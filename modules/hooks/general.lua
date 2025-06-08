@@ -1040,7 +1040,8 @@ function CardArea:align_cards()
                 end
 
                 table.sort(face_up_cards, function(a, b)
-                    return a.base.id > b.base.id
+                    -- aces should be last :3
+                    if a.base.id == 14 then return false end return a.base.id > b.base.id
                 end)
 
                 for _, card in ipairs(face_up_cards) do

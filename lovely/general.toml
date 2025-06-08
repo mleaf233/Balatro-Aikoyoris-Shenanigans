@@ -9,7 +9,8 @@ priority = 0
 target = "game.lua"
 pattern = "    boot_timer('prep stage', 'splash prep',1)"
 position = "before"
-payload = """    AKYRS.aiko_mod_startup(self)"""
+payload = """assert(AKYRS,"You forgot to install/update Steamodded...")
+AKYRS.aiko_mod_startup(self)"""
 overwrite = true
 match_indent = true
 

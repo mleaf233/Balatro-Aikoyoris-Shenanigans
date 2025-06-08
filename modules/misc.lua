@@ -264,7 +264,7 @@ function AKYRS.getBlindText(key)
 end
 
 function AKYRS.getCashOutText(config,scale,stake_sprite)
-    if config.saved then return end
+    
     if G.GAME.aiko_puzzle_win then
         return {n=G.UIT.C, config={padding = 0.05, align = 'cm', minw = 2}, nodes={
             {n=G.UIT.R, config={align = 'cm'}, nodes={
@@ -272,6 +272,8 @@ function AKYRS.getCashOutText(config,scale,stake_sprite)
             }}
         }}
     end
+    if config.saved then return end
+
     if G.GAME.akyrs_mathematics_enabled then
         return {n=G.UIT.C, config={padding = 0.05, align = 'cm'}, nodes={
             {n=G.UIT.R, config={align = 'cm'}, nodes={
@@ -286,15 +288,15 @@ function AKYRS.getCashOutText(config,scale,stake_sprite)
 end
 
 
-function getGameOverBlindText()
+function AKYRS.getGameOverBlindText()
     if G.GAME.blind and G.GAME.blind.config and G.GAME.blind.config.blind and G.GAME.blind.config.blind.key then
         if (G.GAME.blind.config.blind.key == "bl_akyrs_the_thought") then
             return string.upper(G.GAME.word_todo)
         else
-            return "?????"
+            return nil
         end
     else
-        return "?????"
+        return nil
     end
 end
 

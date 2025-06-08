@@ -8,7 +8,7 @@ return {
                 name = 'Letter Deck',
                 text = { 'Letters-Only Deck',
                         "with Scrabble Distribution", 
-                        "{C:mult}Mult{} and {C:white,X:mult}Xmult{} Enabled", 
+                        "{C:mult}Mult{} and {C:white,X:mult}XMult{} Enabled", 
                         "Play {C:playable}as many{} cards", 
                         "as you want per hand",
                         "{C:red}X#1#{} base Blind Size",
@@ -389,7 +389,9 @@ return {
             dd_akyrs_cryptposting_ability={
                 name="Cryptposting Ability",
                 text={
-                    "???"
+                    "Create a {X:attention,E:1}Joker{} when",
+                    "Blind is skipped",
+                    "{C:inactive}(No room needed)"
                 },
             },
             dd_akyrs_aikoyori_pta_ability={
@@ -446,7 +448,7 @@ return {
                 name = "Mukuroju no Hakamori",
                 text = { 
                     "This Joker {C:attention}octuples{} ({X:mult,C:white} X8 {})",
-                    "its {X:mult,C:white} Xmult {} every time {C:tarot}The Star{} is used",
+                    "its {X:mult,C:white} XMult {} every time {C:tarot}The Star{} is used",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
                 }
             },
@@ -729,8 +731,7 @@ return {
                 text = { 
                     "Debuffed Cards held in hand or played",
                     "give {X:mult,C:white} X#1#{} Mult each",
-                    "{C:inactive,s:0.8}Does NOT work properly on macOS",
-                    "{C:inactive,s:0.8}Please check back later if you're on macOS",
+                    "{C:inactive,s:0.8}Now works properly on macOS :D!",
                 }
             },
             j_akyrs_it_is_forbidden_to_dog_absurd = {
@@ -957,10 +958,10 @@ return {
             j_akyrs_neurosama_absurd = {
                 name = "Neuro Sama",
                 text = { 
-                    "This Joker {C:attention}multiplies{} its {X:mult,C:white}Xmult{} by {X:mult,C:white} X#2# {}",
+                    "This Joker {C:attention}multiplies{} its {X:mult,C:white}XMult{} by {X:mult,C:white} X#2# {}",
                     "for every {C:hearts}Hearts{} scored",
                     "and if {T:j_akyrs_evilneuro,C:red}Evil Neuro{} is present,",
-                    "also {C:attention}multiplies{} its {X:mult,C:white}Xmult{} by {X:mult,C:white} X#2# {}",
+                    "also {C:attention}multiplies{} its {X:mult,C:white}XMult{} by {X:mult,C:white} X#2# {}",
                     "for every {C:spades}Spades{} scored",
                     "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
                 }
@@ -979,10 +980,10 @@ return {
             j_akyrs_evilneuro_absurd = {
                 name = "Evil Neuro",
                 text = { 
-                    "This Joker {C:attention}expotentiates{} its {X:chips,C:white}Xchips{} by {X:edition,C:purple} ^#2# {}",
+                    "This Joker {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
                     "for every {C:clubs}Clubs{} scored",
                     "and if {T:j_akyrs_neurosama,C:red}Neuro Sama{} is present,",
-                    "also {C:attention}expotentiates{} its {X:chips,C:white}Xchips{} by {X:edition,C:purple} ^#2# {}",
+                    "also {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
                     "for every {C:diamonds}Diamonds{} scored",
                     "{C:inactive}(Currently {X:chips,C:white} X#1# {C:inactive} Chips)",
                 }
@@ -1160,6 +1161,7 @@ return {
                 text = { 
                     "This Joker gains more abilities",
                     "the more {C:attention}mods{} you installed",
+                    "{C:inactive}The self-insert of all time!"
                 }
             },
             j_akyrs_mukuroju_no_hakamori = {
@@ -1303,7 +1305,7 @@ return {
                 text = { 
                     "Tells the URL where to download",
                     "{X:akyrs_pissandshittium,C:white}Pissandshittium{}",
-                    "{C:akyrs_pissandshittium}^^^#1#{} Mult",
+                    "{X:akyrs_pissandshittium,C:white}^^^#1#{} Mult",
                 }
             },
             j_akyrs_pandora_paradoxxx = {
@@ -1331,13 +1333,30 @@ return {
                     "Hides {C:attention}all{} tooltips",
                 }
             },
+            j_akyrs_no_hints_here_absurd = {
+                name = "No Hints Here!",
+                text = { 
+                    "{X:dark_edition,C:white} ^#1# {} Mult",
+                    "Hides {C:attention}all{} tooltips",
+                }
+            },
             j_akyrs_brushing_clothes_pattern = {
                 name = "Brushing Clothes Pattern",
                 text = { 
                     "If played hand contains a {C:attention}Flush",
                     "and at least one of them is {C:attention}Wild Card",
                     "This joker gains {X:chips,C:white} X#1# {} Chips",
-                    "per {C:attention}Wild Cards{} scored",
+                    "when a {C:attention}Wild Cards{} is scored",
+                    "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} Chips)",
+                }
+            },
+            j_akyrs_brushing_clothes_pattern_absurd = {
+                name = "Brushing Clothes Pattern",
+                text = { 
+                    "If played hand contains a {C:attention}Flush",
+                    "and at least one of them is {C:attention}Wild Card",
+                    "This joker {X:chips,C:white} X#1# {} its Chips value",
+                    "when a {C:attention}Wild Cards{} is scored",
                     "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} Chips)",
                 }
             },
@@ -1345,8 +1364,81 @@ return {
                 name = "You Tried",
                 text = { 
                     "{C:attention}Prevents death",
+                    "{C:red}Destroy all your Jokers",
                     "Set Ante to {C:attention}#1#{}",
                     "then {E:1,C:red}self-desructs",
+                }
+            },
+            j_akyrs_you_tried_absurd = {
+                name = "You Tried",
+                text = { 
+                    "{C:attention}Prevents death",
+                    "Set Ante to {C:attention}#1#{}",
+                    "then {E:1,C:red}self-desructs",
+                }
+            },
+            j_akyrs_don_chan = {
+                name = "Don-Chan",
+                text = { 
+                    "Add {C:attention}#1#%{}",
+                    "of current {X:chips,C:white}Chips{} to {C:white,X:mult}Mult",
+                }
+            },
+            j_akyrs_don_chan_absurd = {
+                name = "Don-Chan",
+                text = { 
+                    "Add {C:attention}#1#%{}",
+                    "of current {X:chips,C:white}Chips{} to {C:white,X:mult}Mult",
+                    "when a card {C:attention}scores",
+                }
+            },
+            j_akyrs_katsu_chan = {
+                name = "Katsu-Chan",
+                text = { 
+                    "Add {C:attention}#1#%{}",
+                    "of current {C:white,X:mult}Mult{} to {X:chips,C:white}Chips",
+                }
+            },
+            j_akyrs_katsu_chan_absurd = {
+                name = "Katsu-Chan",
+                text = { 
+                    "Add {C:attention}#1#%{}",
+                    "of current {C:white,X:mult}Mult{} to {X:chips,C:white}Chips",
+                    "when a card {C:attention}scores",
+                }
+            },
+            j_akyrs_lagtrain = {
+                name = "Lagtrain",
+                text = { 
+                    "If played hand contained a {C:attention}Straight",
+                    "Gain {C:chips} +#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
+                    "{C:inactive}(Currently {C:chips} +#3# {C:inactive} Chips)",
+                }
+            },
+            j_akyrs_lagtrain_absurd = {
+                name = "Lagtrain",
+                text = { 
+                    "If played hand contained a {C:attention}Straight",
+                    "Gain {X:chips,C:white} X#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
+                    "{C:inactive}(Currently {X:chips,C:white} X#3# {C:inactive} Chips)",
+                }
+            },
+            j_akyrs_bocchi = {
+                name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
+                text = { 
+                    "This Joker gains {C:white,X:mult} X#1# {} Mult",
+                    "if played hand contains {C:attention}at most 1 {}card",
+                    "and only {C:attention}1{} Joker is held",
+                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
+                }
+            },
+            j_akyrs_bocchi_absurd = {
+                name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
+                text = { 
+                    "This Joker {C:attention}multiplies{} its {C:white,X:mult} XMult {} by {C:white,X:mult} X#1# {}",
+                    "if played hand contains {C:attention}at most 1 {}card",
+                    "and only {C:attention}1{} Joker is held",
+                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
                 }
             },
         },
@@ -1734,7 +1826,7 @@ return {
                 name = "Letter Sleeve",
                 text = { 
                     "Start with {C:red}Letters{} Enabled",
-                    "Along with with its {C:white,X:mult}Xmult{}",
+                    "Along with with its {C:white,X:mult}XMult{}",
              }
             },
             sleeve_akyrs_letter_alt = {
@@ -1864,6 +1956,8 @@ return {
             k_akyrs_woah_undertale = "Woah..",
             k_akyrs_story_of_undertale = "Story of Undertale..",
 
+            k_akyrs_fps = " FPS",
+
             k_akyrs_random_letter = "randomly selected letter",
             k_akyrs_tsunagi_absurd_wheel_nope = "1 Miss!",
 
@@ -1897,6 +1991,7 @@ return {
             k_akyrs_letter_btn_auto = "Auto",
             k_akyrs_letter_btn_set = "Set",
             k_akyrs_letter_btn_swap_case = "Swap Case",
+            k_akyrs_you_tried = "You tried :star:",
 
             k_akyrs_textbox_notice = "Due to how the game works, you'll have to",
             k_akyrs_textbox_notice_2 = "interact with the textbox for text to show up",

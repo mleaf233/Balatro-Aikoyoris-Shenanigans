@@ -95,3 +95,24 @@ payload = """self.chips = AKYRS.mod_blind_requirement(self,self.chips)"""
 overwrite = true
 match_indent = true
 
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = """    if not initial and delay_sprites ~= "quantum" and G.GAME.blind then G.GAME.blind:debuff_card(self) end"""
+position = "before"
+payload = """if G.GAME.blind and G.GAME.blind.debuff_card then"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = """    if not initial and delay_sprites ~= "quantum" and G.GAME.blind then G.GAME.blind:debuff_card(self) end"""
+position = "after"
+payload = """end"""
+overwrite = true
+match_indent = true
+

@@ -71,10 +71,10 @@ target = "functions/common_events.lua"
 pattern = """                    table.insert(left_text, {n=G.UIT.O, config={w=1.2,h=1.2 , object = blind_sprite, hover = true, can_collide = false}})"""
 position = "after"
 payload = """
-            local akyrs_cashouttxt = AKYRS.getCashOutText(config,scale, stake_sprite)
-            if akyrs_cashouttxt then
-                table.insert(left_text, akyrs_cashouttxt) 
-            else
+local akyrs_cashouttxt = AKYRS.getCashOutText(config,scale, stake_sprite)
+if akyrs_cashouttxt then
+    table.insert(left_text, akyrs_cashouttxt) 
+else
 """
 overwrite = true
 match_indent = true
@@ -99,10 +99,10 @@ pattern = """        {n=G.UIT.O, config={object = blind_choice.animation}}
       }},
     }"""
 position = "after"
-payload = """if (G.GAME.current_round.advanced_blind) then
+payload = """if AKYRS.getGameOverBlindText() then
     score_tab = {
       {n=G.UIT.R, config={align = "cm", minh = 0.6}, nodes={
-        {n=G.UIT.O, config={object = DynaText({string = {{string = getGameOverBlindText()}}, colours = {G.C.WHITE},shadow = true, float = true,maxw = 2.2, scale = 0.45})}}
+        {n=G.UIT.O, config={object = DynaText({string = {{string = AKYRS.getGameOverBlindText()}}, colours = {G.C.WHITE},shadow = true, float = true,maxw = 2.2, scale = 0.45})}}
       }},
       {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={
         {n=G.UIT.O, config={object = blind_choice.animation}}
