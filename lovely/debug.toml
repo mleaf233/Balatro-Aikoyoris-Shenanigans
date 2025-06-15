@@ -21,3 +21,13 @@ position = "at"
 payload = """    _defined[f] = info.source..":"..info.linedefined"""
 overwrite = true
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """        if G.check and G.SETTINGS.perf_mode then"""
+position = "before"
+payload = """love.graphics.print("Garbage Count: "..collectgarbage("count"), 10, 50)"""
+overwrite = true
+match_indent = true
