@@ -206,6 +206,7 @@ function Card:update(dt)
 end
 
 function AKYRS.expensive_calculation()
+    nuGC(nil,nil, false)
     if G.STATE == G.STATES.HAND_PLAYED then
         G.GAME.current_round.akyrs_executed_debuff = false
 
