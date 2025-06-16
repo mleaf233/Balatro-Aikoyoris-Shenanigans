@@ -24,8 +24,10 @@ SMODS.Challenge{
             pinned = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
-                akyrs_cycler = 4,
-                akyrs_priority_draw_rank = "5"
+                immutable = {
+                    akyrs_cycler = 4,
+                    akyrs_priority_draw_rank = "5"
+                }
 
             }
         },
@@ -35,8 +37,10 @@ SMODS.Challenge{
             pinned = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
-                akyrs_cycler = 3,
-                akyrs_priority_draw_suit = "Hearts"
+                immutable = {
+                    akyrs_cycler = 3,
+                    akyrs_priority_draw_suit = "Hearts"
+                }
             }
         },
         AKYRS.crypternity{
@@ -45,8 +49,10 @@ SMODS.Challenge{
             pinned = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
-                akyrs_cycler = 2,
-                akyrs_priority_draw_conditions = "Face Cards"
+                immutable = {
+                    akyrs_cycler = 2,
+                    akyrs_priority_draw_conditions = "Face Cards"
+                }
             }
         },
         AKYRS.crypternity{
@@ -56,8 +62,10 @@ SMODS.Challenge{
             pinned = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
-                akyrs_cycler = 1,
-                akyrs_priority_draw_rank = "Ace"
+                immutable = {
+                    akyrs_cycler = 1,
+                    akyrs_priority_draw_rank = "Ace"
+                }
             }
         },
     },

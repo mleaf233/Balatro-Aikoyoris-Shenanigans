@@ -1189,55 +1189,55 @@ SMODS.Joker{
     rarity = 3,
     cost = 7,
     config = {
-        extra = {
-            possible_table = {
-                {"Ace", "Rank", {"k_aces", "dictionary"}},
-                {"Face Cards", "Condition", {"k_face_cards","dictionary"}},
-                {"Hearts", "Suit", {"Hearts", 'suits_plural'}},
-                {"5", "Rank", {"5", "ranks"}}
-            },
+        possible_table = {
+            {"Ace", "Rank", {"k_aces", "dictionary"}},
+            {"Face Cards", "Condition", {"k_face_cards","dictionary"}},
+            {"Hearts", "Suit", {"Hearts", 'suits_plural'}},
+            {"5", "Rank", {"5", "ranks"}}
         },
-        akyrs_cycler = 1,
-        akyrs_priority_draw_rank = "Ace",
-        akyrs_priority_draw_suit = nil,
-        akyrs_priority_draw_conditions = nil,
+        immutable = {
+            akyrs_cycler = 1,
+            akyrs_priority_draw_rank = "Ace",
+            akyrs_priority_draw_suit = nil,
+            akyrs_priority_draw_conditions = nil,
+        },
     },
     set_ability = function (self, card, initial, delay_sprites)
-        if card.ability.akyrs_cycler ~= 1 and card.ability.akyrs_cycler ~= 2 and card.ability.akyrs_cycler ~= 3 and card.ability.akyrs_cycler ~= 4 then
-            card.ability.akyrs_cycler = 1
+        if card.ability.immutable.akyrs_cycler ~= 1 and card.ability.immutable.akyrs_cycler ~= 2 and card.ability.immutable.akyrs_cycler ~= 3 and card.ability.immutable.akyrs_cycler ~= 4 then
+            card.ability.immutable.akyrs_cycler = 1
         end
     end,
     loc_vars = function(self, info_queue, card)
-        if card.ability.akyrs_cycler ~= 1 and card.ability.akyrs_cycler ~= 2 and card.ability.akyrs_cycler ~= 3 and card.ability.akyrs_cycler ~= 4 then
-            card.ability.akyrs_cycler = 1
+        if card.ability.immutable.akyrs_cycler ~= 1 and card.ability.immutable.akyrs_cycler ~= 2 and card.ability.immutable.akyrs_cycler ~= 3 and card.ability.immutable.akyrs_cycler ~= 4 then
+            card.ability.immutable.akyrs_cycler = 1
         end
-        local table = card.ability.extra.possible_table[math.floor(card.ability.akyrs_cycler)]
+        local table = card.ability.possible_table[math.floor(card.ability.immutable.akyrs_cycler)]
         info_queue[#info_queue+1] = { key = "dd_akyrs_hibana_conditions", set = "DescriptionDummy"}
         return {
             vars = {
                 localize(table[3][1],table[3][2]),
-                card.ability.akyrs_cycler,
+                card.ability.immutable.akyrs_cycler,
             }
         }
     end,
     calculate = function (self, card, context)
         if (context.end_of_round or context.forcetrigger) and context.cardarea == G.jokers then
-            if card.ability.akyrs_cycler ~= 1 and card.ability.akyrs_cycler ~= 2 and card.ability.akyrs_cycler ~= 3 and card.ability.akyrs_cycler ~= 4 then
-                card.ability.akyrs_cycler = 1
+            if card.ability.immutable.akyrs_cycler ~= 1 and card.ability.immutable.akyrs_cycler ~= 2 and card.ability.immutable.akyrs_cycler ~= 3 and card.ability.immutable.akyrs_cycler ~= 4 then
+                card.ability.immutable.akyrs_cycler = 1
             end
-            card.ability.akyrs_priority_draw_rank = nil
-            card.ability.akyrs_priority_draw_suit = nil
-            card.ability.akyrs_priority_draw_conditions = nil
-            card.ability.akyrs_cycler = math.fmod(card.ability.akyrs_cycler,#(card.ability.extra.possible_table)) + 1
-            local curr = card.ability.extra.possible_table[card.ability.akyrs_cycler]
+            card.ability.immutable.akyrs_priority_draw_rank = nil
+            card.ability.immutable.akyrs_priority_draw_suit = nil
+            card.ability.immutable.akyrs_priority_draw_conditions = nil
+            card.ability.immutable.akyrs_cycler = math.fmod(card.ability.immutable.akyrs_cycler,#(card.ability.possible_table)) + 1
+            local curr = card.ability.possible_table[card.ability.immutable.akyrs_cycler]
             if curr[2] == "Rank" then
-                card.ability.akyrs_priority_draw_rank = curr[1]
+                card.ability.immutable.akyrs_priority_draw_rank = curr[1]
             end
             if curr[2] == "Suit" then
-                card.ability.akyrs_priority_draw_suit = curr[1]
+                card.ability.immutable.akyrs_priority_draw_suit = curr[1]
             end
             if curr[2] == "Condition" then
-                card.ability.akyrs_priority_draw_conditions = curr[1]
+                card.ability.immutable.akyrs_priority_draw_conditions = curr[1]
             end
             return {
                 message = localize('k_akyrs_hibana_change')
@@ -1245,19 +1245,19 @@ SMODS.Joker{
         end
     end,
     add_to_deck = function (self, card, from_debuff)        
-        card.ability.akyrs_cycler = math.floor(card.ability.akyrs_cycler)
-        card.ability.akyrs_priority_draw_rank = nil
-        card.ability.akyrs_priority_draw_suit = nil
-        card.ability.akyrs_priority_draw_conditions = nil
-        local curr = card.ability.extra.possible_table[card.ability.akyrs_cycler]
+        card.ability.immutable.akyrs_cycler = math.floor(card.ability.immutable.akyrs_cycler)
+        card.ability.immutable.akyrs_priority_draw_rank = nil
+        card.ability.immutable.akyrs_priority_draw_suit = nil
+        card.ability.immutable.akyrs_priority_draw_conditions = nil
+        local curr = card.ability.possible_table[card.ability.immutable.akyrs_cycler]
         if curr[2] == "Rank" then
-            card.ability.akyrs_priority_draw_rank = curr[1]
+            card.ability.immutable.akyrs_priority_draw_rank = curr[1]
         end
         if curr[2] == "Suit" then
-            card.ability.akyrs_priority_draw_suit = curr[1]
+            card.ability.immutable.akyrs_priority_draw_suit = curr[1]
         end
         if curr[2] == "Condition" then
-            card.ability.akyrs_priority_draw_conditions = curr[1]
+            card.ability.immutable.akyrs_priority_draw_conditions = curr[1]
         end
         if G.deck then
             G.deck:shuffle()
@@ -1792,7 +1792,6 @@ SMODS.Joker{
     },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = localize{key = "j_popcorn", vars = {20,4}}
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             return {
                 key = self.key .. "_absurd",

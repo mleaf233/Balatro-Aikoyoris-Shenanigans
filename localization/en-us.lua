@@ -1015,12 +1015,12 @@ return {
                 name = "Evil Neuro",
                 text = { 
                     {
-                        "This Joker {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
+                        "This Joker {C:attention}exponentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
                         "for every {C:clubs}Clubs{} scored",
                     },
                     {
                         "If {T:j_akyrs_neurosama,C:red}Neuro Sama{} is present,",
-                        "also {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
+                        "also {C:attention}exponentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
                         "for every {C:diamonds}Diamonds{} scored",
                     },
                     {
