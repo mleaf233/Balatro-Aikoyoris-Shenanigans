@@ -158,32 +158,34 @@ if Cryptid then -- TODO: Ask Cryptid Discord so I can hook this up properly
         },
         difficulty = 20,
     }
-    
-    CardSleeves.Sleeve {
-        key = "cry_misprint_ultima",
-        atlas = "aikoyoriSleeves",
-        pos = { x = 1, y = 0 },
-        config = { cry_misprint_min = 1e-4, cry_misprint_max = 1e4 },
-        set_badges = function (self, card, badges)
-            SMODS.create_mod_badges({ mod = Cryptid }, badges)
-        end,
-        loc_vars = function (self, info_queue, card)
-            local key = self.key
-            if self.get_current_deck_key() == "b_akyrs_cry_misprint_ultima" then
-                key = self.key .. "_alt"
-            end
-            return {
-                key = key,
-                vars = {
-                    self.config.cry_misprint_min,
-                    self.config.cry_misprint_max
+    if CardSleeves then
+        CardSleeves.Sleeve {
+            key = "cry_misprint_ultima",
+            atlas = "aikoyoriSleeves",
+            pos = { x = 1, y = 0 },
+            config = { cry_misprint_min = 1e-4, cry_misprint_max = 1e4 },
+            set_badges = function (self, card, badges)
+                SMODS.create_mod_badges({ mod = Cryptid }, badges)
+            end,
+            loc_vars = function (self, info_queue, card)
+                local key = self.key
+                if self.get_current_deck_key() == "b_akyrs_cry_misprint_ultima" then
+                    key = self.key .. "_alt"
+                end
+                return {
+                    key = key,
+                    vars = {
+                        self.config.cry_misprint_min,
+                        self.config.cry_misprint_max
+                    }
                 }
-            }
-        end,
-        apply = function(self)
-            G.GAME.modifiers.cry_misprint_min = (G.GAME.modifiers.cry_misprint_min or to_big(1)) * self.config.cry_misprint_min
-            G.GAME.modifiers.cry_misprint_max = (G.GAME.modifiers.cry_misprint_max or to_big(1)) * self.config.cry_misprint_max
-        end
-    }
+            end,
+            apply = function(self)
+                G.GAME.modifiers.cry_misprint_min = (G.GAME.modifiers.cry_misprint_min or to_big(1)) * self.config.cry_misprint_min
+                G.GAME.modifiers.cry_misprint_max = (G.GAME.modifiers.cry_misprint_max or to_big(1)) * self.config.cry_misprint_max
+            end
+        }
+    end
+    
 end
 ret = {}
