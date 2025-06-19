@@ -9,7 +9,7 @@
 	"badge_colour": "ff475a",
 	"badge_text_colour": "edefff",
 	"display_name": "AikoShenanigans",
-	"version": "0.2.0-alpha-250619a",
+	"version": "0.2.0-alpha-250620a",
 	"dependencies": [
 		"Steamodded (>=1.0.0~BETA-0530b)", 
 		"Lovely (>=0.8.0)", 

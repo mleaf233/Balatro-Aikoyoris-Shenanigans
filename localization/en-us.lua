@@ -1496,7 +1496,7 @@ return {
                 }
             },
             j_akyrs_kita = {
-                name = "{f:5}郁代喜多{} (Ikuyo Kita)",
+                name = "{f:5}喜多郁代{} (Kita Ikuyo)",
                 text = { 
                     {
                         "If played hand contains a {C:attention}Flush{}",
@@ -1507,11 +1507,27 @@ return {
                 }
             },
             j_akyrs_kita_absurd = {
-                name = "{f:5}郁代喜多{} (Ikuyo Kita)",
+                name = "{f:5}喜多郁代{} (Kita Ikuyo)",
                 text = { 
                     {
                         "Create {C:dark_edition}Negative {C:tarot}The Lovers{}",
                         "per {C:hearts}Hearts{} scored",
+                    },
+                }
+            },
+            j_akyrs_ryou = {
+                name = "{f:5}山田リョウ{} (Yamada Ryou)",
+                text = { 
+                    {
+                        "[WIP] shouldn't appear in a run yet",
+                    },
+                }
+            },
+            j_akyrs_nijika = {
+                name = "{f:5}伊地知虹夏{} (Ijichi Nijika)",
+                text = { 
+                    {
+                        "[WIP] shouldn't appear in a run yet",
                     },
                 }
             },

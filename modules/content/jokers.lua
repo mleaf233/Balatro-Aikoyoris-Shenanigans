@@ -3150,3 +3150,79 @@ SMODS.Joker{
     end,
 	demicoloncompat = true,
 }
+
+SMODS.Joker{
+    key = "ryou",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, ["Kessoku Band"] = true, },
+    pos = {
+        x = 5, y = 5
+    },
+    rarity = 3,
+    cost = 9,
+    config = {
+        extras = {
+            debt = -10
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
+        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
+        if AKYRS.bal("absurd") then
+            return {
+                -- key = self.key .. "_absurd",
+            }
+        end
+        return {
+        }
+    end,
+    add_to_deck = function (self, card, from_debuff)
+        G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extras.debt
+    end,
+    remove_from_deck = function (self, card, from_debuff)
+        G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extras.debt
+    end,
+    calculate = function (self, card, context)
+        if AKYRS.bal("adequate") then
+            
+        end
+    end,
+    in_pool = function (self, args)
+        return false -- todo: add it properly
+    end,
+	demicoloncompat = true,
+}
+
+SMODS.Joker{
+    key = "nijika",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, ["Kessoku Band"] = true, },
+    pos = {
+        x = 6, y = 5
+    },
+    rarity = 3,
+    cost = 9,
+    config = {
+        extras = {
+            debt = 5,
+            add_debt = 5,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
+        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
+        if AKYRS.bal("absurd") then
+            return {
+                -- key = self.key .. "_absurd",
+            }
+        end
+        return {
+        }
+    end,
+    calculate = function (self, card, context)
+    end,
+    in_pool = function (self, args)
+        return false -- todo: add it properly
+    end,
+	demicoloncompat = true,
+}
