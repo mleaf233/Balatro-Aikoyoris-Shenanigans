@@ -3162,36 +3162,77 @@ SMODS.Joker{
     cost = 9,
     config = {
         extras = {
-            debt = -10
+            debt = 12,
+            add_debt = 3,
+            debt_absurd = 6,
+            factor_debt_absurd = 2,
         }
     },
+    add_to_deck = function (self, card, from_debuff)
+        card.ability.extras.obtain_bal = AKYRS.bal_val()
+        G.GAME.bankrupt_at = G.GAME.bankrupt_at - AKYRS.bal_val_overridable(card.ability.extras.debt,card.ability.extras.debt_absurd,card.ability.extras.obtain_bal)
+    end,
+    remove_from_deck =function (self, card, from_debuff)
+        G.GAME.bankrupt_at = G.GAME.bankrupt_at + AKYRS.bal_val_overridable(card.ability.extras.debt,card.ability.extras.debt_absurd,card.ability.extras.obtain_bal)
+    end,
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
-        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
-        if AKYRS.bal("absurd") then
+        if (card.ability.extras.obtain_bal or AKYRS.bal()) == "absurd" then
             return {
-                -- key = self.key .. "_absurd",
+                key = self.key .. "_absurd",
+                vars = {
+                    card.ability.extras.debt_absurd,
+                    card.ability.extras.factor_debt_absurd,
+                }
             }
         end
         return {
+            vars = {
+                card.ability.extras.debt,
+                card.ability.extras.add_debt,
+            }
         }
     end,
-    add_to_deck = function (self, card, from_debuff)
-        G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extras.debt
-    end,
-    remove_from_deck = function (self, card, from_debuff)
-        G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extras.debt
-    end,
     calculate = function (self, card, context)
-        if AKYRS.bal("adequate") then
-            
+        if context.before and context.poker_hands and #context.poker_hands["Pair"] > 0 then
+            return {
+                message = localize("k_akyrs_ryo_borrowed_money"),
+                func = function ()
+                    local pairs_of_clubs = 0
+                    for _,e_pair in ipairs(context.poker_hands["Pair"]) do
+                        local is_pair_of_clubs = true
+                        for _,e_card in ipairs(e_pair) do
+                            if not e_card:is_suit("Clubs") then
+                                is_pair_of_clubs = false
+                            end
+                        end
+                        if is_pair_of_clubs then
+                            pairs_of_clubs = pairs_of_clubs + 1
+                        end
+                        
+                    end
+                    
+                    if AKYRS.bal_overridable("absurd",card.ability.extras.obtain_bal) then
+                        local old_bkrpt_at = card.ability.extras.debt_absurd -- 6,12,24
+                        -- new debt should be 12,24,48, etc.
+                        card.ability.extras.debt_absurd = card.ability.extras.debt_absurd * pairs_of_clubs * card.ability.extras.factor_debt_absurd
+                        -- the difference should also account for when, for some reason, the joker value changes like Cryptid's misprintize function
+                        -- all those numbers should be positive so i just absurd - old bkrpt ig
+                        G.GAME.bankrupt_at = G.GAME.bankrupt_at - (card.ability.extras.debt_absurd - old_bkrpt_at)
+                        
+                    else
+                        if pairs_of_clubs > 0 then
+                            G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extras.add_debt
+                            card.ability.extras.debt = card.ability.extras.debt + card.ability.extras.add_debt
+                        end
+                    end
+                end
+            }
         end
-    end,
-    in_pool = function (self, args)
-        return false -- todo: add it properly
     end,
 	demicoloncompat = true,
 }
+
 
 SMODS.Joker{
     key = "nijika",
@@ -3204,25 +3245,48 @@ SMODS.Joker{
     cost = 9,
     config = {
         extras = {
-            debt = 5,
-            add_debt = 5,
         }
     },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
-        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
         if AKYRS.bal("absurd") then
             return {
-                -- key = self.key .. "_absurd",
+                key = self.key .. "_absurd",
             }
         end
         return {
         }
     end,
     calculate = function (self, card, context)
+        if AKYRS.bal("absurd") then
+            if context.individual and context.cardarea == G.play and context.other_card and context.other_card:is_suit("Diamonds") then
+                return {
+                    message = localize("k_akyrs_nijika_planet"),
+                    func = function ()
+                        local pl = AKYRS.get_most_played()
+                        SMODS.add_card({soulable = true, key = pl, edition = "e_negative"})
+                    end
+                }
+            end
+        else
+            if context.joker_main then
+                local diac = 0
+                for _,cr in ipairs(G.play.cards) do
+                    if cr:is_suit("Diamonds") then
+                        diac = diac + 1
+                    end
+                end
+                if diac >= (#G.play.cards / 2) then
+                    return {
+                        message = localize("k_akyrs_nijika_planet"),
+                        func = function ()
+                            local pl = AKYRS.get_most_played()
+                            SMODS.add_card({soulable = true, key = pl, edition = "e_negative"})
+                        end
+                    }
+                end
+            end
+        end
     end,
-    in_pool = function (self, args)
-        return false -- todo: add it properly
-    end,
-	demicoloncompat = true,
+	dzicoloncompat = true,
 }

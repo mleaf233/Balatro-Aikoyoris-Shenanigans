@@ -801,3 +801,27 @@ AKYRS.mod_score = function(score_mod)
     )
 end
 
+AKYRS.get_most_played = function()
+    local _planet, _hand, _tally = nil, nil, 0
+    for k, v in ipairs(G.handlist) do
+        if G.GAME.hands[v].visible and G.GAME.hands[v].played > _tally then
+            _hand = v
+            _tally = G.GAME.hands[v].played
+        end
+    end
+    if _hand then
+        for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+            if v.config.hand_type == _hand then
+                _planet = v.key
+            end
+            if v.config.akyrs_hand_types then
+                for i,v2 in ipairs(v.config.akyrs_hand_types) do
+                    if v2 == v then
+                        _planet = v.key
+                    end
+                end
+            end
+        end
+    end
+    return _planet, _hand, _tally
+end

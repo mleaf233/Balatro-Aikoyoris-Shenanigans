@@ -75,9 +75,8 @@ return {
             bl_akyrs_the_picker= {
                 name = "The Picker",
                 text = {
-                    "#1# cards randomly selected every hand",
-                    "X#2# Score Requirement on deselect",
-                    "Activates once per hand",
+                    "X#2# Score Requirement when you",
+                    "change the given card selection",
                 }
             },
             bl_akyrs_the_height= {
@@ -1110,12 +1109,11 @@ return {
                 name = "Chicken Jockey",
                 text = {
                     { 
-                        "Every {C:red}Popcorn{} obtained",
-                        "while this Joker is present",
-                        "decreases Mult by {C:red}-#3#{} per round instead",
-                        "Gain {X:mult,C:white}X#1#{} Mult per",
-                        "{C:red}Popcorn{} eaten.",
+                        "Every {C:red}Popcorn{} obtained while this Joker",
+                        "is present decreases Mult by {C:red}-#3#{} per round instead",
+                        "Gain {X:mult,C:white}X#1#{} Mult per {C:red}Popcorn{} eaten.",
                         "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                        "{s:0.7,C:inactive}Absolute Cinema.{}"
                     }
                 }
             },
@@ -1123,12 +1121,9 @@ return {
                 name = "Chicken Jockey",
                 text = { 
                     {
-                        "Every {C:red}Popcorn{} obtained",
-                        "while this Joker is present",
-                        "starts at {C:red}#4#{} Mult and",
-                        "decreases Mult by {C:red}-#3#{} per round instead",
-                        "Gain {X:dark_edition,C:white}^#1#{} Mult per",
-                        "{C:red}Popcorn{} eaten.",
+                        "Every {C:red}Popcorn{} obtained while this Joker is present",
+                        "starts at {C:red}#4#{} Mult and decreases Mult by {C:red}-#3#{} per round instead",
+                        "Gain {X:dark_edition,C:white}^#1#{} Mult per {C:red}Popcorn{} eaten.",
                         "{C:inactive}(Currently {X:dark_edition,C:white} ^#2# {C:inactive} Mult)",
                         "{s:0.7,C:inactive}They want me to fight the chicken?{}"
                     },
@@ -1235,7 +1230,7 @@ return {
                 text = { 
                     "This joker sells for {X:money,C:black}X#1#{}",
                     "its buy cost ({C:money}$#2#{})",
-                    "{C:inactive}(I wonder what this will do one day)",
+                    "{C:inactive}(Will do more things in future updates trust)",
                 }
             },
             j_akyrs_emerald_absurd = {
@@ -1243,7 +1238,7 @@ return {
                 text = { 
                     "This joker sells for {X:akyrs_money_x,C:akyrs_money_c}(x+#1#)^#2#{}",
                     "where {X:akyrs_money_x,C:akyrs_money_c}x{} is its buy cost ({C:money}$#2#{})",
-                    "{C:inactive}(I wonder what this will do one day)",
+                    "{C:inactive}(Will do more things in future updates trust)",
                 }
             },
             j_akyrs_shimmer_bucket = {
@@ -1519,7 +1514,19 @@ return {
                 name = "{f:5}山田リョウ{} (Yamada Ryou)",
                 text = { 
                     {
-                        "[WIP] shouldn't appear in a run yet",
+                        "Go up to {C:red}-$#1#{} in debt",
+                        "Debt limit {C:red}-$#2#{} per",
+                        "If hand contains a {C:attention}Pair{} of {C:clubs}Clubs{}",
+                    },
+                }
+            },
+            j_akyrs_ryou_absurd = {
+                name = "{f:5}山田リョウ{} (Yamada Ryou)",
+                text = { 
+                    {
+                        "Go up to {C:red}-$#1#{} in debt",
+                        "Debt limit {X:red,C:white}X#2#{} per",
+                        "{C:attention}Pairs{} of {C:clubs}Clubs{} played",
                     },
                 }
             },
@@ -1527,7 +1534,19 @@ return {
                 name = "{f:5}伊地知虹夏{} (Ijichi Nijika)",
                 text = { 
                     {
-                        "[WIP] shouldn't appear in a run yet",
+                        "If {C:attention}played hand{} contains a {C:attention}Straight{} and at least",
+                        "half of played cards are of {C:diamonds}Diamonds{} suit",
+                        "Create a {C:dark_edition}Negative {C:planet}Planet Card{} of your most played hand"
+                    },
+                }
+            },
+            j_akyrs_nijika_absurd = {
+                name = "{f:5}伊地知虹夏{} (Ijichi Nijika)",
+                text = { 
+                    {
+                        "If {C:attention}played hand{} contains a {C:attention}Straight{}",
+                        "Create a {C:dark_edition}Negative {C:planet}Planet Card{}",
+                        "of your most played hand per {C:diamonds}Diamonds{} played",
                     },
                 }
             },
@@ -2012,10 +2031,12 @@ return {
             k_akyrs_alphabets_pack = "Alphabet Pack",
             k_alphabets = "Alphabet Pack",
             k_created = "Created!",
+            k_akyrs_up_to_sel = "x",
             ph_aiko_beat_puzzle = "Solve the following",
             ph_word_puzzle = "Word Puzzle",
             ph_puzzle_clear = "Puzzle Clear!",
             ph_akyrs_unknown = "???",
+
             k_akyrs_reciprocaled = "Reciprocal'd!",
             k_akyrs_centrifuged = "Centrifuged!",
             k_akyrs_drawn_discard = "All Back!",
@@ -2045,6 +2066,10 @@ return {
             k_akyrs_pandora_give_tag = "Re:MASTER 15",
             k_akyrs_woah_undertale = "Woah..",
             k_akyrs_story_of_undertale = "Story of Undertale..",
+
+
+            k_akyrs_ryo_borrowed_money = "Borrowed Money...",
+            k_akyrs_nijika_planet = ":D",
 
             k_akyrs_fps = " FPS",
 

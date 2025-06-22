@@ -378,7 +378,7 @@ SMODS.Blind{
         return { vars = {G.hand.config.highlighted_limit, self.debuff.score_change}, key = self.key }
     end,
     collection_loc_vars = function(self)
-        return { vars = { "Up to selection limit amount of", 1.2 }, key = self.key }
+        return { vars = { localize("k_akyrs_up_to_sel"), 1.2 }, key = self.key }
     end,
     set_blind = function(self)
         G.GAME.blind.debuff.orig_chips = G.GAME.blind.chips
