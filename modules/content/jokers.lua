@@ -642,10 +642,10 @@ SMODS.Joker {
         }
         info_queue[#info_queue+1] = {key = "akyrs_gain_chip_mult_xchip_xmult", set = 'Other', vars = 
             AKYRS.bal_val({ 
-                    card.ability.extra.chips,
-                    card.ability.extra.mult,
-                    card.ability.extra.Xchips,
-                    card.ability.extra.Xmult,
+                    card.ability.extra.gain_chips,
+                    card.ability.extra.gain_mult,
+                    card.ability.extra.gain_Xchips,
+                    card.ability.extra.gain_Xmult,
                 },
                 { 
                     card.ability.extra.gain_chips_absurd,
@@ -2201,6 +2201,7 @@ SMODS.Joker{
                 vars = {
                     card.ability.extras.pluscost,
                     card.ability.extras.ecost,
+                    card.sell_cost,
                 }
             }
         end

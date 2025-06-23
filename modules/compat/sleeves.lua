@@ -11,7 +11,7 @@ if CardSleeves then
             --print(self.get_current_deck_key())
             if self.get_current_deck_key() == "b_akyrs_letter_deck" then
                 key = self.key .. "_alt"
-                self.config = { deck_size = 2, discards = 6, hand_size = 6, ante_scaling = 12 }
+                self.config = { deck_size = 2, discards = 6, hand_size = 6, ante_scaling = 4 }
                 vars = { self.config.deck_size, self.config.discards, self.config.hand_size, self.config.ante_scaling  }
             elseif self.get_current_deck_key() == "b_akyrs_math_deck" then
                 key = self.key .. "_math_pro"
@@ -19,7 +19,7 @@ if CardSleeves then
                 vars = { self.config.hands, self.config.hand_size, self.config.discards,   }
             else
                 key = self.key
-                self.config = { vouchers = {'v_akyrs_alphabet_soup' }, ante_scaling = 2, deck_size = 1, akyrs_hand_to_not_hide = {["akyrs_expression"] = true,["akyrs_modification"] = true,["akyrs_assignment"] = true }, }
+                self.config = { vouchers = {'v_akyrs_alphabet_soup' }, ante_scaling = 1, deck_size = 1, akyrs_hand_to_not_hide = {["akyrs_expression"] = true,["akyrs_modification"] = true,["akyrs_assignment"] = true }, }
                 vars = {  }
             end
             return { key = key, vars = vars }

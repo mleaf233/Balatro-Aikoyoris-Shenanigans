@@ -4,13 +4,9 @@ SMODS.Voucher {
     cost = 10,
     redeem = function (self, card) 
         G.GAME.akyrs_character_stickers_enabled = true
-        G.GAME.akyrs_wording_enabled = true
-        G.GAME.akyrs_letters_xmult_enabled = true
     end,
     unredeem = function (self, card) 
         G.GAME.akyrs_character_stickers_enabled = false
-        G.GAME.akyrs_wording_enabled = false
-        G.GAME.akyrs_letters_xmult_enabled = false
     end,
     in_pool = function (self, args)
         return not G.GAME.akyrs_mathematics_enabled

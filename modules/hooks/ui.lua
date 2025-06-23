@@ -843,7 +843,7 @@ G.FUNCS.HUD_blind_debuff = function(e)
 				{n = G.UIT.T, config = {ref_table = G.GAME.blind.loc_debuff_lines, ref_value = i, scale = scale * 0.9, colour = G.C.UI.TEXT_LIGHT}}}}
 			e.UIBox:set_parent_child(node_def, e)
 		end
-	elseif num_lines < #e.children + (G.skill_deck and 1 or 0) + (G.akyrs_blind_icons and 1 or 0) then
+	elseif num_lines + (G.skill_deck and 1 or 0) + (G.akyrs_blind_icons and 1 or 0) < #e.children then
 		for i = num_lines+1, #e.children do
 			e.children[i]:remove()
 			e.children[i] = nil

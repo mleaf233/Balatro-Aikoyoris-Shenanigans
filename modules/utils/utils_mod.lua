@@ -92,6 +92,14 @@ AKYRS.bal = function(balance)
     return G.PROFILES[G.SETTINGS.profile].akyrs_balance
 end
 
+AKYRS.set_bal = function(balance)
+    G.PROFILES[G.SETTINGS.profile].akyrs_balance = balance
+end
+
+AKYRS.toggle_bal = function(balance)
+    G.PROFILES[G.SETTINGS.profile].akyrs_balance = G.PROFILES[G.SETTINGS.profile].akyrs_balance == "adequate" and "absurd" or "adequate"
+end
+
 AKYRS.bal_overridable = function(balance, override)
     return override and AKYRS.bal(override) or AKYRS.bal(balance)
 end

@@ -700,7 +700,6 @@ return {
                     "for every {C:attention}Stone{} Card scored",
                     "and change every scored {C:attention}Stone{} card",
                     "to a random {C:attention}non-Stone Upgrades{}",
-                    
                 }
             },
             j_akyrs_netherite_pickaxe = {
@@ -935,12 +934,12 @@ return {
             },
             j_akyrs_centrifuge_absurd = {
                 name = "Centrifuge",
-                text = { 
-                    "If at least {C:attention}3{} cards were played",
-                    "First and last card {C:attention}+#1#{} Rank",
-                    "Both gains new enhancement and edition",
-                    "all other cards {C:attention}-#1#{} Rank",
-                    "and becomes {C:attention}Scoreless{}",
+                    text = { 
+                        "If at least {C:attention}3{} cards were played",
+                        "First and last card {C:attention}+#1#{} Rank",
+                        "Both gains new enhancement and edition",
+                        "all other cards {C:attention}-#1#{} Rank",
+                        "and becomes {C:attention}Scoreless{}",
                 }
             },
             j_akyrs_henohenomoheji = {
@@ -963,7 +962,7 @@ return {
                 text = { 
                     {
                         "This Joker gains {X:mult,C:white} X#2# {} Mult",
-                        "for every {C:hearts}Hearts{} scored -",
+                        "for every {C:hearts}Hearts{} scored",
                     },
                     {
                         
@@ -1064,7 +1063,7 @@ return {
                 name = "Charred Roach",
                 text = { 
                     "{C:red}Destroying{} cards",
-                    "grants you a {C:attention}Burnt{} copy of it",
+                    "grants you a {C:attention}Burnt{} copy of them",
                 }
             },
             j_akyrs_ash_joker = {
@@ -1183,24 +1182,6 @@ return {
                     "{C:inactive}(Lines Cleared : {X:attention,C:white} #1# {C:inactive})",
                 }
             },
-            -- toga
-            j_akyrs_toga_charmap = {
-                
-                name = "Character Map",
-                text = {
-                    "Create an Alphabet {C:attention}Alphabet{} card for the most",
-                    "common letter played if there's only {C:attention}one{} most common letter"
-                }
-            },
-            j_akyrs_toga_winword = {
-                
-                name = "Microsoft Word",
-                text = { 
-                    "This Joker gains {X:mult,C:white} X#1# {} Mult",
-                    "per letter if a word is played",
-                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
-                }
-            },
             j_akyrs_aikoyori = {
                 name = "{C:dark_edition}Aikoyori",
                 text = { 
@@ -1245,7 +1226,7 @@ return {
                 text = { 
                     {
                         "This joker sells for {X:akyrs_money_x,C:akyrs_money_c}(x+#1#)^#2#{}",
-                        "where {X:akyrs_money_x,C:akyrs_money_c}x{} is its buy cost ({C:money}$#2#{})",
+                        "where {X:akyrs_money_x,C:akyrs_money_c}x{} is its buy cost ({C:money}$#3#{})",
                         "{C:inactive}(Will do more things in future updates trust)",
                     },
                     {
@@ -1311,7 +1292,7 @@ return {
                     "{C:white,X:dark_edition,E:2} ^#1#{} Mult",
                     "{C:attention}Value is based on its position{}",
                     "{C:attention}Moves itself{} after clicking Play",
-                    "{C:inactive}(Drag to Check value)",
+                    "{C:inactive}(Drag to check value)",
                 }
             },
             j_akyrs_goodbye_sengen = {
@@ -1469,7 +1450,7 @@ return {
                 name = "Lagtrain",
                 text = { 
                     "If played hand contained a {C:attention}Straight",
-                    "Gain {C:chips} +#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
+                    "gain {C:chips} +#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
                     "{C:inactive}(Currently {C:chips} +#3# {C:inactive} Chips)",
                 }
             },
@@ -1477,7 +1458,7 @@ return {
                 name = "Lagtrain",
                 text = { 
                     "If played hand contained a {C:attention}Straight",
-                    "Gain {X:chips,C:white} X#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
+                    "gain {X:chips,C:white} X#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
                     "{C:inactive}(Currently {X:chips,C:white} X#3# {C:inactive} Chips)",
                 }
             },
@@ -1561,6 +1542,24 @@ return {
                         "Create a {C:dark_edition}Negative {C:planet}Planet Card{}",
                         "of your most played hand per {C:diamonds}Diamonds{} played",
                     },
+                }
+            },
+            -- toga
+            j_akyrs_toga_charmap = {
+                
+                name = "Character Map",
+                text = {
+                    "Create an Alphabet {C:attention}Alphabet{} card for the most",
+                    "common letter played if there's only {C:attention}one{} most common letter"
+                }
+            },
+            j_akyrs_toga_winword = {
+                
+                name = "Microsoft Word",
+                text = { 
+                    "This Joker gains {X:mult,C:white} X#1# {} Mult",
+                    "per letter if a word is played",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 }
             },
         },
@@ -1779,9 +1778,6 @@ return {
                 text={
                     "{C:attention}Letters{} appear on playing cards",
                     "Words can be made with playing cards",
-                    "{C:attention}Letters{} give {C:white,X:mult}XMult{} based on",
-                    "1 + tenth of their {C:attention}Scrabble value{}",
-                    "{C:inactive}e.g. 1+(value/10){}",
                 },
             },
             v_akyrs_crossing_field={
