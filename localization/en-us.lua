@@ -6,15 +6,17 @@ return {
         Back={
             b_akyrs_letter_deck = {
                 name = 'Letter Deck',
-                text = { 'Letters-Only Deck',
-                        "with Scrabble Distribution", 
-                        "{C:mult}Mult{} and {C:white,X:mult}XMult{} Enabled", 
-                        "Play {C:akyrs_playable}as many{} cards", 
-                        "as you want per hand",
-                        "{C:red}X#1#{} base Blind Size",
-                        "{C:red}+#2#{} Discards",
-                        "{C:attention}+#3#{} Hand Size",
-                    },
+                text = 
+                { 
+                    'Letters-Only Deck',
+                    "with Scrabble Distribution", 
+                    "and its {C:mult}Mult{} Enabled", 
+                    "Play {C:akyrs_playable}as many{} cards", 
+                    "as you want per hand",
+                    "{C:red}X#1#{} base Blind Size",
+                    "{C:red}+#2#{} Discards",
+                    "{C:attention}+#3#{} Hand Size",
+                },
             },
             b_akyrs_math_deck = {
                 name = 'Math Deck',
@@ -1944,7 +1946,6 @@ return {
                 name = "Letter Sleeve",
                 text = { 
                     "Start with {C:red}Letters{} Enabled",
-                    "Along with with its {C:white,X:mult}XMult{}",
              }
             },
             sleeve_akyrs_letter_alt = {
