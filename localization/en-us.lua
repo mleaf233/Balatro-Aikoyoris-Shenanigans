@@ -1228,17 +1228,30 @@ return {
             j_akyrs_emerald = {
                 name = "Emerald",
                 text = { 
-                    "This joker sells for {X:money,C:black}X#1#{}",
-                    "its buy cost ({C:money}$#2#{})",
-                    "{C:inactive}(Will do more things in future updates trust)",
+                    {
+                        "This joker sells for {X:money,C:black}X#1#{}",
+                        "its buy cost ({C:money}$#2#{})",
+                        "{C:inactive}(Will do more things in future updates trust)",
+                    },
+                    {
+                        "{C:inactive}Holding this Joker makes it more likely to find",
+                        "{C:inactive}another one of the same."
+                    }
+
                 }
             },
             j_akyrs_emerald_absurd = {
                 name = "Emerald",
                 text = { 
-                    "This joker sells for {X:akyrs_money_x,C:akyrs_money_c}(x+#1#)^#2#{}",
-                    "where {X:akyrs_money_x,C:akyrs_money_c}x{} is its buy cost ({C:money}$#2#{})",
-                    "{C:inactive}(Will do more things in future updates trust)",
+                    {
+                        "This joker sells for {X:akyrs_money_x,C:akyrs_money_c}(x+#1#)^#2#{}",
+                        "where {X:akyrs_money_x,C:akyrs_money_c}x{} is its buy cost ({C:money}$#2#{})",
+                        "{C:inactive}(Will do more things in future updates trust)",
+                    },
+                    {
+                        "{C:inactive}Holding this Joker makes it more likely to find",
+                        "{C:inactive}another one of the same."
+                    }
                 }
             },
             j_akyrs_shimmer_bucket = {
@@ -1515,8 +1528,8 @@ return {
                 text = { 
                     {
                         "Go up to {C:red}-$#1#{} in debt",
-                        "Debt limit {C:red}-$#2#{} per",
-                        "If hand contains a {C:attention}Pair{} of {C:clubs}Clubs{}",
+                        "Debt limit {C:red}-$#2#{}",
+                        "if hand contains a {C:attention}Pair{} of {C:clubs}Clubs{}",
                     },
                 }
             },
@@ -2167,7 +2180,8 @@ return {
                 'is demonstrated. If you are experiencing crashes related to "blind" being',
                 'nil when hovering on certain Jokers. Turning this off might mitigate that issue.',
             },
-            k_akyrs_supercommon = "Supercommon",
+            k_akyrs_emerald = "Emerald",
+            k_akyrs_supercommon = "Emerald",
         },
         high_scores={},
         labels={
@@ -2178,7 +2192,8 @@ return {
             akyrs_noire = "Noire",
             akyrs_sliced = "Sliced",
             akyrs_burnt = "Burnt",
-            k_akyrs_supercommon = "Supercommon",
+            k_akyrs_emerald = "Emerald",
+            k_akyrs_supercommon = "Emerald",
         },
         poker_hand_descriptions={
             ["akyrs_3-letter Word"] =  {'Create a valid '.. 3 ..'-letter English word', 'without extra letters'},

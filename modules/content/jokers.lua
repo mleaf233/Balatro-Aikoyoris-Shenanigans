@@ -2181,7 +2181,7 @@ SMODS.Joker{
     pos = {
         x = 4, y = 3
     },
-    rarity = "akyrs_supercommon",
+    rarity = "akyrs_emerald",
     cost = 2,
     config = {
         name = "Emerald",
