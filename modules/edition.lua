@@ -104,7 +104,7 @@ SMODS.Edition{
         name = "akyrs_burnt"
     },
     disable_base_shader = true,
-    sound = { sound = "akyrs_burnt_sfx", per = 0.8, vol = 0.3 },
+    sound = { sound = "akyrs_burnt_sfx", per = 1.2, vol = 0.3 },
     in_shop = false,
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_ash_card"]
@@ -128,7 +128,7 @@ SMODS.Edition{
     config = {
         name = "akyrs_enchanted"
     },
-    sound = { sound = "akyrs_burnt_sfx", per = 0.8, vol = 0.3 },
+    sound = { sound = "akyrs_enchanted", per = 1, vol = 0.7 },
     in_shop = false,
     loc_vars = function (self, info_queue, card)
         return {

@@ -105,7 +105,7 @@ mat2 rotationMatrix(float angle) {
 }
 
 float rand(float va){
-    return fract(va*10000.4556);
+    return fract(va*1000.4556);
 }
 
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
@@ -118,8 +118,8 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     // modify tex.rgb for output
     st *= rotationMatrix(PI*0.15);
 
-    float time = (enchanted.g * 0.008)*250.;
-    float time2 = (enchanted.g * 0.07)*-10.;
+    float time = (fract(enchanted.g*0.001))*2500.;
+    float time2 = (fract(enchanted.g*0.001))*1000.;
     vec4 c = vec4(0.0);
     vec3 target = vec3(0.7,0.1,0.9);
     float val0 = (st.x*0.03-time);
@@ -134,8 +134,11 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     c.a *= y * 2.;
     c += vec4(0.5*y);
     c.rgb *= 3.;
+    vec4 colout = tex+c*vec4(target*0.2,0.0);
+    colout.rgb *= 0.8;
+    colout.rgb += 0.05;
 
-    return dissolve_mask(tex+c*vec4(target*0.1,0.0), texture_coords, uv);
+    return dissolve_mask(colout, texture_coords, uv);
 }
 
 extern MY_HIGHP_OR_MEDIUMP vec2 mouse_screen_pos;

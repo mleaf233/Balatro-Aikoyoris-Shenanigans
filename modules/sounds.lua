@@ -37,6 +37,28 @@ SMODS.Sound({
 })
 
 SMODS.Sound({
+    key = "enchant1",
+    path = "enchant/enchant1.ogg",
+})
+SMODS.Sound({
+    key = "enchant2",
+    path = "enchant/enchant2.ogg",
+})
+SMODS.Sound({
+    key = "enchant3",
+    path = "enchant/enchant3.ogg",
+})
+
+SMODS.Sound({
     key = "loud_incorrect_buzzer",
     path = "loudbuzzer.ogg",
 })
+
+-- hook to play randomized sounds 
+local plsnd = play_sound
+function play_sound(snd, per, vol)
+    if snd == "akyrs_enchanted" then
+        snd = pseudorandom_element({"akyrs_enchant1","akyrs_enchant2","akyrs_enchant3",},pseudoseed("akyrs_enchanted_sound"))
+    end
+    return plsnd(snd, per, vol)
+end

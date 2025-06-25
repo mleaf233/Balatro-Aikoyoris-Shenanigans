@@ -1650,11 +1650,11 @@ SMODS.Joker{
         }
     end,
     calculate = function (self, card, context)
-        if context.joker_main or context.forcetrigger then
+        if AKYRS.bal_val(context.joker_main,context.individual and context.cardarea == G.play) or context.forcetrigger then
             return AKYRS.bal_val({
                 xmult = card.ability.extras.xmult
             },{
-                eemult = card.ability.extras.eemult_absurd
+                emult = card.ability.extras.eemult_absurd
             })
         end
     end,

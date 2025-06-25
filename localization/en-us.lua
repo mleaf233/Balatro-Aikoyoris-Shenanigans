@@ -610,6 +610,24 @@ return {
                 }
             },
         },
+        Enchantment = {
+            ench_akyrs_unbreaking = {
+                name="Unbreaking",
+                text={
+                    "When this card gets {C:attention}destroyed{}",
+                    "{C:attention}Fixed {C:green}#1#%{} chance to",
+                    "duplicate this card",
+                },
+            },
+            ench_akyrs_effeciency = {
+                name="Efficiency",
+                text={
+                    "When this card gets {C:attention}destroyed{}",
+                    "{C:attention}Fixed {C:green}#1#%{} chance to",
+                    "duplicate this card",
+                },
+            },
+        },
         Enhanced={
             m_akyrs_brick_card = {
                 name="Brick Card",
@@ -1064,7 +1082,7 @@ return {
             j_akyrs_happy_ghast_absurd = {
                 name = "Happy Ghast",
                 text = { 
-                    "{C:edition,X:dark_edition} ^^#1# {} Mult",
+                    "{C:white,X:dark_edition} ^#1# {} Mult per card scored",
                 }
             },
             j_akyrs_charred_roach = {
@@ -1352,7 +1370,7 @@ return {
                 text = { 
                     "Tells the URL where to download",
                     "{X:akyrs_pissandshittium,C:white}Pissandshittium{}",
-                    "{X:akyrs_pissandshittium,C:white}^^^#1#{} Mult",
+                    "{X:akyrs_pissandshittium,C:white}^#1#{} Mult",
                 }
             },
             j_akyrs_pandora_paradoxxx = {
