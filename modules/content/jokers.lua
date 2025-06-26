@@ -1683,7 +1683,7 @@ SMODS.Joker{
         
     end,
     calculate = function (self, card, context)
-        if context.akyrs_card_remove and context.card_getting_removed ~= card and not (context.card_getting_removed.edition and context.card_getting_removed.edition.key == "e_akyrs_burnt")
+        if context.akyrs_card_remove and context.card_getting_removed.config.center_key ~= "j_akyrs_charred_roach" and not (context.card_getting_removed.edition and context.card_getting_removed.edition.key == "e_akyrs_burnt")
         then
             return {
                 func = function ()
