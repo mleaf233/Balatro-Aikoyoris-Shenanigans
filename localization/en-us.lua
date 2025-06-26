@@ -785,9 +785,10 @@ return {
                 name = "eat pant",
                 text = { 
                     "If played hand contains exactly {C:attention}#1#{} cards",
-                    "This joker gains {X:mult,C:white} X#2# {} Mult for every scored card",
-                    "{C:red}Destroys all played cards{}",
+                    "This joker loses {X:mult,C:white} 1/#2# {} of its current Mult.",
+                    "for every played card and {C:red}destroys all scored cards{}",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
+                    "{C:inactive}(Can underflow below {X:mult,C:white} X1 {C:inactive})",
                 }
             },
             j_akyrs_eat_pant_absurd = {
@@ -2098,6 +2099,7 @@ return {
             k_akyrs_yee = "Yee!",
             k_akyrs_pissandshittium = "https://pissandshittium.org/",
             k_akyrs_pandora_give_tag = "Re:MASTER 15",
+            k_akyrs_downgrade_ex = "Downgrade!",
             k_akyrs_woah_undertale = "Woah..",
             k_akyrs_story_of_undertale = "Story of Undertale..",
 

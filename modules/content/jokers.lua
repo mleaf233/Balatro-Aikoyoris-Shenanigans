@@ -559,10 +559,10 @@ SMODS.Joker {
     end,
     config = {
         extra = {
-            extra = 0.4,
+            extra = 16,
             extra_absurd = 2,
             card_target = 4,
-            Xmult = 1,
+            Xmult = 4,
             Xmult_absurd = 1,
         }
     },
@@ -589,15 +589,15 @@ SMODS.Joker {
                 end
             end
         else
-            if context.individual and context.cardarea == G.play and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
-                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.extra
+            if context.individual and (context.cardarea == G.play or context.cardarea == 'unscored') and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
+                card.ability.extra.Xmult = card.ability.extra.Xmult * (1-(1)/card.ability.extra.extra)
                 return {
-                    message = localize('k_upgrade_ex'),
+                    message = localize('k_akyrs_downgrade_ex'),
                     colour = G.C.MULT,
                     card = card
                 }
             end
-            if context.destroy_card and (context.cardarea == G.play or context.cardarea == 'unscored') and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
+            if context.destroy_card and (context.cardarea == G.play) and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
                 if #context.full_hand == math.floor(card.ability.extra.card_target) then
                     return { remove = true }
                 end
