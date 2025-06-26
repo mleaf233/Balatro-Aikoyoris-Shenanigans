@@ -562,7 +562,7 @@ SMODS.Joker {
             extra = 16,
             extra_absurd = 2,
             card_target = 4,
-            Xmult = 4,
+            Xmult = 2,
             Xmult_absurd = 1,
         }
     },
