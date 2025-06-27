@@ -566,7 +566,7 @@ return {
                 },
             },
             dd_akyrs_kessoku_band  = {
-                name="結束バンド (Kessoku Band)",
+                name="{f:5}結束バンド {}(Kessoku Band)",
                 text={
                     "This Joker looks like it",
                     "wants to {C:akyrs_bocchi}R{C:akyrs_kita}o{C:akyrs_nijika}c{C:akyrs_ryou}k{}!",
