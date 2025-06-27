@@ -1978,7 +1978,7 @@ SMODS.Joker {
         if Cryptid then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_aikoyori_cryptid_ability"}
         end
-        if SMODS.Mods.MoreFluff then
+        if MoreFluff then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_aikoyori_more_fluff_ability"}
         end
         if Entropy then
@@ -1993,22 +1993,22 @@ SMODS.Joker {
         if PTASaka then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_aikoyori_pta_ability"}
         end
-        if SMODS.Mods.cryptposting then
+        if Cryptposting then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_cryptposting_ability"}
         end
-        if SMODS.Mods.Prism then
+        if AKYRS.is_mod_loaded("Prism") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_prism_ability"}
         end
         if garb_enabled then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_garbshit_ability"}
         end
-        if SMODS.Mods.finity then
+        if AKYRS.is_mod_loaded("finity") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_finity_ability"}
         end
         if Bakery_API then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_bakery_ability"}
         end
-        if SMODS.Mods.Astronomica then
+        if AKYRS.is_mod_loaded("Astronomica") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_astronomica_ability"}
         end
         return {
@@ -2059,13 +2059,13 @@ SMODS.Joker {
                     SMODS.add_card({set = "Bakery", area = G.consumeables, edition = "e_negative"})
                 end
             end
-            if SMODS.Mods.Prism then
+            if AKYRS.is_mod_loaded("Prism") then
                 if not next(context.poker_hands["Flush"]) then
                     SMODS.add_card({set = "Myth", area = G.consumeables, edition = "e_negative"})
                 end
             end
         end 
-        if SMODS.Mods.Astronomica then
+        if AKYRS.is_mod_loaded("Astronomica") then
             if context.after then
                 local cards_below_hand = math.max(G.hand.config.card_limit - #G.play.cards ,1)
                 if cards_below_hand > 1 then
@@ -2079,7 +2079,7 @@ SMODS.Joker {
                 end
             end
         end
-        if SMODS.Mods.finity and context.blind_defeated and G.GAME.blind and G.GAME.blind.boss and G.GAME.blind.config.blind.boss.showdown then
+        if AKYRS.is_mod_loaded("finity") and context.blind_defeated and G.GAME.blind and G.GAME.blind.boss and G.GAME.blind.config.blind.boss.showdown then
             SMODS.add_card({set = "Spectral", area = G.consumeables, edition = "e_negative", key = "c_finity_finity"})
         end
         if garb_enabled and context.selling_card and context.card.ability.set == "Joker" then
@@ -2142,7 +2142,7 @@ SMODS.Joker{
         end
 
         info_queue[#info_queue+1] = G.P_CENTERS['c_star']
-        if SMODS.Mods.MoreFluff then
+        if MoreFluff then
             info_queue[#info_queue+1] = G.P_CENTERS['c_mf_rot_star']
         end
         return {

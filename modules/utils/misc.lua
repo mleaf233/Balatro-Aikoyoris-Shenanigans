@@ -825,3 +825,7 @@ AKYRS.get_most_played = function()
     end
     return _planet, _hand, _tally
 end
+
+AKYRS.is_mod_loaded = function(var) 
+    return (SMODS.Mods[var] and not SMODS.Mods[var].disabled) and true or false
+end
