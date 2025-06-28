@@ -435,3 +435,38 @@ pattern = '''      one_press = args.one_press,'''
 position = 'before'
 payload = '''  akyrs_osk = args.akyrs_osk,'''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/misc_functions.lua'''
+pattern = '''  local _c, _c_name, _c_val, _c_gather = nil, nil, nil, nil'''
+position = 'before'
+payload = '''local is_escaping = false'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/misc_functions.lua'''
+pattern = '''      if char == '{' then --Start of a control section, extract all controls'''
+position = 'before'
+payload = '''
+if char == '\\' then
+    is_escaping = true
+    goto akyrs_loc_escape_continue
+end
+if not is_escaping then
+'''
+match_indent = true
+[[patches]]
+[patches.pattern]
+target = '''functions/misc_functions.lua'''
+pattern = '''      if i == #line then'''
+position = 'before'
+payload = '''
+else
+    str_parts[str_it] = (str_parts[str_it] or '')..(char)
+    is_escaping = false
+end
+::akyrs_loc_escape_continue::
+'''
+match_indent = true

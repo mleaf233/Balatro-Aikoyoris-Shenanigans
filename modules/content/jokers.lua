@@ -541,6 +541,14 @@ SMODS.Joker {
         y = 0
     },
     pools = { ["Meme"] = true },
+    key = "eat_pant",-- eat pant
+SMODS.Joker {
+    atlas = 'AikoyoriJokers',
+    pos = {
+        x = 8,
+        y = 0
+    },
+    pools = { ["Meme"] = true },
     key = "eat_pant",
     rarity = 3,
     cost = 6,
@@ -560,10 +568,10 @@ SMODS.Joker {
     end,
     config = {
         extra = {
-            extra = 0.4,
+            extra = 16,
             extra_absurd = 2,
             card_target = 4,
-            Xmult = 1,
+            Xmult = 2,
             Xmult_absurd = 1,
         }
     },
@@ -590,15 +598,81 @@ SMODS.Joker {
                 end
             end
         else
-            if context.individual and context.cardarea == G.play and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
-                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.extra
+            if context.individual and (context.cardarea == G.play or context.cardarea == 'unscored') and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
+                card.ability.extra.Xmult = card.ability.extra.Xmult * (1-(1)/card.ability.extra.extra)
                 return {
-                    message = localize('k_upgrade_ex'),
+                    message = localize('k_akyrs_downgrade_ex'),
                     colour = G.C.MULT,
                     card = card
                 }
             end
+            if context.destroy_card and (context.cardarea == G.play) and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
+                if #context.full_hand == math.floor(card.ability.extra.card_target) then
+                    return { remove = true }
+                end
+            end
+        end
+    end,
+	demicoloncompat = true,
+    blueprint_compat = true,
+}
+    rarity = 3,
+    cost = 6,
+    loc_vars = function(self, info_queue, card)
+        return {
+            key = AKYRS.bal_val(self.key, self.key.."_absurd"), 
+            vars = AKYRS.bal_val({ 
+                math.floor(card.ability.extra.card_target),
+                card.ability.extra.extra,
+                card.ability.extra.Xmult,
+             }, { 
+                "heheheha",
+                card.ability.extra.extra_absurd,
+                card.ability.extra.Xmult_absurd,
+             })
+        }
+    end,
+    config = {
+        extra = {
+            extra = 16,
+            extra_absurd = 2,
+            card_target = 4,
+            Xmult = 2,
+            Xmult_absurd = 1,
+        }
+    },
+    calculate = function(self, card, context)
+        if context.joker_main then	
+            return {
+                xmult = AKYRS.bal_val(card.ability.extra.Xmult,card.ability.extra.Xmult_absurd)
+            }
+        end
+        if AKYRS.bal("absurd") then
+            if context.individual and context.cardarea == G.play and next(context.poker_hands["Two Pair"]) or context.forcetrigger then
+                return {
+                    message = localize('k_upgrade_ex'),
+                    colour = G.C.MULT,
+                    card = card,
+                    func = function ()
+                        card.ability.extra.Xmult_absurd = card.ability.extra.Xmult_absurd + card.ability.extra.extra_absurd
+                    end
+                }
+            end
             if context.destroy_card and (context.cardarea == G.play or context.cardarea == 'unscored') and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
+                if next(context.poker_hands["Two Pair"]) then
+                    return { remove = true }
+                end
+            end
+        else
+            if context.individual and (context.cardarea == G.play or context.cardarea == 'unscored') and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
+                card.ability.extra.Xmult = card.ability.extra.Xmult * (1-(1)/card.ability.extra.extra)
+                return {
+                    message = localize('k_akyrs_downgrade_ex'),
+                    colour = G.C.MULT,
+                    card = card
+                }
+            end
+            if context.destroy_card and (context.cardarea == G.play) and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
                 if #context.full_hand == math.floor(card.ability.extra.card_target) then
                     return { remove = true }
                 end
@@ -1684,7 +1758,7 @@ SMODS.Joker{
         
     end,
     calculate = function (self, card, context)
-        if context.akyrs_card_remove and context.card_getting_removed ~= card and not (context.card_getting_removed.edition and context.card_getting_removed.edition.key == "e_akyrs_burnt")
+        if context.akyrs_card_remove and context.card_getting_removed.config.center_key ~= "j_akyrs_charred_roach" and not (context.card_getting_removed.edition and context.card_getting_removed.edition.key == "e_akyrs_burnt")
         then
             return {
                 func = function ()
@@ -1821,9 +1895,11 @@ SMODS.Joker{
             end
         end
         if context.joker_main then
-            return {
-                xmult = AKYRS.bal_val(card.ability.extras.xmult,card.ability.extras.emult)
-            }
+            return AKYRS.bal_val({
+                xmult = card.ability.extras.xmult
+            },{
+                emult = card.ability.extras.emult
+            })
         end
 
         if context.akyrs_card_remove 
