@@ -395,7 +395,8 @@ end
 
 local cardDissolveHook = Card.start_dissolve
 function Card:start_dissolve(dissolve_colours, silent, dissolve_time_fac, no_juice)
-    if (not (AKYRS.non_removing_area(self.area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) then
+
+    if (not (not AKYRS.non_removing_area(self.area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) then
         cardDissolveHook(self,dissolve_colours, silent, dissolve_time_fac, no_juice)
     end
 end
