@@ -687,8 +687,11 @@ end
 
 AKYRS.pos_to_val = function(ind,targ)
     if not ind or not targ then return end
-    local calc_ind = ind - (targ+1) / 2 
-    return Talisman and (to_big(1.1):pow(calc_ind)) or 1.1 ^ calc_ind
+    local calc_ind = ind - (targ+1) / 2
+    local v, v2 = pcall(function ()
+        return Talisman and (to_big(1.1):pow(calc_ind)) or 1.1 ^ calc_ind
+    end)
+    return v and v2 or 1
 end
 
 function AKYRS.balala(joker, poker)
