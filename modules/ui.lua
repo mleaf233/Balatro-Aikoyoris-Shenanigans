@@ -764,8 +764,11 @@ AKYRS.balance_intro_end = function (set)
     G.akyrs_aiko_y = 20
     AKYRS.simple_event_add(
       function ()
-        G.AKYRS_AIKOYORI:remove()
-        G.AKYRS_AIKOYORI = nil
+        
+      if G.AKYRS_AIKOYORI then
+            G.AKYRS_AIKOYORI:remove()
+            G.AKYRS_AIKOYORI = nil
+      end
         return true
       end, 1
     )
@@ -975,6 +978,7 @@ AKYRS.start_onboarding = function (forced)
                 local scale = 60
                 G.AKYRS_AIKOYORI = G.AKYRS_AIKOYORI or Sprite(16,12,scale*atl.px/1000,scale*atl.py/1000, atl,{ x = 0, y = 0 })
                 G.AKYRS_AIKOYORI.T.y = 3
+                G.akyrs_aiko_y = 0 
             end
             return true
         end, 0,"akyrs_desc"
