@@ -1221,7 +1221,7 @@ return {
                 name = "{f:5}躯樹の墓守",
                 text = { 
                     "{f:5}このジョーカーは、{f:5,C:tarot}星{f:5}を使用するたびに",
-                    "{f:5}倍率 {X:mult,C:white,f:5} X#1# {f:5} を得る",
+                    "{f:5}倍率 {X:mult,C:white} X#1# {f:5} を得る",
                     "{C:inactive}({C:inactive,f:5}現在 倍率 {X:mult,C:white} X#2# {C:inactive})",
                 }
             },

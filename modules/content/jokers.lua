@@ -1928,8 +1928,8 @@ SMODS.Joker {
                 end})
             end
         else
-            if context.individual and context.cardarea == G.play and G.GAME.akyrs_character_stickers_enabled then
-                if AKYRS.tetoris_piece[string.lower(context.other_card:get_letter_with_pretend())] or context.other_card:get_id() == 10 or context.other_card:get_id() == 11 or context.other_card:is_suit("Spades") then
+            if context.individual and context.cardarea == G.play then
+                if (AKYRS.tetoris_piece[string.lower(context.other_card:get_letter_with_pretend())] and G.GAME.akyrs_character_stickers_enabled) or context.other_card:get_id() == 10 or context.other_card:get_id() == 11 or context.other_card:is_suit("Spades") then
                     return {
                         chips = card.ability.extras.chips,
                     }
@@ -1938,6 +1938,7 @@ SMODS.Joker {
             if context.joker_main then
                 local c = AKYRS.get_letter_freq_from_cards(G.play.cards)
                 local r = AKYRS.get_ranks_freq_from_cards(G.play.cards)
+                local r = AKYRS.get_suit_freq_from_cards(G.play.cards)
                 if (c["l"] or c["s"] or c["o"] or c["z"] or c["j"] or c["i"] or c["t"] or r[11] or r[10]) and G.GAME.akyrs_character_stickers_enabled then
                     return {
                         xchips = card.ability.extras.xchips,
@@ -2472,7 +2473,7 @@ SMODS.Joker{
         end
         return {
             vars = {
-                card.ability.extras.emult
+                card.ability.extras.xmult
             }
         }
     end,

@@ -22,6 +22,7 @@ SMODS.Challenge{
             id = "j_akyrs_hibana",
             edition = "negative",
             pinned = true,
+            eternal = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
                 immutable = {
@@ -35,6 +36,7 @@ SMODS.Challenge{
             id = "j_akyrs_hibana",
             edition = "negative",
             pinned = true,
+            eternal = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
                 immutable = {
@@ -47,6 +49,7 @@ SMODS.Challenge{
             id = "j_akyrs_hibana",
             edition = "negative",
             pinned = true,
+            eternal = true,
             akyrs_sell_cost = 0,
             akyrs_card_ability = {
                 immutable = {

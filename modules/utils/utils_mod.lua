@@ -299,6 +299,22 @@ AKYRS.get_ranks_freq_from_cards = function(listofcards)
     return wordArray
 end
 
+AKYRS.get_suits_freq_from_cards = function(listofcards)
+    
+    local wordArray = {}
+    for i,v in ipairs(listofcards) do
+        if not SMODS.has_no_suit(v) then
+            for j,st in pairs(SMODS.Suits) do
+                if v:is_suit(j) then
+                    wordArray[j] = wordArray[j] and wordArray[j] + 1 or 1
+                end
+            end
+
+        end
+    end
+    return wordArray
+end
+
 function AKYRS.is_valid_enhancement(name)
     for _, v in pairs(G.P_CENTER_POOLS.Enhanced) do
         local first_part = string.split(v.name," ")[1]
