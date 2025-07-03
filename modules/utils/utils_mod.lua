@@ -3,7 +3,7 @@
 AKYRS.game_areas = function(area)
     return area == G.play or area == G.hand or area == G.deck or area == G.discard or area == G.jokers or area == G.consumeables or nil
 end
-AKYRS.non_removing_area = function(area)
+AKYRS.sigmaable_areas = function(area)
     return area == G.hand or area == G.deck or area == G.discard or area == G.jokers or area == G.consumeables or nil
 end
 AKYRS.non_removing_play_state = function()

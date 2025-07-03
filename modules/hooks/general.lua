@@ -354,7 +354,7 @@ end
 local cardSellHook = Card.sell_card
 
 function Card:sell_card()
-    if (not (AKYRS.non_removing_area(self.area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) then
+    if (not (AKYRS.sigmaable_areas(self.area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) then
         self.akyrs_is_being_sold = true
         return cardSellHook(self)
     else
@@ -367,7 +367,7 @@ local cardRemoveHook = Card.remove
 function Card:remove()
     local area = self.area or self.akyrs_lastcardarea
 
-    if (not (AKYRS.non_removing_area(area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) or area.being_removed then
+    if (not (AKYRS.sigmaable_areas(area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) or area.being_removed then
         --print("CARD CAN BE REMOVED SAFELY")
         if not G.AKYRS_RUN_BEING_DELETED and not self.akyrs_is_being_sold and not (area and (area.config.collection or area.config.temporary or area.config.view_deck)) and area and AKYRS.game_areas(area) then
             if not area.being_removed then
@@ -396,7 +396,7 @@ end
 local cardDissolveHook = Card.start_dissolve
 function Card:start_dissolve(dissolve_colours, silent, dissolve_time_fac, no_juice)
 
-    if (not (not AKYRS.non_removing_area(self.area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) then
+    if (AKYRS.is_card_not_sigma(self)) or not (AKYRS.sigmaable_areas(self.area) and self.ability.akyrs_sigma) then
         cardDissolveHook(self,dissolve_colours, silent, dissolve_time_fac, no_juice)
     end
 end
