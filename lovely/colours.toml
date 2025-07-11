@@ -6,10 +6,32 @@ priority = 0
 
 [[patches]]
 [patches.pattern]
+target = "globals.lua"
+pattern = """        RENTAL = HEX('b18f43'),"""
+position = "after"
+payload = """AKYRS_PLAYABLE = HEX("ee36ff"),
+AKYRS_PISSANDSHITTIUM = HEX("68211d"),
+AKYRS_BOCCHI = HEX("ff61d2"),
+AKYRS_KITA = HEX("ff294d"),
+AKYRS_NIJIKA = HEX("e38e20"),
+AKYRS_RYOU = HEX("3653f7"),"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
 target = "functions/misc_functions.lua"
 pattern = """  return G.ARGS.LOC_COLOURS[_c] or _default or G.C.UI.TEXT_DARK"""
 position = "before"
-payload = """if AKYRS then AKYRS.add_formatting_colours(G.ARGS.LOC_COLOURS) end"""
+payload = """G.ARGS.LOC_COLOURS.akyrs_playable = G.C.AKYRS_PLAYABLE
+G.ARGS.LOC_COLOURS.akyrs_pissandshittium = G.C.AKYRS_PISSANDSHITTIUM
+G.ARGS.LOC_COLOURS.akyrs_bocchi = G.C.AKYRS_BOCCHI
+G.ARGS.LOC_COLOURS.akyrs_kita = G.C.AKYRS_KITA
+G.ARGS.LOC_COLOURS.akyrs_nijika = G.C.AKYRS_NIJIKA
+G.ARGS.LOC_COLOURS.akyrs_ryou = G.C.AKYRS_RYOU
+"""
 overwrite = true
 match_indent = true
 
