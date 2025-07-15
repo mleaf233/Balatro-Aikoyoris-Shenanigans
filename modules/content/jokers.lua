@@ -1748,7 +1748,7 @@ SMODS.Joker{
                 }
             }
         end
-        local n, d = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'akyrs_ash_joker_adequate')
+        local n, d = SMODS.get_probability_vars(card, 1, card.ability.extras.odds, 'akyrs_ash_joker_adequate')
         return {
             vars = {
                 card.ability.extras.chips,
@@ -2634,7 +2634,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             key = self.key .. AKYRS.bal_val("","_absurd"),
             vars = {

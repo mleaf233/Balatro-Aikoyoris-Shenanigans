@@ -160,7 +160,6 @@ SMODS.Enhancement{
     end,
     never_scores = true,
     replace_base_card = false,
-    overrides_base_rank = true
 }
 
 
@@ -274,6 +273,50 @@ SMODS.Enhancement{
                     end
                 }
             end
+        end
+    end
+}
+
+
+SMODS.Enhancement{
+    key = "item_box",
+    atlas = 'cardUpgrades',
+    pos = {x = 4, y = 0},
+    no_rank = true,
+    no_suit = true,
+    always_scores = true,
+    replace_base_card = true,
+    config = {
+        extras = {
+        }
+    },
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            return {
+                message = localize("k_akyrs_item_box_trigger"),
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function ()
+                            --[[
+                            -- this is just me being stupid
+                            if #G.consumeables.cards < G.consumeables.config.card_limit then
+                                card.ability.akyrs_triggered = true
+                                local k, lim = nil, 0
+                                repeat
+                                    lim = lim + 1
+                                    k = pseudorandom_element(G.P_CENTER_POOLS.Consumeables,pseudoseed("akyrs_item_box_consumable_pick"))
+                                until (not k.hidden and (not k.in_pool or k:in_pool({})) and not G.GAME.banned_keys[k.key]) or lim >= #G.P_CENTER_POOLS.Consumeables
+                                if not lim >= #G.P_CENTER_POOLS.Consumeables then
+                                    SMODS.add_card{key = k.key}
+                                end
+                            end
+                            ]]
+                            SMODS.add_card{set = "Consumeables", area = G.consumeables}
+                            return true
+                        end, 0
+                    )
+                end
+            }
         end
     end
 }

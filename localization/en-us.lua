@@ -669,12 +669,32 @@ return {
             m_akyrs_hatena = {
                 name="? Card",
                 text={
-                    "{C:green}#1# in #2#{} chance to gain {C:money}$#3#",
-                    "{C:green}#4# in #5#{} chance to gain {C:money}$#6#",
-                    "{C:green}#7# in #8#{} chance to give {C:mult}+#9#{} Mult",
-                    "on initial scoring and {X:mult,C:white} X#10# {} on retriggers",
-                    "No rank or suit",
-                },
+                    {
+                        "{C:green}#1# in #2#{} chance to gain {C:money}$#3#",
+                        "{C:green}#4# in #5#{} chance to gain {C:money}$#6#",
+                        "{C:green}#7# in #8#{} chance to give {C:mult}+#9#{} Mult",
+                        "on initial scoring and {X:mult,C:white} X#10# {} on retriggers",
+                    },
+                    {
+                        "No rank, no suit, always scores"
+                    }
+                }
+            },
+            m_akyrs_item_box = {
+                name="Item Box Card",
+                text={
+                    {
+                        "Create a {C:attention}random{}",
+                        "{C:tarot}consumable{} card when {C:attention}scored",
+                        "{C:inactive}(Must have room)"
+                    },
+                    {
+                        "{C:red,E:1}Self-destructs{} if successfully triggered"
+                    },
+                    {
+                        "No rank, no suit, always scores"
+                    }
+                }
             },
         },
         Joker={
@@ -1246,7 +1266,7 @@ return {
                 name = "{f:5}躯樹の墓守",
                 text = { 
                     "{f:5}このジョーカーは、{f:5,C:tarot}星{f:5}を使用するたびに",
-                    "{f:5}自分の倍率は {X:mult,C:white} 八倍 {f:5} で殖える",
+                    "{f:5}自分の倍率は {X:mult,C:white,f:5} 八倍 {f:5} で殖える",
                     "{C:inactive}({C:inactive,f:5}現在 倍率 {X:mult,C:white} X#1# {C:inactive})",
                 }
             },
@@ -2097,6 +2117,7 @@ return {
             ph_word_puzzle = "Word Puzzle",
             ph_puzzle_clear = "Puzzle Clear!",
             ph_akyrs_unknown = "???",
+            k_akyrs_item_box_trigger = "?",
 
             k_akyrs_reciprocaled = "Reciprocal'd!",
             k_akyrs_centrifuged = "Centrifuged!",

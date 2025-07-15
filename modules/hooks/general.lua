@@ -467,6 +467,15 @@ function end_round()
                         end
 
                     end
+                    if SMODS.get_enhancements(card)["m_akyrs_item_box"] and card.ability.akyrs_triggered then
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                card:start_dissolve({ G.C.DARK_EDITION }, nil, 1.6)
+                                return true
+                            end,
+                            delay = 0.5,
+                        }), 'base')
+                    end
                     if card.edition and card.edition.key == "e_akyrs_burnt" then
                         local odder = SMODS.pseudorandom_probability(card,"akyrs_ash_card",1,card.edition.extras.odds)
                         if odder then
@@ -489,6 +498,9 @@ function end_round()
                                 delay = 0.5,
                             }), 'base')
                         end
+                    end
+                    if card.ability.akyrs_triggered then
+                        card.ability.akyrs_triggered = nil
                     end
                 end
             end
