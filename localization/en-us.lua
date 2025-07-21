@@ -2201,6 +2201,12 @@ return {
                     "{C:inactive}(If possible)"
                 },
             },
+            c_akyrs_umbral_public_transport = {
+                name="Public Transport",
+                text={
+                    "",
+                },
+            },
         }
     },
     misc = {

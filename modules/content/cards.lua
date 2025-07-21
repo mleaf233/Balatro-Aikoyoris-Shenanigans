@@ -345,7 +345,22 @@ SMODS.Enhancement{
         if context.before then
         end
         if context.main_scoring and context.cardarea == G.play then
-            SMODS.calculate_effect()
+            local r = AKYRS.get_suit_freq_from_cards(G.play.cards,true)
+            local s = true
+            for k,v in pairs(r) do
+                if v > 1 then
+                    s = false
+                    break
+                end
+            end
+            if s then
+                SMODS.calculate_effect({
+                    message = localize("k_upgrade_ex"),
+                    func = function ()
+                        card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_add
+                    end
+                }, card)
+            end
             return {
                 xmult = card.ability.extras.xmult
             }
