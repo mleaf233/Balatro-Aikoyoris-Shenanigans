@@ -119,7 +119,7 @@ local getChipBonusHook = Card.get_chip_bonus
 function Card:get_chip_bonus()
     if self.is_null then self.base.nominal = 0 end
     local c = getChipBonusHook(self)
-    if (self.ability.set == 'Enhanced' and self.config.center_key == "m_akyrs_scoreless") or (not AKYRS.should_score_chips(self.config.center)) then
+    if (self.ability.set == 'Enhanced' and self.config.center_key == "m_akyrs_scoreless") or (not AKYRS.should_score_chips(self.config.center,self)) then
         c = c - self.base.nominal
     end
     return c
@@ -153,13 +153,14 @@ function copy_card(...)
     local c = {copyCardHook(...)}
     c[1].is_null = other.is_null
     c[1].akyrs_old_ability = other.ability
-    if c[1].config and c[1].config.center.set == "Enhanced" or c[1].config.center.set == "Default" then
-        
-        if c[1].config.center.key == "m_akyrs_rankless" then
-            c[1].base.nominal = 0
-        elseif SMODS.Ranks[c[1].base.value] then
-            c[1].base.nominal = SMODS.Ranks[c[1].base.value].nominal
-        end
+
+    if c[1].ability.akyrs_special_card_type == "suit" then
+        c[1].base.nominal = 0
+    elseif c[1].base and c[1].base.value and SMODS.Ranks[c[1].base.value] then
+        c[1].base.nominal = SMODS.Ranks[c[1].base.value].nominal
+    end
+    if c[1].ability.akyrs_special_card_type then
+        c[1]:set_sprites(c[1].config and c[1].config.center,c[1].config and c[1].config.card)
     end
     return unpack(c)
 end
@@ -218,7 +219,7 @@ local noRankHook = SMODS.has_no_rank
 function SMODS.has_no_rank(card)
     if card.is_null then return true end
     --if card.base.value and card.base.value == "akyrs_non_playing" then return true end
-    if card.config and card.config.center and card.config.center.key and card.config.center.key == "m_akyrs_rankless" then
+    if card.ability.akyrs_special_card_type == "suit" then
         return true
     end
     local ret = noRankHook(card)
@@ -229,6 +230,10 @@ local noSuitHook = SMODS.has_no_suit
 function SMODS.has_no_suit(card)
     if card.is_null then return true end
     --if card.base.value and card.base.value == "akyrs_non_playing" then return true end
+    
+    if card.ability.akyrs_special_card_type == "rank" then
+        return true
+    end
     local ret = noSuitHook(card)
     return ret
 end

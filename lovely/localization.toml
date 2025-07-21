@@ -12,7 +12,7 @@ pattern = """       elseif _c.name == "The World" then loc_vars = {cfg.max_highl
 position = "after"
 payload = """    
 elseif _c.set == 'AikoyoriExtraBases' then
-    if _c.is_null then
+    if card.is_null then
     
         if(G.GAME.akyrs_letters_mult_enabled) then
             localize{type = 'descriptions', key = _c.key, set = _c.set, full_UI_table.name, vars = _c.vars or loc_vars}
@@ -36,7 +36,7 @@ elseif _c.set == 'AikoyoriExtraBases' then
             localize{type = 'descriptions', key = "x".._c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}
         end
     else
-        if not _c.is_null and string.sub(_c.key, -1) then
+        if not card.is_null and string.sub(_c.key, -1) then
             local last_letter = string.lower(string.sub(_c.key, -1))
             local key = "letterNotScored"
             if(AKYRS.non_letter_symbols_reverse[last_letter]) then
@@ -55,17 +55,6 @@ elseif _c.set == 'AikoyoriExtraBases' then
     end
 elseif _c.set == 'DescriptionDummy' then
     localize{type = 'descriptions', key = _c.key, set = _c.set, nodes = desc_nodes, vars = _c.vars or loc_vars}
-"""
-overwrite = true
-match_indent = true
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = """    return generate_card_ui(self.config.center, nil, loc_vars, card_type, badges, hide_desc, main_start, main_end)"""
-position = "before"
-payload = """
-self.config.center.is_null = self.is_null
 """
 overwrite = true
 match_indent = true

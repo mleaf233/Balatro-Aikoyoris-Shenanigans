@@ -900,29 +900,14 @@ function Card:set_ability(c,i,d)
     if self and self.ability and self.ability.akyrs_sigma then return end
     -- this one is for collection
     local r = setCardAbilityHook(self,c,i,d)
-    AKYRS.simple_event_add(
-        function ()
-        if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" then
-            self:set_base(self.config.card, i)
-            if self.config.center.key == "m_akyrs_rankless" then
-                self.base.nominal = 0
-            elseif SMODS.Ranks[self.config.card.value] then
-                self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
-            end
+    
+    if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" then
+        self:set_base(self.config.card, i)
+        if self.ability.akyrs_special_card_type == "suit" then
+            self.base.nominal = 0
+        elseif SMODS.Ranks[self.config.card.value] then
+            self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
         end
-            return true
-        end, 0
-    )
-
-    if self.config.center.key == "m_akyrs_rankless" or self.config.center.key == "m_akyrs_suitless" then
-        AKYRS.simple_event_add(
-            function ()
-                if self.area and self.area.config and self.area.config.collection then
-                    self:set_base(G.P_CARDS[AKYRS.randomCard()], i)
-                end
-                return true
-            end, 0, "other"
-        )
     end
     if(i) then
         self.akyrs_old_ability = AKYRS.deep_copy(self.ability)
@@ -942,7 +927,7 @@ function Card:set_base(card, initial)
     end
     
     if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" then
-        if self.config.center.key == "m_akyrs_rankless" then
+        if self.ability.akyrs_special_card_type == "suit" then
             self.base.nominal = 0
         elseif SMODS.Ranks[self.config.card.value] then
             self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
@@ -1059,7 +1044,7 @@ function Card:get_nominal(mod)
     if self.is_null and self.ability.aikoyori_letters_stickers then
         return -10 - string.byte(self.ability.aikoyori_letters_stickers)
     end
-    if not AKYRS.should_score_chips(self.config.center) and not mod then
+    if not AKYRS.should_score_chips(self.config.center, self) and not mod then
         return -10
     end
     local ret = getNominalHook(self, mod)

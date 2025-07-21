@@ -234,10 +234,20 @@ SMODS.Consumable{
         AKYRS.juice_like_tarot(card)
         for _, c in ipairs(G.hand.highlighted) do
             if not SMODS.has_no_suit(c) then
-                SMODS.add_card{ area = G.hand, set = "Enhanced", enhancement = "m_akyrs_rankless", rank = c.base.value, suit = c.base.suit }
+                G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                local c2 = copy_card(c, nil, nil, G.playing_card)
+                c2.ability.akyrs_special_card_type = "rank"
+                table.insert(G.playing_cards,c2)
+                c2:set_sprites(c2.config.center,c2.config.card)
+                G.hand:emplace(c2)
             end
             if not SMODS.has_no_rank(c) then
-                SMODS.add_card{ area = G.hand, set = "Enhanced", enhancement = "m_akyrs_suitless", rank = c.base.value, suit = c.base.suit }
+                G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                local c2 = copy_card(c, nil, nil, G.playing_card)
+                c2.ability.akyrs_special_card_type = "suit"
+                table.insert(G.playing_cards,c2)
+                c2:set_sprites(c2.config.center,c2.config.card)
+                G.hand:emplace(c2)
             end
             c:start_dissolve({ G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y, }, 0.5   )
         end

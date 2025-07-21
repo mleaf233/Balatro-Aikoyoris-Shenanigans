@@ -63,8 +63,8 @@ target = 'functions/common_events.lua'
 pattern = "                localize{type = 'other', key = 'playing_card', set = 'Other', nodes = full_UI_table.name, vars = {localize(specific_vars.value, 'ranks'), localize(specific_vars.suit, 'suits_plural'), colours = {specific_vars.colour}}}"
 position = "before"
 payload = """
-if AKYRS.should_playing_card_loc_hooks(_c) then
-    AKYRS.playing_card_loc_hooks(_c,full_UI_table,specific_vars)
+if AKYRS.should_playing_card_loc_hooks(_c,card) then
+    AKYRS.playing_card_loc_hooks(_c,full_UI_table,specific_vars,card)
 else
 """
 overwrite = true
@@ -91,7 +91,7 @@ target = 'functions/common_events.lua'
 pattern = "            localize{type = 'other', key = 'card_chips', nodes = desc_nodes, vars = {specific_vars.nominal_chips}}"
 position = "before"
 payload = """
-if AKYRS.should_score_chips(_c) then
+if AKYRS.should_score_chips(_c, card) then
 """
 overwrite = true
 match_indent = true
@@ -105,6 +105,19 @@ pattern = "            localize{type = 'other', key = 'card_chips', nodes = desc
 position = "after"
 payload = """
 end
+"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+pattern = "    elseif _c.set == 'Enhanced' then "
+position = "before"
+payload = """
+AKYRS.mod_card_displays(_c,card,desc_nodes,specific_vars)
 """
 overwrite = true
 match_indent = true

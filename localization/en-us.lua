@@ -734,14 +734,6 @@ return {
                     "but not scored",
                 }
             },
-            m_akyrs_rankless = {
-                name = "Suit",
-                text = {"No rank"}
-            },
-            m_akyrs_suitless = {
-                name = "Rank",
-                text = {"No Suit"}
-            },
         },
         Joker={
             j_akyrs_redstone_repeater = {
@@ -1814,6 +1806,12 @@ return {
                 text={
                     "{C:light_black}#1#",
                 },
+            },
+            akyrs_no_rank = {
+                text = {"No rank"}
+            },
+            akyrs_no_suit = {
+                text = {"No Suit"}
             },
         },
         Planet={

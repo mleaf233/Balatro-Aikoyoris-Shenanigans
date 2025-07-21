@@ -39,38 +39,45 @@ AKYRS.sprite_info_override = function (_center,_front, card, orig_a, orig_p)
     --print(card.config.center_key,_front.suit,_front.value)
     _center = _center or card.config.center
     _front = _front or card.base
-    if _center.set == "Enhanced" then
-        if _front.suit and card.config and _center and _center.key == "m_akyrs_rankless" then
-            return AKYRS.suit_to_atlas(_front.suit)
-        end
-        if _front.value and card.config and _center and _center.key == "m_akyrs_suitless" then
-            return AKYRS.rank_to_atlas(_front.value)
-        end
+    if card and card.ability and card.ability.akyrs_special_card_type == "suit" then
+        return AKYRS.suit_to_atlas(_front.suit)
+    end
+    if card and card.ability and card.ability.akyrs_special_card_type == "rank" then
+        return AKYRS.rank_to_atlas(_front.value)
     end
 
     return orig_a, orig_p
 end
 
 
-AKYRS.should_playing_card_loc_hooks = function (_c)
-    if not _c then return false end
+AKYRS.should_playing_card_loc_hooks = function (_c, card)
+    if not _c or not card then return false end
     --print(_c)
-    return _c.set == "Enhanced" and (_c.key == "m_akyrs_suitless" or _c.key == "m_akyrs_rankless")
+    return not not card.ability.akyrs_special_card_type
 end
 
-AKYRS.playing_card_loc_hooks = function (_c,full_UI_table,specific_vars)
-    if _c.set == "Enhanced" and _c.key == "m_akyrs_suitless" then
+AKYRS.playing_card_loc_hooks = function (_c,full_UI_table,specific_vars,card)
+    if card and card.ability and card.ability.akyrs_special_card_type == "rank" then
         localize{type = 'other', key = 'akyrs_playing_card_rank', set = 'Other', nodes = full_UI_table.name, vars = {localize(specific_vars.value, 'ranks'), localize(specific_vars.suit, 'suits_plural'), colours = {specific_vars.colour}}}
     end
-    if _c.set == "Enhanced" and _c.key == "m_akyrs_rankless" then
+    if card and card.ability and card.ability.akyrs_special_card_type == "suit" then
         localize{type = 'other', key = 'akyrs_playing_card_suit', set = 'Other', nodes = full_UI_table.name, vars = {localize(specific_vars.value, 'ranks'), localize(specific_vars.suit, 'suits_plural'), colours = {specific_vars.colour}}}
     end
 end
 
-AKYRS.should_score_chips = function (_c)
+AKYRS.should_score_chips = function (_c, card)
     --print(_c)
-    if _c.set == "Enhanced" and _c.key == "m_akyrs_rankless" then
+    if card.ability.akyrs_special_card_type == "suit" then
         return false
     end
     return true
+end
+
+AKYRS.mod_card_displays = function(_c,card,desc_nodes,specific_vars)
+    if card and card.ability and card.ability.akyrs_special_card_type == "rank" then
+        localize{type = 'other', key = 'akyrs_no_rank', nodes = desc_nodes}
+    end
+    if card and card.ability and card.ability.akyrs_special_card_type == "suit" then
+        localize{type = 'other', key = 'akyrs_no_suit', nodes = desc_nodes}
+    end
 end
