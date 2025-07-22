@@ -868,3 +868,41 @@ function Moveable:remove()
     self.REMOVED = true
     return moveableRemoveHook(self)
 end
+
+AKYRS.mod_run_info_hands = function(object)
+    if G.GAME.akyrs_pure_unlocked then
+        table.insert(object.nodes, 1,{
+                n = G.UIT.R,
+                config = { colour = G.C.AKYRS_UMBRAL_Y, r = 0.05, padding = 0.1 },
+                nodes =     {
+            {n=G.UIT.C, config={align = "cl", padding = 0, minw = 5}, nodes={
+                {n=G.UIT.C, config={align = "cm", padding = 0.01, r = 0.1, colour = G.C.HAND_LEVELS[math.floor(to_number(math.min(7, G.GAME.akyrs_pure_hand_modifier.level)))], minw = 1.5, outline = 0.8, outline_colour = G.C.WHITE}, nodes={
+                {n=G.UIT.T, config={text = localize('k_level_prefix')..number_format(G.GAME.akyrs_pure_hand_modifier.level), scale = 0.5, colour = G.C.UI.TEXT_DARK}}
+                }},
+                {n=G.UIT.C, config={align = "cm", minw = 4.5, maxw = 4.5}, nodes={
+                {n=G.UIT.T, config={text = ' '..localize("k_akyrs_pure_hands"), scale = 0.45, colour = G.C.BLACK, shadow = true}}
+                }}
+            }},
+            {n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.BLACK,r = 0.1}, nodes={
+                {n=G.UIT.T, config={text = "×", scale = 0.45, colour = G.C.AKYRS_UMBRAL_Y}},
+                {n=G.UIT.C, config={align = "cr", padding = 0.01, r = 0.1, colour = G.C.AKYRS_UMBRAL_P, minw = 1.1}, nodes={
+                {n=G.UIT.T, config={text = number_format(G.GAME.akyrs_pure_hand_modifier.multiplier, 1000000), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}},
+                {n=G.UIT.B, config={w = 0.08, h = 0.01}}
+                }},
+                {n=G.UIT.T, config={text = "^", scale = 0.45, colour = G.C.AKYRS_UMBRAL_P}},
+                {n=G.UIT.C, config={align = "cl", padding = 0.01, r = 0.1, colour = G.C.AKYRS_UMBRAL_Y, minw = 1.1}, nodes={
+                {n=G.UIT.B, config={w = 0.08,h = 0.01}},
+                {n=G.UIT.T, config={text = number_format(G.GAME.akyrs_pure_hand_modifier.power, 1000000), scale = 0.45, colour = G.C.UI.TEXT_DARK}}
+                }}
+            }},
+            {n=G.UIT.C, config={align = "cm"}, nodes={
+                {n=G.UIT.T, config={text = '  #', scale = 0.45, colour = G.C.UI.TEXT_DARK, shadow = true}}
+                }},
+            {n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.L_BLACK,r = 0.1, minw = 0.9}, nodes={
+                {n=G.UIT.T, config={text = G.GAME.akyrs_pure_hand_modifier.played, scale = 0.45, colour = G.C.FILTER, shadow = true}},
+            }}
+            }
+        })
+    end
+    return object
+end

@@ -159,18 +159,35 @@ AKYRS.hand_display_mod = function(hand,text,disp_text,poker_hands)
         end
     end
     if are_pure and #hand > 0 then
-        G.GAME.current_round.current_hand.mult = nil
-        G.GAME.current_round.current_hand.chips = nil
-        rawset(G.GAME.hands[text], "mult", G.GAME.hands[text].mult * 1)
-        local m_d = "+"..G.GAME.hands[text].mult * (AKYRS.pure_hands_modifier - 1)..""
-        local h_d = "+"..G.GAME.hands[text].chips * (AKYRS.pure_hands_modifier - 1)..""
+        G.GAME.akyrs_pure_hand_modifier = G.GAME.akyrs_pure_hand_modifier or { multiplier = 2, power = 1, level = 1, played = 0 }
         -- what the fuck balatro why is this tostring function essential to it working????
-        local _ = tostring(G.GAME.hands[text].mult)
-        local m = rawget(G.GAME.hands[text],"mult") * AKYRS.pure_hands_modifier
-        local h = rawget(G.GAME.hands[text],"chips") * AKYRS.pure_hands_modifier
+        local _ = tostring(rawget(G.GAME.hands[text], "mult") or 1)
+        local _2 = tostring(rawget(G.GAME.hands[text], "chips") or 1)
+        local pre_mult = rawget(G.GAME.hands[text], "mult") or 1
+        local pre_chips = rawget(G.GAME.hands[text], "chips") or 1
+        --print(rawget(G.GAME.hands[text], "mult"))
+        local hm = G.GAME.akyrs_pure_hand_modifier
+        local final_mult, final_chips
+        if Talisman then
+            hm.multiplier = to_big(hm.multiplier)
+            hm.power = to_big(hm.power)
+            pre_mult = to_big(pre_mult)
+            pre_chips = to_big(pre_chips)
+            -- i fucking hate this
+            local _,_2 = tostring(pre_mult),tostring(pre_chips)
+            final_mult = pre_mult * to_big(hm.multiplier):pow(hm.power)
+            final_chips = pre_chips * to_big(hm.multiplier):pow(hm.power)
+        else
+            final_mult = pre_mult * hm.multiplier ^ hm.power
+            final_chips = pre_chips * hm.multiplier ^ hm.power
+        end
+        local m_d = "+"..tostring(final_mult-pre_mult)..""
+        local h_d = "+"..tostring(final_chips-pre_chips)..""
+        local m = final_mult
+        local h = final_chips
         local hand_name = localize{ type = "variable", key = "k_akyrs_pure", vars = {disp_text}}
         update_hand_text({immediate = true, nopulse = true, delay = 0}, {handname=hand_name, level=G.GAME.hands[text].level, mult = m_d, chips = h_d, StatusText = true})
-        update_hand_text({immediate = nil, nopulse = true, delay = 0}, {handname=hand_name, level=G.GAME.hands[text].level, mult = m, chips = h})
+        update_hand_text({immediate = nil, nopulse = true, delay = 0}, {handname=hand_name, level=G.GAME.hands[text].level .."×"..tostring(hm.level), mult = m, chips = h})
         
         return true
     end
@@ -188,9 +205,33 @@ AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
         for _,c in ipairs(hand) do
             c:set_debuff(false)
         end
+        G.GAME.akyrs_pure_unlocked = true
+        G.GAME.akyrs_pure_hand_modifier = G.GAME.akyrs_pure_hand_modifier or { multiplier = 2, power = 1, level = 1, played = 0 }
+        G.GAME.akyrs_pure_hand_modifier.played = (G.GAME.akyrs_pure_hand_modifier.played or 0) + 0.5
+        -- what the fuck balatro why is this tostring function essential to it working????
+        local _ = tostring(rawget(G.GAME.hands[text], "mult") or 1)
+        local _2 = tostring(rawget(G.GAME.hands[text], "chips") or 1)
+        local pre_mult = rawget(G.GAME.hands[text], "mult") or 1
+        local pre_chips = rawget(G.GAME.hands[text], "chips") or 1
+        --print(rawget(G.GAME.hands[text], "mult"))
+        local hm = G.GAME.akyrs_pure_hand_modifier
+        local final_mult, final_chips
+        if Talisman then
+            hm.multiplier = to_big(hm.multiplier)
+            hm.power = to_big(hm.power)
+            pre_mult = to_big(pre_mult)
+            pre_chips = to_big(pre_chips)
+            -- i fucking hate this
+            local _,_2 = tostring(pre_mult),tostring(pre_chips)
+            final_mult = pre_mult * to_big(hm.multiplier):pow(hm.power)
+            final_chips = pre_chips * to_big(hm.multiplier):pow(hm.power)
+        else
+            final_mult = pre_mult * hm.multiplier ^ hm.power
+            final_chips = pre_chips * hm.multiplier ^ hm.power
+        end
         local hand_name = localize{ type = "variable", key = "k_akyrs_pure", vars = {poker_info[2]}}
-        mult = mod_mult(b_mult * AKYRS.pure_hands_modifier)
-        hand_chips = mod_chips(b_chip * AKYRS.pure_hands_modifier)
+        mult = mod_mult(final_mult)
+        hand_chips = mod_chips(final_chips)
         update_hand_text({immediate = true, delay = 0 }, {handname=hand_name, chips = hand_chips, mult = mult})
         return true
     end

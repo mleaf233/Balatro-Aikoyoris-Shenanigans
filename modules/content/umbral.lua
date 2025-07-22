@@ -471,6 +471,39 @@ SMODS.Consumable{
     key = "umbral_intrusive_thoughts",
     atlas = "umbra",
     pos = {x=4,y=1},
+    config = {
+        extras = {
+            n = 1,
+            d = 4,
+            emoney = 2
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        local n, d = SMODS.get_probability_vars(card,card.ability.extras.n,card.ability.extras.d, "akyrs_umbral_intrusive")
+        return {
+            vars = {
+                card.ability.extras.emoney,
+                n,
+                d,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return true
+    end,
+    use = function (self, card, area, copier)
+        local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",card.ability.extras.n,card.ability.extras.d)
+        if die_question_mark then
+            if G.STAGE == G.STAGES.RUN then G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false end
+        end
+        if Talisman then
+            local d_dollar = to_big(G.GAME.dollars):pow(card.ability.extras.emoney) - to_big(G.GAME.dollars)
+            ease_dollars(d_dollar)
+        else
+            local d_dollar = G.GAME.dollars ^ card.ability.extras.emoney - G.GAME.dollars
+            ease_dollars(d_dollar)
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",

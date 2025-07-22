@@ -1903,6 +1903,14 @@ return {
                     "{C:attention} and longer hands",
                 },
             },
+            c_akyrs_planet_bishop_ring = {
+                name="Bishop Ring",
+                text={
+                    "{S:0.8}({S:0.8,C:red}lvl.#1#{S:0.8}){} Level up",
+                    "{C:attention}Pure Hands",
+                    "Multiplier: {C:mult}#2#{} + {C:attention}#3#",
+                },
+            }
         },
         Spectral={},
         Stake={},
@@ -2264,6 +2272,14 @@ return {
                     "{C:attention}Canopy Cards{}",
                 },
             },
+            c_akyrs_umbral_intrusive_thoughts = {
+                name="Intrusive Thoughts",
+                text=
+                {
+                    "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}#2# in #3# chance{} to",
+                    "{E:1,C:red}Lose the run immediately{}",
+                },
+            },
         }
     },
     misc = {
@@ -2421,6 +2437,9 @@ return {
                 'Always Manual',
                 'Auto Set', 
             },
+            
+            k_akyrs_pure_hands = "Pure Hands",
+
             k_akyrs_wildcard_behaviours_description={
                 {'Automatically find a letter for wildcards','which do not have letters set. (Default).'},
                 {'The play button will be disabled','if you selected an unset wild card.',} ,

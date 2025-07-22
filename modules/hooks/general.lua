@@ -21,6 +21,8 @@ function Game:init_game_object()
     ret.aiko_current_word_table = {}
     ret.aiko_words_played = {}
     ret.letters_to_give = {}
+    ret.akyrs_pure_hand_modifier = { multiplier = 2, power = 1, level = 1, played = 0 }
+    ret.akyrs_pure_unlocked = false
     ret.akyrs_generated_but_not_redeemed_vouchers_check = {}
     ret.akyrs_list_of_generated_but_not_redeemed_vouchers = {}
     ret.aiko_letters_consumable_rate = 0
