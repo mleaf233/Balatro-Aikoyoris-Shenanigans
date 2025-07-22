@@ -2254,7 +2254,7 @@ return {
                     "selected card to",
                     "{C:attention}Brick Card{}",
                 },
-            },,
+            },
             c_akyrs_umbral_overgrowth = {
                 name="Overgrowth",
                 text=
