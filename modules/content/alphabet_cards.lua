@@ -73,7 +73,8 @@ for k, v in ipairs(aiko_alphabets_no_wilds) do
             for i=1, #G.hand.highlighted do
                 local percent = math.abs(0.85 + (i-0.999)/(#G.hand.highlighted-0.998)*0.3)
                 G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
-                    G.hand.highlighted[i].ability.aikoyori_letters_stickers = card.ability.extra.letter G.hand.highlighted[i]:flip();play_sound('tarot2', percent, 0.6);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
+                    G.hand.highlighted[i]:set_letters(card.ability.extra.letter)
+                    G.hand.highlighted[i]:flip();play_sound('tarot2', percent, 0.6);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
             end
         end,
         in_pool = function(self, args)
@@ -121,7 +122,7 @@ SMODS.Consumable{
         for i=1, #G.hand.highlighted do
             local percent = math.abs(0.85 + (i-0.999)/(#G.hand.highlighted-0.998)*0.3)
             G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
-                G.hand.highlighted[i].ability.aikoyori_letters_stickers = card.ability.extra.letter
+                G.hand.highlighted[i]:set_letters(card.ability.extra.letter)
                 G.hand.highlighted[i]:flip();play_sound('tarot2', percent, 0.6);G.hand.highlighted[i]:juice_up(0.3, 0.3);return true end }))
         end
     end,

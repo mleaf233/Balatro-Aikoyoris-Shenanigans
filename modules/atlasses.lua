@@ -179,12 +179,6 @@ SMODS.Atlas {
     py = 95
 }
 SMODS.Atlas {
-    key = "umbra_2",
-    path = "aikoUmbraTarotAlt.png",
-    px = 71,
-    py = 95
-}
-SMODS.Atlas {
     key = "umbra_undisc",
     path = "undiscoveredUmbra.png",
     px = 71,

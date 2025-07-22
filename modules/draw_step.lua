@@ -26,7 +26,7 @@ function AKYRS.aikoyori_draw_extras(card, layer)
         draw_status("incorrect")
     end
     local tint = false
-    if letter_key == "#" and card.ability.aikoyori_pretend_letter and stickers[card.ability.aikoyori_pretend_letter] then
+    if letter_key == "#" and card.ability.aikoyori_pretend_letter then
         tint = true
     end
 

@@ -20,25 +20,28 @@ function Card:set_letters_random()
         if G.GAME.akyrs_mathematics_enabled then 
             self.is_null = true
         end
-        self.ability.aikoyori_letters_stickers = l
+        self:set_letters(l)
     else
-        self.ability.aikoyori_letters_stickers = pseudorandom_element(AKYRS.scrabble_letters, pseudoseed('aiko:letters'))
+        self:set_letters(pseudorandom_element(AKYRS.scrabble_letters, pseudoseed('aiko:letters')))
     end
 end
 
 function Card:set_letters(letter)
+    if not self.ability then return end
     self.ability.aikoyori_letters_stickers = letter
     self:set_sprites(self.config.center,self.config.card)
 end
 
 function Card:set_pretend_letters(letter)
-    if self.ability.aikoyori_letters_stickers == "#" then
+    if self.ability and self.ability.aikoyori_letters_stickers == "#" then
         self.ability.aikoyori_pretend_letter = letter
+        self:set_sprites(self.config.center,self.config.card)
     end
 end
 
 function Card:remove_letters()
     self.ability.aikoyori_letters_stickers = nil
+    self:set_sprites(self.config.center,self.config.card)
 end
 
 -- parse hand on cards rearrangement
@@ -223,9 +226,7 @@ function SMODS.has_no_rank(card)
     if card.is_null then return true end
     --if card.base.value and card.base.value == "akyrs_non_playing" then return true end
     if card.ability.akyrs_special_card_type == "suit" then
-        if not SMODS.has_any_suit(card) then -- lol
-            return true
-        end
+        return true
     end
     local ret = noRankHook(card)
     return ret
@@ -236,7 +237,7 @@ function SMODS.has_no_suit(card)
     if card.is_null then return true end
     --if card.base.value and card.base.value == "akyrs_non_playing" then return true end
     
-    if card.ability.akyrs_special_card_type == "rank" then
+    if card.ability.akyrs_special_card_type == "rank" and not SMODS.has_any_suit(card) then
         return true
     end
     local ret = noSuitHook(card)

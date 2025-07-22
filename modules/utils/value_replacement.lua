@@ -1,11 +1,12 @@
 
+AKYRS.pure_hands_modifier = 2
 
 AKYRS.change_letter_to = function(card,letter,respect_wild)
     if not card or not letter then return false end
     if respect_wild and card.ability.aikoyori_letters_stickers == "#" then
         card.ability.aikoyori_pretend_letter = letter
     else
-        card.ability.aikoyori_letters_stickers = letter
+        card:set_letters(letter)
     end
     
 end

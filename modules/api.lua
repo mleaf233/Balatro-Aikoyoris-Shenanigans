@@ -184,9 +184,12 @@ function AKYRS.maxwell_generate_card(cardtype, context)
             --print(cardtype)
             --print(name)
             pcall(function()
-                local carder = create_card(name, area, nil, nil, nil, nil, nil, 'akyrs:maxwell')
-                if carder then
-                    area:emplace(carder)
+                if area and AKYRS.has_room(area) then
+                    
+                    local carder = create_card(name, area, nil, nil, nil, nil, nil, 'akyrs:maxwell')
+                    if carder then
+                        area:emplace(carder)
+                    end
                 end
             end)
         end 

@@ -14,7 +14,7 @@ AKYRS.DescriptionDummy{
         for index, value in ipairs(cards) do
             value.ability.forced_letter_render = true
             value.is_null = true
-            value.ability.aikoyori_letters_stickers = letters[index]
+            value:set_letters(letters[index])
         end
         SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
         if desc_nodes ~= full_UI_table.main then

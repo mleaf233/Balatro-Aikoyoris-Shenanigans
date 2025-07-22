@@ -2150,9 +2150,9 @@ return {
                 name="Graduate",
 				text = {
                     "Creates the last",
-                    "{C:akyrs_umbral_p,X:akyrs_umbral_y}Umbral{} card",
+                    "{C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} card",
                     "used during this run",
-                    "{s:0.8,C:akyrs_umbral_p,X:akyrs_umbral_y}Graduate{s:0.8} excluded",
+                    "{s:0.8,C:akyrs_umbral_p,X:akyrs_umbral_y} Graduate {s:0.8} excluded",
 				},
             },
             c_akyrs_umbral_realist = {
@@ -2216,6 +2216,54 @@ return {
                     "or {C:red}destroy {C:attention}half{} of the cards in your hand"
                 },
             },
+            c_akyrs_umbral_fomo = {
+                name="Fear of Missing Out",
+                text={
+                    "Randomly redeem #1# {C:attention}previously unredeemed",
+                    "{C:attention} Voucher {}that has {C:attention}ever appeared{}",
+                    "in the shop for {C:money}$#2#{}"
+                },
+            },
+            c_akyrs_umbral_misfortune = {
+                name="Misfortune",
+                text={
+                    {
+                        "Enhances {C:attention}#1#",
+                        "selected card to",
+                        "{C:attention}? Cards{}",
+                    },
+                    {
+                        "Enhance it to {C:attention}Item Box Cards{} instead",
+                        "If the Card is already {C:attention}? Card{}",
+                    },
+                }
+            },
+            c_akyrs_umbral_book_smart = {
+                name="Book Smart",
+                text={
+                    "Create up to {C:attention}#1#{} random",
+                    "{C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} Cards",
+                    "{C:inactive}(Must have room){}"
+                },
+            },
+            c_akyrs_umbral_prisoner = {
+                name="Prisoner",
+                text=
+                {
+                    "Enhances {C:attention}#1#",
+                    "selected card to",
+                    "{C:attention}Brick Card{}",
+                },
+            },,
+            c_akyrs_umbral_overgrowth = {
+                name="Overgrowth",
+                text=
+                {
+                    "Enhances {C:attention}#1#",
+                    "selected card to",
+                    "{C:attention}Canopy Cards{}",
+                },
+            },
         }
     },
     misc = {
@@ -2263,6 +2311,7 @@ return {
             ph_puzzle_clear = "Puzzle Clear!",
             ph_akyrs_unknown = "???",
             k_akyrs_item_box_trigger = "?",
+
 
             k_akyrs_reciprocaled = "Reciprocal'd!",
             k_akyrs_centrifuged = "Centrifuged!",
@@ -2500,6 +2549,7 @@ return {
         },
         tutorial={},
         v_dictionary={
+            k_akyrs_pure="Pure #1#",
         },
         v_text={
             ch_c_sliced_space={

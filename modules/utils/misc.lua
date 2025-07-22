@@ -829,7 +829,7 @@ function AKYRS.juice_like_tarot(card)
     card:juice_up(0.3, 0.5)
 end
 function AKYRS.do_things_to_card(cards, func, config) -- func(card)
-    config = config or {}
+    config = config or {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true}
     for i, card in ipairs(cards) do
         AKYRS.simple_event_add(
             function ()
@@ -946,4 +946,22 @@ function AKYRS.deselect_from_area(card)
     if card.area then
         card.area:remove_from_highlighted(card)
     end
+end
+
+function AKYRS.can_afford(money)
+    if Talisman then
+        
+        return to_big(money) < to_big(G.GAME.dollars) - to_big(G.GAME.bankrupt_at)
+    end
+    return money < G.GAME.dollars - G.GAME.bankrupt_at
+end
+
+
+function AKYRS.do_nothing(...)
+    return ...
+end
+
+function AKYRS.has_room(cardarea)
+    if not cardarea.cards then return true end
+    return #cardarea.cards < cardarea.config.card_limit
 end

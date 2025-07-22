@@ -115,3 +115,26 @@ position = "at"
 payload = """        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)"""
 overwrite = true
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = """                update_hand_text({immediate = true, nopulse = nil, delay = 0}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})"""
+position = "before"
+payload = """
+if AKYRS.hand_display_mod(self.highlighted,text,disp_text,poker_hands) then
+else
+"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = """                update_hand_text({immediate = true, nopulse = nil, delay = 0}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})"""
+position = "after"
+payload = """
+end
+"""
+overwrite = true
+match_indent = true

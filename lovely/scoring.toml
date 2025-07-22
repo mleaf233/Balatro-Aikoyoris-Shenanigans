@@ -116,3 +116,13 @@ payload = """end"""
 overwrite = true
 match_indent = true
 
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """        hand_chips = mod_chips(G.GAME.hands[text].chips)"""
+position = "after"
+payload = """AKYRS.base_cm_mod(G.play.cards, {text,disp_text,poker_hands,scoring_hand,non_loc_disp_text}, hand_chips, mult)"""
+overwrite = true
+match_indent = true
+

@@ -1819,7 +1819,7 @@ SMODS.Joker{
     calculate = function (self, card, context)
         if AKYRS.bal("absurd") then
             if context.setting_blind then
-                if #G.jokers.cards < G.jokers.config.card_limit then
+                if AKYRS.has_room(G.jokers) then
                     SMODS.add_card{key = "j_popcorn"}
                 end
             end
@@ -2546,7 +2546,7 @@ SMODS.Joker{
             end
         else
             if context.joker_main then
-                if #context.full_hand == 1 and #G.consumeables.cards < G.consumeables.config.card_limit then
+                if #context.full_hand == 1 and AKYRS.has_room(G.consumeables) then
                     SMODS.add_card{ key = "c_justice", set = "Tarot" } 
                 end
             end
@@ -3138,7 +3138,7 @@ SMODS.Joker{
                 func = function ()
                     local sts, stschk = AKYRS.get_suits(G.play.cards)
                     if (next(context.poker_hands["Flush"]) and stschk["Hearts"]) or context.forcetrigger then
-                        if (#G.consumeables.cards + 1 <= G.consumeables.config.card_limit) then
+                        if AKYRS.has_room(G.consumeables) then
                             SMODS.add_card({key = "c_lovers", set = "Tarot"})
                         end
                     end

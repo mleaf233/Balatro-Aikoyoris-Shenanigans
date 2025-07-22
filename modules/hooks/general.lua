@@ -21,6 +21,8 @@ function Game:init_game_object()
     ret.aiko_current_word_table = {}
     ret.aiko_words_played = {}
     ret.letters_to_give = {}
+    ret.akyrs_generated_but_not_redeemed_vouchers_check = {}
+    ret.akyrs_list_of_generated_but_not_redeemed_vouchers = {}
     ret.aiko_letters_consumable_rate = 0
     AKYRS.replenishLetters()
     ret.current_round.akyrs_round_played_cards = {}
@@ -802,7 +804,7 @@ G.FUNCS.evaluate_play = function(e)
             if v.highlighted then
                 local _card = copy_card(v, nil, nil, G.playing_card)
                 _card.ability.akyrs_self_destructs = true
-                _card.ability.aikoyori_letters_stickers = v.ability.aikoyori_letters_stickers
+                _card:set_letters(v.ability.aikoyori_letters_stickers)
                 G.deck.config.card_limit = G.deck.config.card_limit + 1
                 table.insert(G.playing_cards, _card)
                 G.deck:emplace(_card)
@@ -984,6 +986,7 @@ function Card:akyrs_mod_card_value_init()
         if not self.base.value and not self.base.suit then
             local rank = pseudorandom_element(SMODS.Ranks,pseudoseed("akyrsmodcard"))
             local suit = pseudorandom_element(SMODS.Suits,pseudoseed("akyrsmodcard2"))
+            self.is_null = true
             assert(SMODS.change_base(self,suit.key,rank.key))
             --[[
                 if self.ability.set == "Voucher" then
@@ -1557,19 +1560,23 @@ end
 
 local startMaterializeHook = Card.start_materialize
 function Card:start_materialize(cols, slnt, timefac)
-    if self.ability.set == "Alphabet" then
-        if AKYRS.non_letter_symbols_reverse[self.ability.extra.letter] then
-            cols = {HEX("3b82f6")}
-        elseif self.ability.extra.letter == "#" then
-            cols = {HEX("ff2d8d")}
-        elseif tonumber(self.ability.extra.letter) then
-            cols = {HEX("0ca400")}
-        elseif self.ability.extra.letter:match("[AEIOUaeiou]") then
-            cols = {HEX("2d99ff")}
-        elseif self.ability.extra.letter:match("[Yy]") then
-            cols = {HEX("f59e0b")} 
-        else
-            cols = {HEX("52525b")}
+    if not cols then
+        if self.ability.set == "Umbral" then
+            cols = { G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y }
+        elseif self.ability.set == "Alphabet" then
+            if AKYRS.non_letter_symbols_reverse[self.ability.extra.letter] then
+                cols = {HEX("3b82f6")}
+            elseif self.ability.extra.letter == "#" then
+                cols = {HEX("ff2d8d")}
+            elseif tonumber(self.ability.extra.letter) then
+                cols = {HEX("0ca400")}
+            elseif self.ability.extra.letter:match("[AEIOUaeiou]") then
+                cols = {HEX("2d99ff")}
+            elseif self.ability.extra.letter:match("[Yy]") then
+                cols = {HEX("f59e0b")} 
+            else
+                cols = {HEX("52525b")}
+            end
         end
     end
     local h = startMaterializeHook(self, cols, slnt, timefac)

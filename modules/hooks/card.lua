@@ -102,3 +102,96 @@ function Card:set_sprites(_c,_f)
     end
     return x
 end
+
+
+local gen_voucher_key_hook = get_next_voucher_key
+function get_next_voucher_key(tag)
+    local x = gen_voucher_key_hook(tag)
+    if x then
+        G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers = G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers or {}
+        G.GAME.akyrs_generated_but_not_redeemed_vouchers_check = G.GAME.akyrs_generated_but_not_redeemed_vouchers_check or {}
+        G.GAME.akyrs_generated_but_not_redeemed_vouchers_check[x] = true
+        table.insert(G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers,x)
+        AKYRS.remove_dupes(G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers)
+    end
+    return x
+end
+
+local get_next_vouchers_hook = SMODS.get_next_vouchers
+function SMODS.get_next_vouchers(vouchers)
+    local v = get_next_vouchers_hook(vouchers)
+    if v and #v > 0 then
+        for _,x in ipairs(v) do
+            G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers = G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers or {}
+            G.GAME.akyrs_generated_but_not_redeemed_vouchers_check = G.GAME.akyrs_generated_but_not_redeemed_vouchers_check or {}
+            G.GAME.akyrs_generated_but_not_redeemed_vouchers_check[x] = true
+            table.insert(G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers,x)
+        end
+        AKYRS.remove_dupes(G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers)
+
+    end
+    return v
+end
+
+-- remove redeemed voucher from the pool of possible pool
+local cardRedeem = Card.redeem
+function Card:redeem()
+    local x = {cardRedeem(self)}
+    
+    if self.ability.set == "Voucher" then
+        G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers = G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers or {}
+        G.GAME.akyrs_generated_but_not_redeemed_vouchers_check = G.GAME.akyrs_generated_but_not_redeemed_vouchers_check or {}
+
+        G.GAME.akyrs_generated_but_not_redeemed_vouchers_check[self.config.center_key] = nil
+        AKYRS.remove_value_from_table(G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers,self.config.center_key)
+
+    end
+    return unpack(x)
+end
+
+AKYRS.hand_display_mod = function(hand,text,disp_text,poker_hands)
+    if not hand then return end
+    local are_pure = true
+    for _,c in ipairs(hand) do
+        if not c.ability.akyrs_special_card_type then
+            are_pure = false
+            break
+        end
+    end
+    if are_pure and #hand > 0 then
+        G.GAME.current_round.current_hand.mult = nil
+        G.GAME.current_round.current_hand.chips = nil
+        rawset(G.GAME.hands[text], "mult", G.GAME.hands[text].mult * 1)
+        local m_d = "+"..G.GAME.hands[text].mult * (AKYRS.pure_hands_modifier - 1)..""
+        local h_d = "+"..G.GAME.hands[text].chips * (AKYRS.pure_hands_modifier - 1)..""
+        -- what the fuck balatro why is this tostring function essential to it working????
+        local _ = tostring(G.GAME.hands[text].mult)
+        local m = rawget(G.GAME.hands[text],"mult") * AKYRS.pure_hands_modifier
+        local h = rawget(G.GAME.hands[text],"chips") * AKYRS.pure_hands_modifier
+        local hand_name = localize{ type = "variable", key = "k_akyrs_pure", vars = {disp_text}}
+        update_hand_text({immediate = true, nopulse = true, delay = 0}, {handname=hand_name, level=G.GAME.hands[text].level, mult = m_d, chips = h_d, StatusText = true})
+        update_hand_text({immediate = nil, nopulse = true, delay = 0}, {handname=hand_name, level=G.GAME.hands[text].level, mult = m, chips = h})
+        
+        return true
+    end
+end
+AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
+    if not hand then return end
+    local are_pure = true
+    for _,c in ipairs(hand) do
+        if not c.ability.akyrs_special_card_type then
+            are_pure = false
+            break
+        end
+    end
+    if are_pure and #hand > 0 then
+        for _,c in ipairs(hand) do
+            c:set_debuff(false)
+        end
+        local hand_name = localize{ type = "variable", key = "k_akyrs_pure", vars = {poker_info[2]}}
+        mult = mod_mult(b_mult * AKYRS.pure_hands_modifier)
+        hand_chips = mod_chips(b_chip * AKYRS.pure_hands_modifier)
+        update_hand_text({immediate = true, delay = 0 }, {handname=hand_name, chips = hand_chips, mult = mult})
+        return true
+    end
+end

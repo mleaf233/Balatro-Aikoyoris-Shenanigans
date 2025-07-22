@@ -31,7 +31,7 @@ if togabalatro then
                 if most_common_letter then
                     return {
                         func = function ()
-                            if #G.consumeables.cards < G.consumeables.config.card_limit then
+                            if AKYRS.has_room(G.consumeables) then
                                 SMODS.add_card({area = G.consumeables, set = 'Alphabet', key = 'c_akyrs_'..most_common_letter})
                             end
                         end

@@ -299,7 +299,7 @@ SMODS.Enhancement{
                         function ()
                             --[[
                             -- this is just me being stupid
-                            if #G.consumeables.cards < G.consumeables.config.card_limit then
+                            if AKYRS.has_room(G.consumeables) then
                                 card.ability.akyrs_triggered = true
                                 local k, lim = nil, 0
                                 repeat
@@ -311,7 +311,9 @@ SMODS.Enhancement{
                                 end
                             end
                             ]]
-                            SMODS.add_card{set = "Consumeables", area = G.consumeables}
+                            if AKYRS.has_room(G.consumeables) then
+                                SMODS.add_card{set = "Consumeables", area = G.consumeables}
+                            end
                             return true
                         end, 0
                     )

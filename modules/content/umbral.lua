@@ -2,7 +2,7 @@ SMODS.ConsumableType{
     key = "Umbral",
     primary_colour = HEX("ffd45b"),
     secondary_colour = HEX("925ac3"),
-    collection_rows = { 7,6 },
+    collection_rows = { 4, 5 },
     shop_rate = 4,
 }
 
@@ -276,9 +276,9 @@ SMODS.Consumable{
                 c2 = SMODS.modify_rank(c2, ud*i)
                 if c2 then c2:juice_up(0.3,0.3) end
             end
+            AKYRS.deselect_from_area(_c)
             
         end
-        AKYRS.deselect_from_area(card)
     end
 }
 SMODS.Consumable{
@@ -307,30 +307,164 @@ SMODS.Consumable{
     key = "umbral_fomo",
     atlas = "umbra",
     pos = {x=9,y=0},
+    config = {
+        extras = {
+            create = 1,
+            take = 12
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.create,
+                card.ability.extras.take
+            }
+        }
+    end,
+    can_use = function (self, card)
+        -- wtf? talisman
+        for _,v in ipairs(G.GAME.current_round.voucher) do
+            if G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers[v] then
+                return false
+            end
+        end
+        return #G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers > 0 and AKYRS.can_afford(card.ability.extras.take)
+    end,
+    in_pool = function (self, args)
+        return #G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers > 0
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        ease_dollars(-card.ability.extras.take)
+        for i = 1, card.ability.extras.create do
+            local to_redeem = pseudorandom_element(G.GAME.akyrs_list_of_generated_but_not_redeemed_vouchers,pseudoseed("akyrs_umbral_fomo_voucher"))
+            local _c = SMODS.create_card{ set = "Voucher", key = to_redeem }
+            _c.cost = 0
+            G.play:emplace(_c)
+            _c:redeem()
+            if G.shop_vouchers and G.shop_vouchers.cards then
+                for _,_cds in ipairs(G.shop_vouchers.cards) do
+                    if _cds.config.center_key == to_redeem then
+                        _cds:remove()
+                    end
+                end
+            end
+            AKYRS.simple_event_add(
+                function ()
+                    _c:start_dissolve(nil,2)
+                    return true
+                end, 1
+            )
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_misfortune",
     atlas = "umbra",
     pos = {x=0,y=1},
+    config = {
+        max_highlighted = 2
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(G.hand.highlighted,
+            function (_c)
+                if _c.config.center_key == "m_akyrs_hatena" then
+                    _c:set_ability(G.P_CENTERS["m_akyrs_item_box"])
+                else
+                    _c:set_ability(G.P_CENTERS["m_akyrs_hatena"])
+                end
+                AKYRS.deselect_from_area(_c)
+            end
+        )
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_book_smart",
     atlas = "umbra",
     pos = {x=1,y=1},
+    config = {
+        extras = 2,
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return true
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for i = 1, card.ability.extras do
+            if not AKYRS.has_room(G.consumeables) then break end
+            local _c = SMODS.add_card{set = "Umbral"}
+            _c:juice_up(0.3,0.3)
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_prisoner",
     atlas = "umbra",
     pos = {x=2,y=1},
+    config = {
+        max_highlighted = 1
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_brick_card"]
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(G.hand.highlighted,
+            function (_c)
+                _c:set_ability(G.P_CENTERS["m_akyrs_brick_card"])
+                AKYRS.deselect_from_area(_c)
+            end
+        )
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_overgrowth",
     atlas = "umbra",
     pos = {x=3,y=1},
+    config = {
+        max_highlighted = 2
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_canopy_card"]
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(G.hand.highlighted,
+            function (_c)
+                _c:set_ability(G.P_CENTERS["m_akyrs_canopy_card"])
+                AKYRS.deselect_from_area(_c)
+            end
+        )
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
@@ -382,9 +516,33 @@ SMODS.Consumable{
 }
 SMODS.Consumable{
     set = "Umbral",
-    key = "umbral_free_will",
+    key = "umbral_nyctophobia",
     atlas = "umbra",
     pos = {x=2,y=2},
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_puzzle",
+    atlas = "umbra",
+    pos = {x=3,y=2},
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_electrify",
+    atlas = "umbra",
+    pos = {x=4,y=2},
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_d1",
+    atlas = "umbra",
+    pos = {x=5,y=2},
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_free_will",
+    atlas = "umbra",
+    pos = {x=6,y=2},
     soul_pos = {x=9,y=2, draw=function (card, scale_mod, rotate_mod)
         if card.children.floating_sprite then
             rotate_mod = -G.TIMERS.REAL * 0.731
