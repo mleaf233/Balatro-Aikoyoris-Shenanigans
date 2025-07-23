@@ -186,7 +186,7 @@ SMODS.Atlas {
 }
 SMODS.Atlas {
     key = "rank_suit_cards",
-    path = "rankSuitCards.png",
+    path = "ranksuitCards.png",
     px = 71,
     py = 95
 }
