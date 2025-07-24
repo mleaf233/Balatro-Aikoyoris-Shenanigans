@@ -108,6 +108,7 @@ SMODS.Consumable{
         max_highlighted = 99999,
     },
     use = function (self, card, area, copier)
+        table.sort(G.hand.highlighted,AKYRS.hand_sort_function_immute)
         AKYRS.juice_like_tarot(card)
         local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
         local pl = AKYRS.get_planet_for_hand(h)

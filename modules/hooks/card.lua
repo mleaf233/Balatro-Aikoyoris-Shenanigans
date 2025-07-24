@@ -168,7 +168,7 @@ AKYRS.hand_display_mod = function(hand,text,disp_text,poker_hands)
         --print(rawget(G.GAME.hands[text], "mult"))
         local hm = G.GAME.akyrs_pure_hand_modifier
         local final_mult, final_chips
-        if Talisman then
+        if Talisman and type(hm) == "table" and type(to_big(hm.multiplier)) == "table" then
             hm.multiplier = to_big(hm.multiplier)
             hm.power = to_big(hm.power)
             pre_mult = to_big(pre_mult)
@@ -192,7 +192,7 @@ AKYRS.hand_display_mod = function(hand,text,disp_text,poker_hands)
         return true
     end
 end
-AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
+AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult,already_ran)
     if not hand then return end
     local are_pure = true
     for _,c in ipairs(hand) do
@@ -205,10 +205,11 @@ AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
         for _,c in ipairs(hand) do
             c:set_debuff(false)
         end
+        local text = poker_info[1]
         G.GAME.akyrs_pure_unlocked = true
         G.GAME.akyrs_pure_hand_modifier = G.GAME.akyrs_pure_hand_modifier or { multiplier = 2, power = 1, level = 1, played = 0 }
         -- this function runs twice so
-        G.GAME.akyrs_pure_hand_modifier.played = (G.GAME.akyrs_pure_hand_modifier.played or 0) + 0.5
+        G.GAME.akyrs_pure_hand_modifier.played = (G.GAME.akyrs_pure_hand_modifier.played or 0) + (already_ran and 0 or 1)
         -- what the fuck balatro why is this tostring function essential to it working????
         local _ = tostring(rawget(G.GAME.hands[text], "mult") or 1)
         local _2 = tostring(rawget(G.GAME.hands[text], "chips") or 1)
@@ -217,7 +218,7 @@ AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
         --print(rawget(G.GAME.hands[text], "mult"))
         local hm = G.GAME.akyrs_pure_hand_modifier
         local final_mult, final_chips
-        if Talisman then
+        if Talisman and type(hm) == "table" and type(to_big(hm.multiplier)) == "table" then
             hm.multiplier = to_big(hm.multiplier)
             hm.power = to_big(hm.power)
             pre_mult = to_big(pre_mult)
