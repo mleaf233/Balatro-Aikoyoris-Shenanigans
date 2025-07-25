@@ -10,6 +10,7 @@ SMODS.Tag{
     apply = function (self, tag, context)
         if context.type == 'new_blind_choice' then
             local lock = tag.ID
+            G.CONTROLLER.locks[lock] = true
             tag:yep("+",G.C.BLUE,function ()
                 local key = 'p_akyrs_mega_letter_pack_'..(math.random(1,2))
                 local card = Card(G.play.T.x + G.play.T.w/2 - G.CARD_W*1.27/2,
@@ -22,6 +23,7 @@ SMODS.Tag{
                 return true
             end)
             tag.triggered = true
+            return true
         end 
     end
 }
@@ -35,6 +37,7 @@ SMODS.Tag{
     apply = function (self, tag, context)
         if context.type == 'new_blind_choice' then
             local lock = tag.ID
+            G.CONTROLLER.locks[lock] = true
             tag:yep("+",G.C.AKYRS_UMBRAL_P,function ()
                 local key = 'p_akyrs_mega_umbral_pack_'..(math.random(1,2))
                 local card = Card(G.play.T.x + G.play.T.w/2 - G.CARD_W*1.27/2,
@@ -47,6 +50,7 @@ SMODS.Tag{
                 return true
             end)
             tag.triggered = true
+            return true
         end 
     end
 }

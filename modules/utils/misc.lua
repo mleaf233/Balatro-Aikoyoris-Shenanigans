@@ -400,13 +400,17 @@ function AKYRS.embedded_ui_sprite( sprite_atlas, sprite_pos, desc_nodes, config 
     return uiEX
 end
 
-AKYRS.deep_copy = function(orig)
+AKYRS.deep_copy = function(orig, table_of_objects_that_are_root)
+    table_of_objects_that_are_root = table_of_objects_that_are_root or {}
+    table.insert(table_of_objects_that_are_root, orig)
     local orig_type = type(orig)
     local copy
     if orig_type == 'table' then
         copy = {}
         for orig_key, orig_value in next, orig, nil do
-            copy[AKYRS.deep_copy(orig_key)] = AKYRS.deep_copy(orig_value)
+            if not AKYRS.is_in_table(table_of_objects_that_are_root, orig_value) then
+                copy[AKYRS.deep_copy(orig_key, table_of_objects_that_are_root)] = AKYRS.deep_copy(orig_value, table_of_objects_that_are_root)
+            end
         end
     else -- number, string, boolean, etc
         copy = orig
@@ -839,7 +843,8 @@ AKYRS.get_planet_for_hand = function(_hand)
 end
 
 AKYRS.is_mod_loaded = function(var) 
-    return (SMODS.Mods[var] and SMODS.Mods[var].mod.can_load) and true or false
+    if not var then return false end
+    return (SMODS.Mods[var] and SMODS.Mods[var].can_load) and true or false
 end
 function AKYRS.juice_like_tarot(card)
     play_sound('tarot1')
