@@ -243,8 +243,17 @@ function AKYRS.expensive_calculation()
             G.GAME.aiko_last_chips = G.GAME.current_round.current_hand.chips
         end
         if G.GAME.blind.debuff.akyrs_perma_selection then
-            for i, k in ipairs(G.play.cards) do
-                k.ability.akyrs_forced_selection = true
+            if type(G.GAME.blind.debuff.akyrs_perma_selection) == "table" then
+                local ps = G.GAME.blind.debuff.akyrs_perma_selection
+                for i, k in ipairs(G.play.cards) do
+                    if SMODS.pseudorandom_probability(G.GAME.blind, ps.seed, ps.num, ps.denum) then
+                        k.ability.akyrs_forced_selection = true
+                    end
+                end
+            else
+                for i, k in ipairs(G.play.cards) do
+                    k.ability.akyrs_forced_selection = true
+                end
             end
         end
         if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then

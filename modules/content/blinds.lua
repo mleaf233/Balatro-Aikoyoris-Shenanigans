@@ -346,6 +346,7 @@ AKYRS.picker_initial_action = function()
                         trigger = "after",
                         func = function ()
                             G.GAME.blind.debuff.primed = true
+                            AKYRS.force_save()
                             return true
                         end
                     }))
@@ -483,8 +484,23 @@ SMODS.Blind {
     mult = 2,
     boss_colour = HEX('8c7d36'),
     debuff = {
-        akyrs_perma_selection = true
+        akyrs_perma_selection = { num = 1, denum = 4, seed = "akyrs_boss_the_key" }
     },
+    loc_vars = function(self)
+        local n, d = SMODS.get_probability_vars(self, self.debuff.akyrs_perma_selection.num,self.debuff.akyrs_perma_selection.denum,self.debuff.akyrs_perma_selection.seed )
+        return {
+            vars = {
+                n, d
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        return {
+            vars = {
+                1, 4
+            }
+        }
+    end,
     atlas = 'aikoyoriBlindsChips', 
     boss = {min = 3, max = 10},
     pos = { x = 0, y = 12 },

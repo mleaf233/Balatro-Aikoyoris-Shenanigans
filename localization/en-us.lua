@@ -104,8 +104,8 @@ return {
             bl_akyrs_the_key= {
                 name = "The Key",
                 text = {
-                    "Played cards cannot be",
-                    "deselected ever again",
+                    "Played cards have a #1# in #2#",
+                    "chance to be forever selected",
                 }
             },
             bl_akyrs_final_periwinkle_pinecone= {
