@@ -68,10 +68,12 @@ assert(SMODS.load_file("./modules/compat/partner.lua"))()
 -- cross mod loading
 for _,mod in pairs(SMODS.Mods) do
     if mod.can_load and mod.path and not mod.meta_mod then
-        local p = SMODS.load_file("AikoyorisShenanigans.lua", mod.id)
-        if p then
-            p()
-        end
+        pcall(function ()
+            local p = SMODS.load_file("AikoyorisShenanigans.lua", mod.id)
+            if p then
+                p()
+            end
+        end)
     end
 
 end
