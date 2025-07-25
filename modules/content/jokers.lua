@@ -2439,7 +2439,7 @@ SMODS.Joker{
                 if edition then
                     other:set_edition(edition.key)
                 end
-                if SMODS.pseudorandom_probability(card,"akyrs_aether_portal",1,card.ability.extra.odds) then
+                if SMODS.pseudorandom_probability(card,"akyrs_aether_portal",1,card.ability.extras.odds) then
                     card:start_dissolve({G.C.BLUE},1.6)
                 end
             end
