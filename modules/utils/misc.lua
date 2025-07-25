@@ -839,7 +839,7 @@ AKYRS.get_planet_for_hand = function(_hand)
 end
 
 AKYRS.is_mod_loaded = function(var) 
-    return (SMODS.Mods[var] and not SMODS.Mods[var].disabled) and true or false
+    return (SMODS.Mods[var] and SMODS.Mods[var].mod.can_load) and true or false
 end
 function AKYRS.juice_like_tarot(card)
     play_sound('tarot1')

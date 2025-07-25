@@ -64,3 +64,14 @@ assert(SMODS.load_file("./modules/compat/notjustyet.lua"))()
 assert(SMODS.load_file("./modules/compat/togasstuff.lua"))()
 assert(SMODS.load_file("./modules/compat/partner.lua"))()
 
+-- cross mod loading
+for _,mod in pairs(SMODS.Mods) do
+    if mod.can_load and mod.path then
+        local p = SMODS.load_file("AikoyorisShenanigans.lua", mod.id)
+        if p then
+            p()
+        end
+    end
+
+end
+
