@@ -513,7 +513,7 @@ SMODS.Consumable{
         if die_question_mark then
             if G.STAGE == G.STAGES.RUN then G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false end
         end
-        if Talisman then
+        if Talisman and type(to_big(G.GAME.dollars)) == "table" then
             local d_dollar = to_big(G.GAME.dollars):pow(card.ability.extras.emoney) - to_big(G.GAME.dollars)
             ease_dollars(d_dollar)
         else

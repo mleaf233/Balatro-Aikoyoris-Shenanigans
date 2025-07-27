@@ -97,7 +97,8 @@ for i = 3, 31 do
             AKYRS.randomCard(),
             true,
             nil,
-            akyrs_letter = c
+            akyrs_letter = c,
+            is_null = true
         })
     end
     
@@ -175,13 +176,13 @@ SMODS.PokerHand{
     l_mult = 0,
     visible = false,
     example = {
-        { "", true, nil, akyrs_letter = "3"},
-        { "", true, nil, akyrs_letter = "7"},
-        { "", true, nil, akyrs_letter = "*"},
-        { "", true, nil, akyrs_letter = "4"},
-        { "", true, nil, akyrs_letter = "+"},
-        { "", true, nil, akyrs_letter = "2"},
-        { "", true, nil, akyrs_letter = "7"},
+        { "", true, nil, akyrs_letter = "3", is_null = true},
+        { "", true, nil, akyrs_letter = "7", is_null = true},
+        { "", true, nil, akyrs_letter = "*", is_null = true},
+        { "", true, nil, akyrs_letter = "4", is_null = true},
+        { "", true, nil, akyrs_letter = "+", is_null = true},
+        { "", true, nil, akyrs_letter = "2", is_null = true},
+        { "", true, nil, akyrs_letter = "7", is_null = true},
     },
     evaluate = function(parts, hand_in)
         if ((not G.GAME.akyrs_character_stickers_enabled) or (not G.GAME.akyrs_mathematics_enabled)) then 
@@ -225,9 +226,9 @@ SMODS.PokerHand{
     l_mult = 0,
     visible = false,
     example = {
-        { "", true, nil, akyrs_letter = "/"},
-        { "", true, nil, akyrs_letter = "2"},
-        { "", true, nil, akyrs_letter = "5"},
+        { "", true, nil, akyrs_letter = "/", is_null = true},
+        { "", true, nil, akyrs_letter = "2", is_null = true},
+        { "", true, nil, akyrs_letter = "5", is_null = true},
     },
     evaluate = function(parts, hand_in)
         if ((not G.GAME.akyrs_character_stickers_enabled) or (not G.GAME.akyrs_mathematics_enabled)) then 
@@ -276,9 +277,9 @@ SMODS.PokerHand{
     l_mult = 0,
     visible = false,
     example = {
-        { "", true, nil, akyrs_letter = "x"},
-        { "", true, nil, akyrs_letter = "="},
-        { "", true, nil, akyrs_letter = "7"},
+        { "", true, nil, akyrs_letter = "x", is_null = true},
+        { "", true, nil, akyrs_letter = "=", is_null = true},
+        { "", true, nil, akyrs_letter = "7", is_null = true},
     },
     evaluate = function(parts, hand_in)
         if ((not G.GAME.akyrs_character_stickers_enabled) or (not G.GAME.akyrs_mathematics_enabled)) then 

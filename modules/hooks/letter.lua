@@ -29,19 +29,19 @@ end
 function Card:set_letters(letter)
     if not self.ability then return end
     self.ability.aikoyori_letters_stickers = letter
-    self:set_sprites(self.config.center,self.config.card)
+    self:set_sprites(self.config.center,not self.is_null and self.config.card)
 end
 
 function Card:set_pretend_letters(letter)
     if self.ability and self.ability.aikoyori_letters_stickers == "#" then
         self.ability.aikoyori_pretend_letter = letter
-        self:set_sprites(self.config.center,self.config.card)
+        self:set_sprites(self.config.center,not self.is_null and self.config.card)
     end
 end
 
 function Card:remove_letters()
     self.ability.aikoyori_letters_stickers = nil
-    self:set_sprites(self.config.center,self.config.card)
+    self:set_sprites(self.config.center,not self.is_null and self.config.card)
 end
 
 -- parse hand on cards rearrangement

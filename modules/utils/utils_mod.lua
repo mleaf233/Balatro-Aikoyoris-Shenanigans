@@ -398,21 +398,24 @@ AKYRS.mod_card_values = function(table_in, config)
     local keywords = config.keywords or {}
     local unkeyword = config.unkeywords or {}
     local reference = config.reference or table_in
-    local randomize = config.random or {digits_min = 1, digits_max = 1, min = 1, max = 1,scale = 1 }
+    local randomize = config.random
 
     local function modify_values(table_in, ref)
-        for k, v in pairs(table_in) do
+        for k, v in pairs(table_in) do 
+            local rand = 1
+            if randomize then
+                local val = pseudorandom("akyrs_mod_val")
+                local val2 = pseudorandom("akyrs_mod_val_2",randomize.digits_min, randomize.digits_max)
+                rand = val * 10 ^ val2
+            end
             
-            local val = pseudorandom("akyrs_mod_val")
-            local val2 = pseudorandom("akyrs_mod_val_2",randomize.digits_min, randomize.digits_max)
-            local rand = val * 10 ^ val2
             if type(v) == "number" then
                 if (keywords[k] or #keywords < 1) and not unkeyword[k] then
                     if ref and ref[k] then
                         table_in[k] = (ref[k] + add) * multiply * rand
                     end
                 end
-            elseif Talisman and type(v) == "table" and (getmetatable(v) == OmegaMeta or getmetatable(v) == BigMeta) then
+            elseif Talisman and type(v) == "table" and v.to_number and (to_number(v) == v) then
                 if (keywords[k] or #keywords < 1) and not unkeyword[k] then
                     if ref and ref[k] then
                         table_in[k] = (to_big(ref[k]) + to_big(add)) * to_big(multiply) * to_big(rand)

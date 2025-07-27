@@ -939,7 +939,7 @@ function Card:set_ability(c,i,d)
     -- this one is for collection
     local r = setCardAbilityHook(self,c,i,d)
     
-    if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" then
+    if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" and not self.is_null then
         self:set_base(self.config.card, i)
         if self.ability.akyrs_special_card_type == "suit" then
             self.base.nominal = 0

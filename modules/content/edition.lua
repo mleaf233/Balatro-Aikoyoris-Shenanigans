@@ -88,7 +88,7 @@ SMODS.Edition{
         end
     end,
     on_remove = function (card)
-        card.ability = card.akyrs_old_ability
+        card:set_ability(card.config.center)
         card.akyrs_upgrade_sliced = false
     end,
     weight = 5,
