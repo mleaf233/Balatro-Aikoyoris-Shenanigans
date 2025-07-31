@@ -502,12 +502,12 @@ end
 AKYRS.simple_event_add = function (func, delay, queue, config)
     config = config or {}
     G.E_MANAGER:add_event(Event{
-        trigger = 'after',
+        trigger = config.trigger or 'after',
         delay = delay or 0.1,
         func = func,
         blocking = config.blocking,
         blockable = config.blockable,
-    }, queue)
+    }, queue, config.front)
 end
 
 
@@ -1009,4 +1009,17 @@ function AKYRS.force_save()
             return true
         end
     )
+end
+
+
+-- i fucking hate talisman™
+function AKYRS.compare(val1, sign, val2)
+    local value1 = Talisman and to_big(val1) or val1
+    local value2 = Talisman and to_big(val2) or val2
+    if sign == "==" then return value1 == value2 end
+    if sign == ">=" then return value1 >= value2 end
+    if sign == "<=" then return value1 <= value2 end
+    if sign == ">" then return value1 > value2 end
+    if sign == "<" then return value1 < value2 end
+    if sign == "~=" or sign == "!=" then return value1 ~= value2 end
 end

@@ -2106,7 +2106,7 @@ SMODS.Joker {
         if context.akyrs_round_eval then
             local d = Talisman and to_big(context.dollars) or context.dollars
             local v = Talisman and to_big(10) or 10
-            local c = Talisman and d:lt(v) or d < v
+            local c = d < v
             if togabalatro and c then
                 local tag = Tag(pseudorandom_element(toga_tags,pseudoseed("akyrs_aikoyori_toga_tags")))
                 add_tag(tag)

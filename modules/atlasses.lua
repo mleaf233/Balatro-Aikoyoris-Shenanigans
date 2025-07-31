@@ -196,6 +196,20 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+SMODS.Atlas {
+    key = "aikoStakes",
+    path = "aikoyoriStakes.png",
+    px = 29,
+    py = 29
+}
+
+SMODS.Atlas {
+    key = "aikoStakeStickers",
+    path = "aikoyoriStakeStickers.png",
+    px = 71,
+    py = 95
+}
+
 -- we glsling so hard rn 
 
 SMODS.Shader{

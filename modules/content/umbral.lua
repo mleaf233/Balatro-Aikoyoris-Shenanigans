@@ -3,7 +3,8 @@ SMODS.ConsumableType{
     primary_colour = HEX("ffd45b"),
     secondary_colour = HEX("925ac3"),
     collection_rows = { 4, 5 },
-    shop_rate = 4,
+    shop_rate = 3,
+    default = "c_akyrs_umbral_break_up"
 }
 
 SMODS.UndiscoveredSprite{
@@ -476,15 +477,13 @@ SMODS.Consumable{
     pos = {x=4,y=1},
     config = {
         extras = {
-            n = 1,
-            d = 2,
             emoney = 2
         }
     },
     
     calculate = function (self, card, context)
         if context.selling_card and context.card == card then
-            local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",card.ability.extras.n,card.ability.extras.d)
+            local die_question_mark = pseudorandom("akyrs_umbral_intrusive") >= 0.5
             return {
                 message = localize("k_akyrs_umbral_intrusive_"..(die_question_mark and "would_die" or "would_win")),
                 colour = (die_question_mark and G.C.GREEN or G.C.RED),
@@ -495,12 +494,9 @@ SMODS.Consumable{
         end
     end,
     loc_vars = function (self, info_queue, card)
-        local n, d = SMODS.get_probability_vars(card,card.ability.extras.n,card.ability.extras.d, "akyrs_umbral_intrusive")
         return {
             vars = {
                 card.ability.extras.emoney,
-                n,
-                d,
             }
         }
     end,
@@ -742,25 +738,29 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=1,y=2},
     config = {
-        extras = 100
     },
     can_use = function (self, card)
         return #G.hand.cards > 0
     end,
     loc_vars = function (self, info_queue, card)
+        G.GAME.akyrs_umbral_atmosphere_score_inc = G.GAME.akyrs_umbral_atmosphere_score_inc or 100
+        G.GAME.akyrs_umbral_atmosphere_uses = G.GAME.akyrs_umbral_atmosphere_uses or 0
         return {
             vars = {
-                card.ability.extras
+                G.GAME.akyrs_umbral_atmosphere_score_inc,
+                G.GAME.akyrs_umbral_atmosphere_score_inc + 100 * (G.GAME.akyrs_umbral_atmosphere_uses + 1)^2
             }
         }
     end,
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
+        G.GAME.akyrs_umbral_atmosphere_score_inc = G.GAME.akyrs_umbral_atmosphere_score_inc or 100
+        G.GAME.akyrs_umbral_atmosphere_uses = (G.GAME.akyrs_umbral_atmosphere_uses or 0) + 1
         for _,_c in ipairs(G.hand.cards) do
             if _c:is_suit("Diamonds") then
                 AKYRS.simple_event_add(
                     function ()
-                        _c.ability.akyrs_perma_score = _c.ability.akyrs_perma_score + card.ability.extras
+                        _c.ability.akyrs_perma_score = _c.ability.akyrs_perma_score + G.GAME.akyrs_umbral_atmosphere_score_inc
                         _c:juice_up(0.3, 0.3)
                         play_sound("tarot1")
                         return true
@@ -768,6 +768,12 @@ SMODS.Consumable{
                 )
             end
         end
+        AKYRS.simple_event_add(
+            function ()
+                G.GAME.akyrs_umbral_atmosphere_score_inc =  G.GAME.akyrs_umbral_atmosphere_score_inc + 100 * (G.GAME.akyrs_umbral_atmosphere_uses)^2
+                return true
+            end, 0
+        )
     end
 }
 SMODS.Consumable{

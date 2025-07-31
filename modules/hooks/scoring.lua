@@ -6,7 +6,20 @@ end
 ]]
 local hookCalFx = SMODS.calculate_effect
 AKYRS.repetable_fx_calc = function(effect, scored_card, from_edition, pre_jokers)
-    local r = hookCalFx(effect, scored_card, from_edition, pre_jokers)
+    local card = effect.card or scored_card
+    local r
+    if card.ability.akyrs_oxidising and not effect.akyrs_ignore_copper_calculation then
+        local psrd = pseudorandom(pseudoseed("akyrs_oxidising_"..card.config.center_key))
+        local compr
+        if Talisman then compr = to_big(psrd) * to_big(4) > to_big(card.ability.akyrs_oxidising - 1) else compr = psrd * 4 > card.ability.akyrs_oxidising - 1 end
+        if  compr then
+            r = hookCalFx(effect, scored_card, from_edition, pre_jokers)
+        else
+            r = hookCalFx({ message = localize("k_nope_ex"), colour = HEX("b74912"),}, card, from_edition, pre_jokers)
+        end
+    else
+        r = hookCalFx(effect, scored_card, from_edition, pre_jokers)
+    end
     if G.GAME.blind and mult and G.GAME.blind.debuff.akyrs_score_face_with_my_dec_mult and G.GAME.blind.debuff.dec_mult then
         if scored_card and scored_card:is_face(true) then
             G.E_MANAGER:add_event(Event({trigger = 'immediate', blocking = false, blockable = true, func = function () scored_card:juice_up(0.1); return true end}))
@@ -123,8 +136,30 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
             G.GAME.akyrs_no_calculate = true
         end
         if (key == 'akyrs_score' or key == "akyrs_h_score") and amount ~= 0 then
-            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
-            AKYRS.mod_score_instant({ add = amount, card = effect.card or scored_card })
+            AKYRS.simple_event_add(
+                function ()
+                    if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+                    AKYRS.simple_event_add(
+                        function ()
+                            AKYRS.mod_score_instant({ add = amount, card = effect.card or scored_card })
+                            if not G.GAME.akyrs_win_checked then
+                                AKYRS.simple_event_add(
+                                    function ()
+                                        if not G.GAME.akyrs_win_checked then
+                                            AKYRS.force_check_win()
+                                            G.GAME.akyrs_win_checked = true
+                                        end
+                                        return true
+                                    end, 0
+                                )
+                            end
+                            return true
+                        end, 1, "base", { trigger = "after" }
+                    )
+                return true
+                end, 0
+            )
+
             return true
     end
     return unpack(aaa)

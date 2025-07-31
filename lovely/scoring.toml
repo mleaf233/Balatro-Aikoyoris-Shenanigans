@@ -250,3 +250,16 @@ overwrite = true
 match_indent = true
 
 
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """            SMODS.calculate_context({end_of_round = true, game_over = game_over, beat_boss = G.GAME.blind.boss })"""
+position = "after"
+payload = """
+AKYRS.copper_eval_calculation = true
+SMODS.calculate_context({akyrs_copper_end_of_round = true, game_over = game_over, beat_boss = G.GAME.blind.boss })
+AKYRS.simple_event_add(function() AKYRS.copper_eval_calculation = nil return true end, 0)"""
+overwrite = true
+match_indent = true

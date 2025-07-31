@@ -578,6 +578,13 @@ return {
                     "wants to {C:akyrs_bocchi}R{C:akyrs_kita}o{C:akyrs_nijika}c{C:akyrs_ryou}k{}!",
                 },
             },
+            dd_akyrs_copper_scrape_tip  = {
+                name="Scraping",
+                text={
+                    "Fixed {C:green}25% chance{} to {C:attention}scrape{} off",
+                    "{C:attention}a layer{} of oxidation when a consumable is {C:attention}used{}",
+                },
+            },
         },
         Edition={
             e_akyrs_texelated = {
@@ -1744,6 +1751,19 @@ return {
                     "{C:inactive,s:0.8}how do i get him off",
                 },
             },
+            akyrs_oxidising={
+                name="Oxidising",
+                text={
+                    "{C:red}#1#%{} chance to not trigger",
+                    "Turns into {C:attention}#2#{} {C:inactive}(+#5#%){} in {C:attention}#3#{} #4#",
+                },
+            },
+            akyrs_oxidising_full={
+                name="Oxidising",
+                text={
+                    "{C:red}#1#%{} chance to not trigger",
+                },
+            },
             akyrs_debuff_seal={
                 name="Debuff Seal",
                 text={
@@ -1881,6 +1901,14 @@ return {
                     "be used immediately",
                 },
             },
+            akyrs_copper_sticker={
+                name="Gold Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Copper",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
         },
         Planet={
             c_akyrs_p_ara={
@@ -1982,7 +2010,27 @@ return {
             }
         },
         Spectral={},
-        Stake={},
+        Stake={
+            stake_akyrs_oxidising = {
+                name = "Oxidising Stake",
+                text = {
+                    "Cards can have {C:attention}Oxidising{} Sticker",
+                    "{s:0.8}Applies White Stake",
+                }
+            },
+            stake_akyrs_inner = {
+                name = "Inner Stake",
+                text = {
+                    "{C:blue}+1{} Hand Size",
+                }
+            },
+            stake_akyrs_outer = {
+                name = "Outer Stake",
+                text = {
+                    "{C:blue}+1{} Hand",
+                }
+            }
+        },
         Tag={
             tag_akyrs_spell_itself_tag={
                 name="Tag that spells Tag",
@@ -2360,7 +2408,7 @@ return {
                 name="Intrusive Thoughts",
                 text={
                     {
-                        "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}#2# in #3# chance{} to",
+                        "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}fixed 50% chance{} to",
                         "{E:1,C:red}Lose the run immediately{}",
                     },
                     
@@ -2422,8 +2470,9 @@ return {
                 name="Atmosphere",
                 text=
                 {
-                    "Give {C:attention}permanent{} bonus of {C:purple} +#1# {} Score",
+                    "Give {C:attention}permanent{} bonus of {C:purple}+#1#{} Score",
                     "to {C:attention}all {C:diamonds}Diamonds{} cards in hands",
+                    "{C:inactive}(Next use will give {C:purple}+#2#{C:inactive} Score)"
                 },
             },
             c_akyrs_umbral_nyctophobia = {
@@ -2613,6 +2662,15 @@ return {
             k_akyrs_wild_card = "Wild Card",
             k_akyrs_kitan = "Kita~n",
 
+            k_akyrs_copper_oxidation_stage_1 = "Unoxidised",
+            k_akyrs_copper_oxidation_stage_2 = "Exposed",
+            k_akyrs_copper_oxidation_stage_3 = "Weathered",
+            k_akyrs_copper_oxidation_stage_4 = "Oxidised",
+            k_akyrs_oxidise_ex = "Oxidised!",
+            k_akyrs_scrape_ex = "Scrape!",
+            k_akyrs_round_singular = "round",
+            k_akyrs_round_plural = "rounds",
+
             k_akyrs_balance_dialog_intro_next = "Next",
             k_akyrs_balance_dialog_cryptid_accept = "Sounds Good. (End)",
             k_akyrs_balance_dialog_cryptid_decline = "I want to hear more!",
@@ -2667,6 +2725,7 @@ return {
         labels={
             akyrs_self_destructs="Self-Destructive",
             akyrs_sigma="Sigma",
+            akyrs_oxidising="Oxidising",
             akyrs_debuff_seal="Seal-Debuffed",
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",

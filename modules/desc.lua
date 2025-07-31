@@ -246,3 +246,6 @@ AKYRS.DescriptionDummy{
 AKYRS.DescriptionDummy{
     key = "kessoku_band",
 }
+AKYRS.DescriptionDummy{
+    key = "copper_scrape_tip",
+}

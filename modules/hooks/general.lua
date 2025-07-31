@@ -47,6 +47,8 @@ function Game:init_game_object()
     ret.current_round.aiko_infinite_hack = "8"
     ret.current_round.advanced_blind = false
     ret.akyrs_last_ante = nil
+    ret.akyrs_umbral_atmosphere_score_inc = 100
+    ret.akyrs_umbral_atmosphere_uses = 0
 
     -- this one prevents crashes
     ret.modifiers.scaling = ret.modifiers.scaling or 1
