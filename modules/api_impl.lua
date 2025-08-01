@@ -244,7 +244,11 @@ AKYRS.suit_to_atlas = function (suit_key, card)
             return t(suit_key, card)
         end
         if type(t) == "table" then
-            return unpack(t)
+            local a, p = unpack(t)
+            if type(a) == "string" then
+                return G.ASSET_ATLAS[a], p
+            end
+            return a, p
         end
     end
     return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 8, y = 0}
@@ -276,7 +280,11 @@ AKYRS.rank_to_atlas = function (rank_key, card)
             return t(rank_key, card)
         end
         if type(t) == "table" then
-            return unpack(t)
+            local a, p = unpack(t)
+            if type(a) == "string" then
+                return G.ASSET_ATLAS[a], p
+            end
+            return a, p
         end
     end
     return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 10, y = 1}
