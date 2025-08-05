@@ -876,6 +876,7 @@ AKYRS.mod_run_info_hands = function(object)
     else 
         show_power = G.GAME.akyrs_pure_hand_modifier.power ~= 1
     end
+    local to_number = to_number or function(l) return tonumber(l) end
     if G.GAME.akyrs_pure_unlocked then
         table.insert(object.nodes, 1,{
                 n = G.UIT.R,
