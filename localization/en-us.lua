@@ -905,7 +905,7 @@ return {
                 name = "{f:5,C:akyrs_luminous}系ぎて",
                 text = { 
                     "Played cards permanently gain {X:mult,C:white} X#2#{} Mult",
-                    "if played cards total is divisible by {C:attention}#1#"
+                    "if played cards' {C:chips}chips{} is divisible by {C:attention}#1#"
                 }
             },
             j_akyrs_tsunagite_absurd = {
@@ -1480,7 +1480,8 @@ return {
                 name = "PANDORA PARADOXXX",
                 text = { 
                     "Give {C:attention}Standard Tag",
-                    "for every {C:attention}#1#{C:inactive} (#2#) {}playing card scored",
+                    "for every {C:attention}#1#{C:inactive} (#2#) {}playing card",
+                    "played and scored"
                 }
             },
             j_akyrs_pandora_paradoxxx_absurd = {
@@ -1812,8 +1813,6 @@ return {
                 text={
                     "Current total:",
                     "{s:1.2,C:attention}#1#{}",
-                    "{C:inactive}Aces count as 1",
-                    "{C:inactive}and face cards count as 10",
                 },
             },
             akyrs_tsunagite_name={

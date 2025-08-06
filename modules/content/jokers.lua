@@ -649,12 +649,7 @@ SMODS.Joker {
             local total = 0
             if G.hand and G.hand.highlighted then
                 for i,k in ipairs(G.hand.highlighted) do
-                    if not SMODS.has_no_rank(k)then
-                        total = total + k.base.nominal
-                        if k:get_id() == 14 then
-                            total = total - 10
-                        end                    
-                    end
+                    total = total + k:get_chip_bonus()
                 end
             end
             info_queue[#info_queue+1] = {key = "akyrs_tsunagite_scores", set = 'Other', vars = {
@@ -714,21 +709,22 @@ SMODS.Joker {
                 }, card)
             end
         end
-        if context.before and AKYRS.bal("adequate") then
+        if context.akyrs_pre_play and AKYRS.bal("adequate") then
             return {
                 func = function ()
                     local total = 0
-                    for i,k in ipairs(G.play.cards) do
-                        if not SMODS.has_no_rank(k)then
-                            total = total + k.base.nominal
-                            if k:get_id() == 14 then
-                                total = total - 10
-                            end                    
-                        end
+                    for i,k in ipairs(context.akyrs_pre_play_cards) do
+                        total = total + k:get_chip_bonus()
                     end
-                    if math.fmod(total,15) then
-                        AKYRS.do_things_to_card(G.play.cards,
-                        function(_c) _c.ability.perma_x_mult = (_c.ability.perma_x_mult or 0) + card.ability.extra.gain_Xmult end)
+                    if math.fmod(total,15) == 0 then
+                        for i,k in ipairs(context.akyrs_pre_play_cards) do
+                            AKYRS.simple_event_add(function()
+                                AKYRS.juice_like_tarot(card)
+                                k:juice_up(0.3, 0.5)
+                                k.ability.perma_x_mult = (k.ability.perma_x_mult or 0) + card.ability.extra.gain_Xmult
+                                return true
+                            end, 0.5)
+                        end
                     end
                 end
             }
