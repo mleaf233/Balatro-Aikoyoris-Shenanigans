@@ -2591,6 +2591,7 @@ return {
             hc_akyrs_extra_defensive_bulwark = "Extra Defensive Bulwark",
             hc_akyrs_no_hints_here = "Knowledge Test",
             hc_akyrs_no_hints_here_gold_edition = "Close-Book Finals",
+            hc_akyrs_wordle_galore = "Chain of Thoughts",
         },
         collabs={},
         dictionary={
@@ -2913,6 +2914,15 @@ return {
             },
             ch_c_akyrs_no_hints={
                 "{C:attention}All tooltips{} are {C:red}hidden",
+            },
+            ch_c_akyrs_start_with_letter_deck={
+                "Play with {C:attention,T:b_akyrs_letter_deck}Letter Deck",
+            },
+            ch_c_akyrs_no_skips={
+                "{C:attention}Skipping Blinds{} are {C:red}not allowed",
+            },
+            ch_c_akyrs_all_blinds_are={
+                "{C:attention}All Blinds{} are {C:attention}#1#",
             },
         },
     },

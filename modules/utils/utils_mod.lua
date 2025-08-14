@@ -552,3 +552,49 @@ AKYRS.set_special_card_type = function(card, type)
         card:set_sprites(card.config.center,card.config.card)
     end
 end
+
+AKYRS.initialise_deck_letter = function(letters)
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            G.playing_cards = {}
+            
+            local deckloop = G.GAME.starting_params.deck_size_letter or 1
+            local usedLetter = {}
+            for loops = 1, deckloop do
+                for i, letter in pairs(letters) do
+                    G.playing_card = (G.playing_card and G.playing_card + 1) or 1
+                    local front = pseudorandom_element(G.P_CARDS, pseudoseed('aikoyori:akyrs_letter_randomer'))
+                    local car = Card(G.deck.T.x, G.deck.T.y, G.CARD_W, G.CARD_H, front, G.P_CENTERS['c_base'],
+                        { playing_card = G.playing_card })
+                    car.is_null = true
+
+                    -- misprintize
+                    if G.GAME.modifiers and G.GAME.modifiers.cry_misprint_min and G.GAME.modifiers.cry_misprint_max then
+                        for k, v in pairs(G.playing_cards) do
+                            Cryptid.misprintize(car)
+                        end
+                    end
+                    if not G.GAME.starting_params.akyrs_letters_no_uppercase then
+                        if not usedLetter[letter:lower()] then letter = letter:upper() usedLetter[letter:lower()]=true else letter = letter:lower() end
+                    end
+                    car:set_letters(letter)
+                    G.deck:emplace(car)
+
+                    table.insert(G.playing_cards, car)
+                    -- for cryptid
+                    if G.GAME.modifiers and G.GAME.modifiers.cry_ccd then
+                        for k, v in pairs(G.playing_cards) do
+                            v:set_ability(Cryptid.random_consumable('cry_ccd', { "no_doe", "no_grc" }, nil, nil, true),
+                                true, nil)
+                        end
+                    end
+                end
+            end
+            G.GAME.starting_deck_size = #G.playing_cards
+
+
+            G.deck:shuffle('akyrsletterdeck')
+            return true
+        end
+    }))
+end

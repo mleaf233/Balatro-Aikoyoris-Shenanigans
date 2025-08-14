@@ -20,6 +20,7 @@
 
 SMODS.Back{
     key = "letter_deck",
+    name = "Letter Deck",
     atlas = 'deckBacks',
     pos = {x = 0, y = 0},
     loc_vars = function (self, info_queue, card)
@@ -44,6 +45,7 @@ SMODS.Back{
 }
 SMODS.Back{
     key = "math_deck",
+    name = "Math Deck",
     atlas = 'deckBacks',
     pos = {x = 4, y = 0},
     loc_vars = function (self, info_queue, card)

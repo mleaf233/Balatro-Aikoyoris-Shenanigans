@@ -317,6 +317,10 @@ function Game:start_run(args)
     if self.GAME.modifiers.akyrs_can_buy_playing_cards then
         G.GAME.playing_card_rate = 4
     end
+    
+    if G.GAME.modifiers.akyrs_no_skips then
+        G.GAME.akyrs_no_skips = G.GAME.modifiers.akyrs_no_skips
+    end
     if self.GAME.modifiers.akyrs_no_hints then
         AKYRS.simple_event_add(
             function()
@@ -1370,51 +1374,21 @@ function Back:apply_to_run()
         end
     end
     if G.GAME.starting_params.akyrs_starting_letters then
-        
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                G.playing_cards = {}
-                
-                local deckloop = G.GAME.starting_params.deck_size_letter or 1
-                local usedLetter = {}
-                for loops = 1, deckloop do
-                    for i, letter in pairs(G.GAME.starting_params.akyrs_starting_letters) do
-                        G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                        local front = pseudorandom_element(G.P_CARDS, pseudoseed('aikoyori:akyrs_letter_randomer'))
-                        local car = Card(G.deck.T.x, G.deck.T.y, G.CARD_W, G.CARD_H, front, G.P_CENTERS['c_base'],
-                            { playing_card = G.playing_card })
-                        car.is_null = true
-
-                        -- misprintize
-                        if G.GAME.modifiers and G.GAME.modifiers.cry_misprint_min and G.GAME.modifiers.cry_misprint_max then
-                            for k, v in pairs(G.playing_cards) do
-                                Cryptid.misprintize(car)
-                            end
-                        end
-                        if not G.GAME.starting_params.akyrs_letters_no_uppercase then
-                            if not usedLetter[letter:lower()] then letter = letter:upper() usedLetter[letter:lower()]=true else letter = letter:lower() end
-                        end
-                        car:set_letters(letter)
-                        G.deck:emplace(car)
-
-                        table.insert(G.playing_cards, car)
-                        -- for cryptid
-                        if G.GAME.modifiers and G.GAME.modifiers.cry_ccd then
-                            for k, v in pairs(G.playing_cards) do
-                                v:set_ability(Cryptid.random_consumable('cry_ccd', { "no_doe", "no_grc" }, nil, nil, true),
-                                    true, nil)
-                            end
-                        end
-                    end
-                end
-                G.GAME.starting_deck_size = #G.playing_cards
-
-
-                G.deck:shuffle('akyrsletterdeck')
-                return true
-            end
-        }))
+        AKYRS.initialise_deck_letter(G.GAME.starting_params.akyrs_starting_letters)
     end
+    AKYRS.simple_event_add(
+        function ()
+            if G.GAME.modifiers.akyrs_start_with_letter_deck then
+                G.GAME.starting_params.akyrs_starting_letters = AKYRS.scrabble_letters
+                AKYRS.initialise_deck_letter(G.GAME.starting_params.akyrs_starting_letters)
+                G.GAME.akyrs_character_stickers_enabled = true
+                G.GAME.akyrs_wording_enabled = true
+                SMODS.change_play_limit(1e100)
+                SMODS.change_discard_limit(1e100)
+            end
+            return true
+        end, 0
+    )
     return c
 end
 
@@ -1711,5 +1685,16 @@ function Blind:set_blind(blind, initial, silent)
         --AKYRS.nope_buzzer()
     else
         return setBlindHook(self,blind, initial, silent)
+    end
+end
+
+local rst_blind = reset_blinds
+function reset_blinds()
+    if G.GAME.modifiers.akyrs_all_blinds_are then
+        for bl, cho in pairs(G.GAME.round_resets.blind_choices) do
+            G.GAME.round_resets.blind_choices[bl] = G.GAME.modifiers.akyrs_all_blinds_are
+        end
+    else
+        rst_blind()
     end
 end
