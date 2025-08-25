@@ -445,6 +445,20 @@ return {
                     "below hand size",
                 },
             },
+            dd_akyrs_vallkarri_ability={
+                name="Vall-Karri Ability",
+                text={
+                    "Create a {C:dark_edition}Negative{} {C:attention}Aesthetic Card",
+                    "If {C:blue}Hands{} = {C:red}Discards{} after pressing play"
+                },
+            },
+            dd_akyrs_grab_bag_ability={
+                name="Grab Bag Ability",
+                text={
+                    "Create a {C:dark_edition}Negative{} {C:attention}Ephemeral Card",
+                    "When blind is selected"
+                },
+            },
             dd_akyrs_mukuroju_en = {
                 name = "Mukuroju no Hakamori",
                 text = { 
@@ -616,7 +630,7 @@ return {
                 name = "Sliced",
                 text = {
                     "{C:attention}Halves{} all values",
-                    "Triggers {C:attention}twice",
+                    "Effects calculate {C:attention}twice",
                 }
             },
             e_akyrs_burnt = {
@@ -1268,46 +1282,20 @@ return {
                     "{X:chips,C:white}X#2#{} Chips when any of",
                     "{C:attention}L{}, {C:attention}S{}{C:inactive}(pades), {C:attention}O{}, {C:attention}Z{}, {C:attention}J{C:inactive}(ack), {C:attention}I{}, and {C:attention}T{}{C:inactive}(en)",
                     "are played",
-                    "{s:0.9,C:inactive,f:akyrs_MochiyPopOne}テテテテト テト テテテテトリス!{}"
+                    "{s:0.9,C:inactive,f:5}テテテテト テト テテテテトリス!{}"
                 }
             },
             j_akyrs_tetoris_absurd = {
                 name = "Tetoris",
                 text = { 
-                    "Increase {C:attention}counter{} by {C:attention}1{} per card played",
-                    "If counter is at least {C:attention}4{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:spectral}Spectral Card{} and {C:attention}reduce{} the counter by {C:attention}4{}",
-                    "If counter is at least {C:attention}30{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:spectral}The Soul{} and {C:attention}reduce{} the counter by {C:attention}30{}",
+                    "Increase {C:attention}lines cleared{} by {C:attention}1{} per card played",
+                    "If counter is at least {C:attention}4{} at the end of the round",
+                    "Create a {C:dark_edition}Negative{} {C:spectral}Spectral Card{} and {C:attention}reduce{} lines cleared by {C:attention}4{}",
+                    "If counter is at least {C:attention}160{} at the end of the round",
+                    "Create a {C:dark_edition}Negative{} {C:spectral}The Soul{} and {C:attention}reduce{} lines cleared by {C:attention}160{}",
                     "{C:inactive}(Lines Cleared : {X:attention,C:white} #1# {C:inactive})",
-                }
-            },
-            j_akyrs_tetoris_absurd_cryptid = {
-                name = "Tetoris",
-                text = { 
-                    "Increase {C:attention}counter{} by {C:attention}1{} per card played",
-                    "If counter is at least {C:attention}4{} when a hand is played,",
-                    "Create a {C:spectral}Spectral Card{} and {C:attention}reduce{} the counter by {C:attention}4{}",
-                    "If counter is at least {C:attention}30{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:spectral}The Soul{} and {C:attention}reduce{} the counter by {C:attention}30{}",
-                    "If counter is at least {C:attention}40{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:spectral}Gateway{} and {C:attention}reduce{} the counter by {C:attention}40{}",
-                    "{C:inactive}(Lines Cleared : {X:attention,C:white} #1# {C:inactive})",
-                }
-            },
-            j_akyrs_tetoris_absurd_cryptid_entropy = {
-                name = "Tetoris",
-                text = { 
-                    "Increase {C:attention}counter{} by {C:attention}1{} per card played",
-                    "If counter is at least {C:attention}4{} when a hand is played,",
-                    "Create a {C:spectral}Spectral Card{} and {C:attention}reduce{} the counter by {C:attention}4{}",
-                    "If counter is at least {C:attention}30{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:spectral}The Soul{} and {C:attention}reduce{} the counter by {C:attention}30{}",
-                    "If counter is at least {C:attention}40{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:spectral}Gateway{} and {C:attention}reduce{} the counter by {C:attention}40{}",
-                    "If counter is at least {C:attention}50{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:akyrs_playable}Beyond{} and {C:attention}reduce{} the counter by {C:attention}50{}",
-                    "{C:inactive}(Lines Cleared : {X:attention,C:white} #1# {C:inactive})",
+                    "{s:0.9,C:inactive,f:5}興味がないこと本気じゃないもの全部後回しで{}",
+                    "{s:0.9,C:inactive,f:5}知ってることは知らんぷり私は終わってる{}",
                 }
             },
             j_akyrs_aikoyori = {

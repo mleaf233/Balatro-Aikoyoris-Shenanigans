@@ -1896,7 +1896,7 @@ SMODS.Joker {
     loc_vars = function (self, info_queue, card)
         if AKYRS.bal("absurd") then
             return {
-                key = self.key.."_absurd"..(Cryptid and "_cryptid" or "")..(Entropy and "_entropy" or ""),
+                key = self.key.."_absurd",
                 vars = {
                     card.ability.extras.immutable.counter,
                 }
@@ -1919,29 +1919,17 @@ SMODS.Joker {
                     end
                 }
             end
-            if context.before then
+            if context.end_of_round and context.cardarea == G.jokers then
                 card.ability.extras.immutable.counter = math.max(card.ability.extras.immutable.counter,0)
                 SMODS.calculate_effect({func = function() 
-                    if Entropy and card.ability.extras.immutable.counter >= 50 then
-                        SMODS.add_card{ key = "c_entr_beyond", set = "Omen", edition = "e_negative"} 
-                        card.ability.extras.immutable.counter = card.ability.extras.immutable.counter - 50
-                    end
-                end})
-                SMODS.calculate_effect({func = function() 
-                    if Entropy and card.ability.extras.immutable.counter >= 40 then
-                        SMODS.add_card{ key = "c_cry_gateway", set = "Spectral", edition = "e_negative"} 
-                        card.ability.extras.immutable.counter = card.ability.extras.immutable.counter - 40
-                    end
-                end})
-                SMODS.calculate_effect({func = function() 
-                    if Entropy and card.ability.extras.immutable.counter >= 30 then
+                    if card.ability.extras.immutable.counter >= 160 then
                         SMODS.add_card{ key = "c_soul", set = "Spectral", edition = "e_negative"} 
-                        card.ability.extras.immutable.counter = card.ability.extras.immutable.counter - 30
+                        card.ability.extras.immutable.counter = card.ability.extras.immutable.counter - 160
                     end
                 end})
                 SMODS.calculate_effect({func = function() 
-                    if Entropy and card.ability.extras.immutable.counter >= 4 then
-                        SMODS.add_card{ set = "Spectral", edition = "e_negative"} 
+                    if card.ability.extras.immutable.counter >= 4 then
+                        SMODS.add_card{ set = "Spectral", edition = "e_negative", soulable = true} 
                         card.ability.extras.immutable.counter = card.ability.extras.immutable.counter - 4
                     end
                 end})
@@ -2026,6 +2014,12 @@ SMODS.Joker {
         if AKYRS.is_mod_loaded("Astronomica") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_astronomica_ability"}
         end
+        if AKYRS.is_mod_loaded("vallkarri") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_vallkarri_ability"}
+        end
+        if AKYRS.is_mod_loaded("GrabBag") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_grab_bag_ability"}
+        end
         return {
         }
     end,
@@ -2042,13 +2036,26 @@ SMODS.Joker {
     calculate = function (self, card, context)
         if context.skip_blind then
             if Cryptposting then
-                local jkr = pseudorandom_element(cryptposting_joker,pseudoseed("aikocryptposting"))
-                SMODS.add_card({set = "Joker", key = jkr})
+                return {
+                    func = function()
+                        local jkr = pseudorandom_element(cryptposting_joker,pseudoseed("aikocryptposting"))
+                        SMODS.add_card({set = "Joker", key = jkr})
+                    end
+                }
+            end
+        end
+        if context.setting_blind then
+            if AKYRS.is_mod_loaded("vallkarri") then
+                return {
+                    func = function()
+                        SMODS.add_card({set = "Ephemeral", area = G.consumeables, edition = "e_negative"})
+                    end
+                }
             end
         end
         if context.before then
             if Cryptid and #G.play.cards == 1 and G.play.cards[1]:get_id() == 14 then
-                SMODS.add_card({set = "Code", area = G.consumeables, edition = "e_negative"})
+                SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Code", area = G.consumeables, edition = "e_negative"}) end}, card)
             end
             if Entropy and #context.full_hand >= 4 then
                 local suits_in_hand = {}
@@ -2066,17 +2073,22 @@ SMODS.Joker {
                     end
                 end
                 if all_card_unique then
-                    SMODS.add_card({set = "Spectral", key = "c_entr_flipside", area = G.consumeables, edition = "e_negative"})
+                    SMODS.calculate_effect({ func = function() SMODS.add_card({key = "c_entr_flipside", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end
             end
             if SDM_0s_Stuff_Mod then
                 if next(context.poker_hands["Full House"]) then
-                    SMODS.add_card({set = "Bakery", area = G.consumeables, edition = "e_negative"})
+                    SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Bakery", area = G.consumeables, edition = "e_negative"}) end}, card)
+                end
+            end
+            if AKYRS.is_mod_loaded("vallkarri") then
+                if G.GAME.current_round.hands_left == G.GAME.current_round.discards_left then
+                    SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Aesthetic", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end
             end
             if AKYRS.is_mod_loaded("Prism") then
                 if not next(context.poker_hands["Flush"]) then
-                    SMODS.add_card({set = "Myth", area = G.consumeables, edition = "e_negative"})
+                    SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Myth", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end
             end
         end 
@@ -2095,10 +2107,10 @@ SMODS.Joker {
             end
         end
         if AKYRS.is_mod_loaded("finity") and context.blind_defeated and G.GAME.blind and G.GAME.blind.boss and G.GAME.blind.config.blind.boss.showdown then
-            SMODS.add_card({set = "Spectral", area = G.consumeables, edition = "e_negative", key = "c_finity_finity"})
+            SMODS.calculate_effect({ func = function() SMODS.add_card({key = "c_finity_finity", area = G.consumeables, edition = "e_negative"}) end}, card)
         end
         if garb_enabled and context.selling_card and context.card.ability.set == "Joker" then
-            SMODS.add_card({set = "Stamp", area = G.consumeables, edition = "e_negative"})
+            SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Stamp", area = G.consumeables, edition = "e_negative"}) end}, card)
         end
         if context.individual and context.cardarea == G.play then
             if not context.other_card:is_face() then
