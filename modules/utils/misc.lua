@@ -1057,3 +1057,19 @@ function AKYRS.random_string(length)
     return stri
 
 end
+
+function AKYRS.round(val)
+    local neg = val < 0 and -1 or 1
+    local ve = math.abs(val)
+    if ve - math.floor(ve) >= 0.5 then
+        return neg * math.ceil(ve)
+    else
+        return neg * math.floor(ve)
+    end
+end
+-- https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
+function AKYRS.hsl2rgb(h,s,l,al) 
+    local a=s*math.min(l,1-l);
+    local f = function(n, k) k = math.fmod((n+h/30),12); return l - a*math.max(math.min(k-3,9-k,1),-1) end
+    return {f(0),f(8),f(4),al};
+end

@@ -272,3 +272,27 @@ AKYRS.DescriptionDummy{
         })
     end,
 }
+if SMODS.DynaTextEffect then
+    SMODS.DynaTextEffect {
+        key = "obfuscate",
+        func = function (dynatext, index, letter)
+            letter.letter = love.graphics.newText(dynatext.font.FONT, string.char(math.fmod((string.byte(letter.char) + math.fmod(math.floor(G.TIMERS.REAL * 142.1 + index), 192)), 94)+ 33))
+        end
+    }
+
+    SMODS.DynaTextEffect {
+        key = "rainbow_wiggle",
+        func = function (dynatext, index, letter)
+            letter.colour = AKYRS.hsl2rgb(math.fmod((G.TIMERS.REAL + index) * 50, 360), 1, 0.75)
+            letter.offset.y = math.cos(G.TIMERS.REAL * 2.95 + index) * 9
+            letter.scale = (((math.sin((G.TIMERS.REAL + index)*2.9443) + 1)/2) + 6 )/6
+        end
+    }
+    SMODS.DynaTextEffect {
+        key = "snaking",
+        func = function (dynatext, index, letter)
+            letter.offset.x = math.sin((G.TIMERS.REAL + index) * 7.95) * 9
+            letter.offset.y = math.cos((G.TIMERS.REAL + index) * 7.95) * 9
+        end
+    }
+end

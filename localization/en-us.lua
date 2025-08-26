@@ -335,14 +335,14 @@ return {
                 },
             },
             dd_akyrs_aikoyori_base_ability={
-                name="Base Ability",
+                name="Steamodded & Lovely Ability",
                 text={
                     "{X:mult,C:white} X#1# {} Mult per",
                     "{C;attention}non-face{} cards scored",
                 },
             },
             dd_akyrs_aikoyori_base_ability_absurd={
-                name="Base Ability",
+                name="Steamodded & Lovely Ability",
                 text={
                     "{X:dark_edition,C:white} ^#1# {} Mult per",
                     "{C;attention}non-face{} cards scored",
@@ -1299,9 +1299,9 @@ return {
                 }
             },
             j_akyrs_aikoyori = {
-                name = "{C:dark_edition}Aikoyori",
+                name = "{C:dark_edition,E:akyrs_rainbow_wiggle}Aikoyori",
                 text = { 
-                    "This Joker gains more abilities",
+                    "This {E:akyrs_obfuscate}Joker?{} gains more abilities",
                     "the more {C:attention}mods{} you installed",
                     "{C:inactive}The self-insert of all time!"
                 }
@@ -1487,7 +1487,7 @@ return {
                     "and create {C:dark_edition}Negative {C:attention}Mr.Bones{}",
                     "equal to the {C:attention}number of digits{} in",
                     "that Joker's {C:attention}sell price",
-                    "{E:2,C:red}Self-destructs",
+                    "{E:akyrs_snaking,C:red}Self-destructs",
                 }
             },
             j_akyrs_no_hints_here = {
@@ -1531,7 +1531,7 @@ return {
                     "{C:red}Destroy all your Jokers",
                     "Halves your current Ante {C:inactive}(rounding up)",
                     "Sets money to {C:money}$#2#",
-                    "then {E:1,C:red}self-desructs",
+                    "then {E:akyrs_snaking,C:red}self-destructs",
                 }
             },
             j_akyrs_you_tried_absurd = {
@@ -1539,7 +1539,7 @@ return {
                 text = { 
                     "{C:attention}Prevents death",
                     "Set Ante to {C:attention}#1#{}",
-                    "then {E:1,C:red}self-desructs",
+                    "then {E:akyrs_snaking,C:red}self-destructs",
                 }
             },
             j_akyrs_don_chan = {
@@ -1576,7 +1576,7 @@ return {
                 name = "Lagtrain",
                 text = { 
                     "If played hand contained a {C:attention}Straight",
-                    "gain {C:chips} +#1# {} Chips per {C:white,X:mult}FPS{} below #2#",
+                    "gain {C:chips}+#1#{} Chips per {C:white,X:mult}FPS{} below #2#",
                     "{C:inactive}(Currently {C:chips} +#3# {C:inactive} Chips)",
                 }
             },
