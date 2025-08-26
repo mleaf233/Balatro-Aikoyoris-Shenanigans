@@ -108,6 +108,9 @@ SMODS.Consumable{
         min_highlighted = 0,
         max_highlighted = 99999,
     },
+    can_use = function (self, card)
+        return true
+    end,
     use = function (self, card, area, copier)
         table.sort(G.hand.highlighted,AKYRS.hand_sort_function_immute)
         AKYRS.juice_like_tarot(card)
