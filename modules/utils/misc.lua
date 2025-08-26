@@ -850,6 +850,9 @@ function AKYRS.juice_like_tarot(card)
     play_sound('tarot1')
     card:juice_up(0.3, 0.5)
 end
+---@param cards Card[] list of cards
+---@param func fun(card: Card): nil callback for each card
+---@param config? table config for the function
 function AKYRS.do_things_to_card(cards, func, config) -- func(card)
     config = config or {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true}
     for i, card in ipairs(cards) do

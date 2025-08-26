@@ -1,3 +1,4 @@
+---@type SMODS.Joker
 AKYRS.LetterJoker = SMODS.Joker:extend{
     in_pool = function (self, args)
         return G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled or false
@@ -11,10 +12,7 @@ AKYRS.LetterJoker = SMODS.Joker:extend{
 -- maxwell's notebook
 AKYRS.LetterJoker {
     atlas = 'guestJokerArts',
-    pos = {
-        x = 0,
-        y = 0
-    },
+    pos = { x = 0, y = 0 },
     pools = { ["Letter"] = true },
     key = "maxwells_notebook",
     rarity = 3,
@@ -152,4 +150,42 @@ AKYRS.LetterJoker{
         end
 
     end
+}
+
+AKYRS.LetterJoker {
+    key = "g",
+    atlas = 'guestJokerArts',
+    pos = { x = 1, y = 0 },
+    pools = { ["Letter"] = true },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_zap_card"]
+        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_credit_larantula"]
+    end,
+    rarity = 3,
+    cost = 7,
+    config = {
+    },
+    calculate = function (self, card, context)
+        if context.joker_main and G.GAME.aiko_current_word then
+            return {
+                func = function()
+                    ---@type Card[]
+                    G.play.cards = G.play.cards
+                    table.sort(G.play.cards,AKYRS.hand_sort_function)
+                    local l = G.play.cards[1]:get_letter_with_pretend()
+                    if l and string.lower(l) == "g" then
+                        for x,_c in ipairs(G.play.cards) do
+                            _c.ability.aiko_about_to_be_destroyed = true
+                        end
+                        AKYRS.do_things_to_card( G.hand.cards, function (card)
+                            card:set_ability(G.P_CENTERS['m_akyrs_zap_card'])
+                        end)
+                    end
+                end
+            }
+        end
+        if context.destroying_card and context.destroying_card.ability.aiko_about_to_be_destroyed then
+            return { remove = true }
+        end
+    end,
 }

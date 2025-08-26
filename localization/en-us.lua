@@ -776,6 +776,24 @@ return {
             },
         },
         Joker={
+            -- toga
+            j_akyrs_toga_charmap = {
+                
+                name = "Character Map",
+                text = {
+                    "Create an Alphabet {C:attention}Alphabet{} card for the most",
+                    "common letter played if there's only {C:attention}one{} most common letter"
+                }
+            },
+            j_akyrs_toga_winword = {
+                
+                name = "Microsoft Word",
+                text = { 
+                    "This Joker gains {X:mult,C:white} X#1# {} Mult",
+                    "per letter if a word is played",
+                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                }
+            },
             j_akyrs_redstone_repeater = {
                 name = "Redstone Repeater",
                 text = { "Swaps the current {C:white,X:mult} Mult {}", "with the stored {C:mult}Mult",
@@ -1690,24 +1708,20 @@ return {
                     },
                 }
             },
-            -- toga
-            j_akyrs_toga_charmap = {
-                
-                name = "Character Map",
+            j_akyrs_g = {
+                name = {
+                    'Awesome fucking evil blue',
+                    'flaming skull next to',
+                    'a keyboard with the "g"',
+                    'key being highlighted',
+                },
                 text = {
-                    "Create an Alphabet {C:attention}Alphabet{} card for the most",
-                    "common letter played if there's only {C:attention}one{} most common letter"
+                    'If first hand played is a word',
+                    'and starts with a {C:white,X:blue}g{}',
+                    '{E:akyrs_shrivel,C:red}Destroy all cards played{}',
+                    'and enhance all cards in hand to {C:blue}Zap Cards{}'
                 }
-            },
-            j_akyrs_toga_winword = {
-                
-                name = "Microsoft Word",
-                text = { 
-                    "This Joker gains {X:mult,C:white} X#1# {} Mult",
-                    "per letter if a word is played",
-                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
-                }
-            },
+            }
         },
         Partner = {
             pnr_akyrs_aikoyori = {

@@ -291,8 +291,15 @@ if SMODS.DynaTextEffect then
     SMODS.DynaTextEffect {
         key = "snaking",
         func = function (dynatext, index, letter)
-            letter.offset.x = math.sin((G.TIMERS.REAL + index) * 7.95) * 9
-            letter.offset.y = math.cos((G.TIMERS.REAL + index) * 7.95) * 9
+            letter.offset.x = math.sin((G.TIMERS.REAL + index) * 7.95) * 7
+            letter.offset.y = math.cos((G.TIMERS.REAL + index) * 7.95) * 7
+        end
+    }
+    SMODS.DynaTextEffect {
+        key = "shrivel",
+        func = function (dynatext, index, letter)
+            letter.offset.x = math.sin((G.TIMERS.REAL * 14511.15 + index * 534.415) * 7.95) * 5
+            letter.offset.y = math.cos((G.TIMERS.REAL * 534.15 + index * 14511.415) * 7.95) * 5
         end
     }
 end
