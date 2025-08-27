@@ -210,6 +210,7 @@ SMODS.PokerHand{
         if not status or #hand < 1 then return {} end
         G.GAME.aikoyori_evaluation_value = value
         G.GAME.aikoyori_evaluation_replace = false
+        SMODS.set_scoring_calculation('akyrs_math_display')
         if (G.STATE == G.STATES.HAND_PLAYED) then
 
             G.GAME.aikoyori_evaluation_value = value
@@ -260,7 +261,7 @@ SMODS.PokerHand{
         if not status then return {} end
         G.GAME.aikoyori_evaluation_value = value
         G.GAME.aikoyori_evaluation_replace = true
-
+        SMODS.set_scoring_calculation('akyrs_math_display')
         if (G.STATE == G.STATES.HAND_PLAYED) then
 
             G.GAME.aikoyori_evaluation_value = value

@@ -542,3 +542,16 @@ lifespan = args.backdrop_lifespan or 5,
 speed = args.backdrop_speed or 0,'''
 match_indent = true
 overwrite = true
+
+[[patches]]
+[patches.pattern]
+target = '''engine/text.lua'''
+pattern = '''                new_string = (v.prefix or '')..format_ui_value(v.ref_table and v.ref_table[v.ref_value] or v.string)..(v.suffix or '')'''
+position = 'after'
+payload = '''
+if self.config.akyrs_number_format then
+    new_string = (v.prefix or '')..number_format(v.ref_table and v.ref_table[v.ref_value] or v.string, self.config.akyrs_number_format)..(v.suffix or '')
+end
+'''
+match_indent = true
+overwrite = true

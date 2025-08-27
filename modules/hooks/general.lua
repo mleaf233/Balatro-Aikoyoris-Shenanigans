@@ -245,11 +245,7 @@ function AKYRS.expensive_calculation()
             G.GAME.aiko_last_chips = G.GAME.current_round.current_hand.chips
         end
         if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
-            if G.GAME.current_round and G.GAME.current_round.current_hand then
-                G.GAME.current_round.current_hand.chips = 0
-                G.GAME.current_round.current_hand.mult = 0
-            end
-            update_hand_text({immediate = true, nopulse = true, delay = 0}, {mult = 0, chips = 0})
+            SMODS.set_scoring_calculation('akyrs_math_display')
         end
     end
     if G.STATE == G.STATES.SELECTING_HAND then
@@ -647,6 +643,10 @@ end
 
 local removeFhighlightHook = CardArea.remove_from_highlighted
 function CardArea:remove_from_highlighted(card, force)
+    
+    if self and self == G.hand and G.STATE == G.STATES.SELECTING_HAND then
+        G.GAME.aikoyori_evaluation_value = 0
+    end
     local ret = removeFhighlightHook(self,card, force)
     if AKYRS.checkBlindKey("bl_akyrs_the_picker") and not G.GAME.blind.disabled and self == G.hand then
         if G.GAME.blind.debuff.primed and not G.GAME.blind.debuff.lock and AKYRS.picker_primed_action and not G.GAME.blind.debuff.acted and G.STATE == G.STATES.SELECTING_HAND then
@@ -658,7 +658,11 @@ function CardArea:remove_from_highlighted(card, force)
 end
 local unhighlightallHook = CardArea.unhighlight_all
 function CardArea:unhighlight_all()
+    if self and self == G.hand and G.STATE == G.STATES.SELECTING_HAND then
+        G.GAME.aikoyori_evaluation_value = 0
+    end
     local ret = unhighlightallHook(self)
+
     if AKYRS.checkBlindKey("bl_akyrs_the_picker") and not G.GAME.blind.disabled and self == G.hand then
         if G.GAME.blind.debuff.primed and not G.GAME.blind.debuff.lock and AKYRS.picker_primed_action and not G.GAME.blind.debuff.acted and G.STATE == G.STATES.SELECTING_HAND then
             AKYRS.picker_primed_action()
@@ -767,10 +771,65 @@ G.FUNCS.evaluate_play = function(e)
         end
     end
     if G.GAME.aikoyori_evaluation_value ~= G.GAME.aikoyori_evaluation_value then
-        error("Galaxy Collapse!",4)
+        error([[Galaxy Collapse!
+
+
+
+
+Obviously this is not a real crash LMAO don't bother reporting.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ]],4)
         return {}
     end
-    if G.GAME.aikoyori_evaluation_value then
+    if G.GAME.aikoyori_evaluation_value and G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
         
         attention_text({
             scale =  1.5, text = ""..G.GAME.aikoyori_evaluation_value, hold = 15, align = 'tm',
@@ -937,7 +996,11 @@ G.FUNCS.evaluate_play = function(e)
             ease_chips(G.GAME.chips + G.GAME.aikoyori_evaluation_value)
         end
     end
-    G.GAME.aikoyori_evaluation_value = nil
+    if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
+        G.GAME.aikoyori_evaluation_value = 0
+    else
+        G.GAME.aikoyori_evaluation_value = nil
+    end
     G.GAME.aikoyori_variable_to_set = nil
     G.GAME.aikoyori_value_to_set_to_variable = nil
     G.GAME.aiko_current_word = nil

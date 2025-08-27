@@ -286,3 +286,8 @@ G.FUNCS.buy_from_shop = function (e)
         return func_bfs(e)
     end
 end
+
+local card_click = Card.click
+function Card:click()
+    return card_click(self)
+end
