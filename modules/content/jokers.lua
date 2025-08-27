@@ -103,7 +103,8 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
-        if context.akyrs_score_change then
+        if context.akyrs_score_change and AKYRS.bal("absurd") then
+            -- this does not need scaling
             card.ability.extra.times = card.ability.extra.times - 1
             return {
                 func = function()
@@ -128,9 +129,15 @@ SMODS.Joker {
                                 vars = { card.ability.extra.times }
                             },
                         })
+                        -- this also does NOT need scaling
                         card.ability.extra.total_times = card.ability.extra.total_times + card.ability.extra.times_increment
                         card.ability.extra.times = card.ability.extra.total_times
-                        card.ability.extra.xmult_stored = card.ability.extra.xmult_stored + card.ability.extra.xmult
+                        -- this however do
+                        SMODS.scale_card(card,{
+                            ref_table = card.ability.extra,
+                            ref_value = "xmult_stored",
+                            scalar_value = "xmult",
+                        })
                     end
                     card.ability.extra.mult_change = mult
                     card.ability.extra.chip_change = chips
@@ -147,7 +154,12 @@ SMODS.Joker {
                         SMODS.calculate_effect({
                             message = localize("k_upgrade_ex"),
                             func = function ()
-                                card.ability.extra.mult_stored = card.ability.extra.mult_stored + card.ability.extra.mult
+                                -- same deal here
+                                SMODS.scale_card(card,{
+                                    ref_table = card.ability.extra,
+                                    ref_value = "mult_stored",
+                                    scalar_value = "mult",
+                                })
                                 card.ability.extra.total_times = card.ability.extra.total_times + card.ability.extra.times_increment
                                 card.ability.extra.times = card.ability.extra.total_times
                             end,
@@ -418,7 +430,16 @@ SMODS.Joker {
                     SMODS.calculate_effect({
                         message = localize("k_upgrade_ex"),
                         func = function ()
-                            card.ability.extra.xchip_storage = card.ability.extra.xchip_storage + card.ability.extra.xchip_add * card.ability.extra.chip_add_stack_absurd
+                            SMODS.scale_card(card,{
+                                ref_table = card.ability.extra,
+                                ref_value = "xchip_storage",
+                                scalar_value = "xchip_add",
+                                -- smods whyyyyy
+                                operation = function (ref_t,ref_v,initial,scalar)
+                                    ref_t[ref_v] = initial + scalar * card.ability.extra.chip_add_stack_absurd
+                                end
+                            })
+                            
                         end
                     },card)
                 else
@@ -599,7 +620,11 @@ SMODS.Joker {
                     colour = G.C.MULT,
                     card = card,
                     func = function ()
-                        card.ability.extra.Xmult_absurd = card.ability.extra.Xmult_absurd + card.ability.extra.extra_absurd
+                        SMODS.scale_card(card, {
+                            ref_table = card.ability.extra,
+                            ref_value = "Xmult_absurd",
+                            scalar_value = "extra_absurd"
+                        })
                     end
                 }
             end
@@ -715,16 +740,12 @@ SMODS.Joker {
         end		
         if context.using_consumeable or context.forcetrigger and AKYRS.bal("absurd") then
             if context.consumeable.config.center_key == 'c_wheel_of_fortune' or context.forcetrigger then
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.gain_chips 
-                card.ability.extra.Xchips = card.ability.extra.Xchips + card.ability.extra.gain_Xchips 
-                card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain_mult 
-                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.gain_Xmult
-                card.ability.extra.chips_absurd = card.ability.extra.chips_absurd + card.ability.extra.gain_chips_absurd
-                card.ability.extra.Xchips_absurd = card.ability.extra.Xchips_absurd + card.ability.extra.gain_Xchips_absurd
-                card.ability.extra.mult_absurd = card.ability.extra.mult_absurd + card.ability.extra.gain_mult_absurd
-                card.ability.extra.Xmult_absurd = card.ability.extra.Xmult_absurd + card.ability.extra.gain_Xmult_absurd
+                SMODS.scale_card(card, { no_message = true, ref_table = card.ability.extra, ref_value = "chips_absurd", scalar_value = "gain_chips_absurd" })
+                SMODS.scale_card(card, { no_message = true, ref_table = card.ability.extra, ref_value = "Xchips_absurd", scalar_value = "gain_Xchips_absurd" })
+                SMODS.scale_card(card, { no_message = true, ref_table = card.ability.extra, ref_value = "mult_absurd", scalar_value = "gain_mult_absurd" })
+                SMODS.scale_card(card, { no_message = true, ref_table = card.ability.extra, ref_value = "Xmult_absurd", scalar_value = "gain_Xmult_absurd" })
                 SMODS.calculate_effect({
-                    message= localize('k_upgrade_ex')
+                    message = localize('k_upgrade_ex')
                 }, card)
             end
         end
@@ -740,7 +761,7 @@ SMODS.Joker {
                             AKYRS.simple_event_add(function()
                                 AKYRS.juice_like_tarot(card)
                                 k:juice_up(0.3, 0.5)
-                                k.ability.perma_x_mult = (k.ability.perma_x_mult or 0) + card.ability.extra.gain_Xmult
+                                SMODS.scale_card(k, { ref_table = k.ability, ref_value = "perma_x_mult", scalar_table = card.ability.extra, scalar_value = "gain_Xmult" })
                                 return true
                             end, 0.5)
                         end
@@ -772,7 +793,7 @@ SMODS.Joker {
         return {
             vars = { 
                 card.ability.extra.times,
-             }
+            }
         }
     end,
     config = {
@@ -991,7 +1012,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.before or context.forcetrigger then
             for i, _card in ipairs(G.play.cards) do
-                card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.extra
+                SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "chips", scalar_value = "extra" })
             end
             return {
                 message = localize("k_akyrs_2fa_generate")
@@ -1054,14 +1075,14 @@ SMODS.Joker {
                                         assert(SMODS.change_base(G.play.cards[i], _suit.key, _rank.key))
                                         G.play.cards[i]:flip()
                                         if G.play.cards[i]:get_id() == original_rank and AKYRS.bal("absurd") then
-                                            card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.xchips_gain
+                                            SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xchips", scalar_value = "xchips_gain" })
                                             SMODS.calculate_effect({
                                                 message = localize("k_upgrade_ex"),
                                                 colour = G.C.CHIPS
                                             }, card)
                                         end
                                         if G.play.cards[i].base.suit == original_suit and AKYRS.bal("absurd") then
-                                            card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmult_gain
+                                            SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "xmult_gain" })
                                             SMODS.calculate_effect({
                                                 message = localize("k_upgrade_ex"),
                                                 colour = G.C.MULT
@@ -1159,7 +1180,8 @@ SMODS.Joker{
                                 if AKYRS.score_catches_fire_or_not() then
                                     card.ability.extra.xmult = 1
                                 else 
-                                    card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.extra
+                                    
+                                    SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "extra" })
                                 end
                                 return true
                             end
@@ -1425,8 +1447,11 @@ SMODS.Joker{
                             card.ability.extras.xmult_absurd = to_big(card.ability.extras.xmult_absurd)
                             card.ability.extras.xmult_inc_absurd = to_big(card.ability.extras.xmult_inc_absurd)
                         end
-                        card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_inc
-                        card.ability.extras.xmult_absurd = card.ability.extras.xmult_absurd * card.ability.extras.xmult_inc_absurd
+                        if AKYRS.bal("absurd") then
+                            SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "xmult_inc" })
+                        else
+                            SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xmult_absurd", scalar_value = "xmult_inc_absurd" })
+                        end
                     end
                 }
             end
@@ -1483,12 +1508,18 @@ SMODS.Joker{
                     message = localize("k_upgrade_ex"),
                     message_card = card,
                     func = function ()
-                        card.ability.extras.xchips = card.ability.extras.xchips + card.ability.extras.xchips_inc
-                        if Talisman then
+                        if AKYRS.bal("adequate") then
+                            
+                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips", scalar_value = "xchips_inc" })
+                        end
+                        if AKYRS.bal("absurd") then
                             card.ability.extras.xchips_absurd = to_big(card.ability.extras.xchips_absurd)
                             card.ability.extras.xchips_inc_absurd = to_big(card.ability.extras.xchips_inc_absurd)
+                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips_absurd", scalar_value = "xchips_inc_absurd",
+                                operation = function (ref_t,ref_v,initial,scalar)
+                                    ref_t[ref_v] = initial ^ scalar 
+                                end })
                         end
-                        card.ability.extras.xchips_absurd = card.ability.extras.xchips_absurd ^ card.ability.extras.xchips_inc_absurd
                     end
                 }
             end
@@ -1504,6 +1535,8 @@ SMODS.Joker{
 }
 
 -- happy ghast family
+
+-- also for future reference scale_card should not be used on round timer
 
 SMODS.Joker{
     atlas = 'AikoyoriJokers',
@@ -1783,7 +1816,7 @@ SMODS.Joker{
             if odder then
                 card.ability.akyrs_ash_disintegrate = odder
             else
-                card.ability.extras.chips = card.ability.extras.chips + card.ability.extras.chips_gain
+                SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "chips", scalar_value = "chips_gain" })
             end
         end
     end,
@@ -1853,10 +1886,13 @@ SMODS.Joker{
             if context.card_getting_removed.ability.mult - context.card_getting_removed.ability.extra <= 0 then
                 return {
                     message = localize("k_upgrade_ex"),
-                    func = function ()
-                        card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_inc
-                        card.ability.extras.emult = card.ability.extras.emult + card.ability.extras.emult_inc
+                    func = AKYRS.bal_val(function ()
+                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_inc" })
+                    end,
+                    function ()
+                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "emult", scalar_value = "emult_inc" })
                     end
+                    )
                 }
             end
         end
@@ -2186,8 +2222,11 @@ SMODS.Joker{
         if context.using_consumeable and not context.blueprint and (
         AKYRS.is_star(context.consumeable.config.center_key)
         ) then
-            card.ability.extras.xmult_absurd = card.ability.extras.xmult_absurd * 8
-            card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_add
+            if AKYRS.bal("absurd") then
+                SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_table = {["s"] = 8}, scalar_value = "s", operation = "X" })
+            else
+                SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_add" })
+            end
             return {
                 message = localize("k_upgrade_ex"),
             }
@@ -2896,8 +2935,11 @@ SMODS.Joker{
                     message = localize("k_upgrade_ex"),
                     message_card = card,
                     func = function ()
-                        card.ability.extras.xchips = card.ability.extras.xchips + card.ability.extras.xchips_gain
-                        card.ability.extras.xchips_absurd = card.ability.extras.xchips_absurd * card.ability.extras.xchips_gain_absurd
+                        if AKYRS.bal("absurd") then
+                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips", scalar_value = "xchips_gain"})
+                        else
+                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips_absurd", scalar_value = "xchips_gain_absurd"})
+                        end
                     end
                 }
             end
@@ -2954,7 +2996,7 @@ SMODS.Joker{
                         ease_ante((-math.floor(G.GAME.round_resets.ante/2)))
                         ease_dollars(-G.GAME.dollars + card.ability.extras.money_set)
                     else
-                        ease_ante(-G.GAME.round_resets.ante+card.ability.extras.ante_set)
+                        ease_ante(-G.GAME.round_resets.ante + card.ability.extras.ante_set)
                     end
                 end
             }
@@ -3078,8 +3120,21 @@ SMODS.Joker{
                         message = love.timer.getFPS( )..localize("k_akyrs_fps"),
                         message_card = card,
                     }, card)
-                    card.ability.extras.xchips = card.ability.extras.xchips + card.ability.extras.xchips_g * x * 240 / c.refreshrate
-                    card.ability.extras.chips = card.ability.extras.chips + card.ability.extras.chips_g * x * 240 / c.refreshrate
+                    if AKYRS.bal("absurd") then
+                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips", scalar_value = "xchips_g",
+                            operation = function (rt,rv,int,sc)
+                                rt[rv] = int + sc * x * 240 / c.refreshrate
+                            end
+                        })
+                    else
+                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "chips", scalar_value = "chips_g",
+                            operation = function (rt,rv,int,sc)
+                                rt[rv] = int + sc * x * 240 / c.refreshrate
+                            end
+                        })
+                    end
+
+
                 end
             }
         end
@@ -3143,12 +3198,17 @@ SMODS.Joker{
                         SMODS.calculate_effect({
                             message = localize("k_upgrade_ex"),
                         }, card)
-                        if Talisman then
-                        card.ability.extras.xmult_absurd = to_big(card.ability.extras.xmult_absurd):pow(card.ability.extras.xmult_g_absurd)
+                        if AKYRS.bal("absurd") then
+                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_value = "xmult_g_absurd",
+                                operation = function (rt,rv,int,sc)
+                                    if Talisman then
+                                    rt[rv] = to_big(int):pow(sc)
+                                    end
+                                end
+                            })
                         else
-                            card.ability.extras.xmult_absurd = card.ability.extras.xmult_absurd ^ card.ability.extras.xmult_g_absurd
+                            SMODS.scale_card(card, {ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_g"})
                         end
-                        card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_g
                     end
                 end
             }
@@ -3283,17 +3343,20 @@ SMODS.Joker{
                     end
                     
                     if AKYRS.bal_overridable("absurd",card.ability.extras.obtain_bal) then
-                        local old_bkrpt_at = card.ability.extras.debt_absurd -- 6,12,24
-                        -- new debt should be 12,24,48, etc.
-                        card.ability.extras.debt_absurd = card.ability.extras.debt_absurd * pairs_of_clubs * card.ability.extras.factor_debt_absurd
-                        -- the difference should also account for when, for some reason, the joker value changes like Cryptid's misprintize function
-                        -- all those numbers should be positive so i just absurd - old bkrpt ig
-                        G.GAME.bankrupt_at = G.GAME.bankrupt_at - (card.ability.extras.debt_absurd - old_bkrpt_at)
-                        
+                        if pairs_of_clubs > 0 then
+                            local old_bkrpt_at = card.ability.extras.debt_absurd -- 6,12,24
+                            -- new debt should be 12,24,48, etc.
+                            -- was told to leave this here
+                            -- https://www.reddit.com/r/mildlyinfuriating/comments/zrct25/the_last_time_i_buy_kfc_almost_13_for_this/
+                            SMODS.scale_card(card, {ref_table = card.ability.extras, ref_value = "debt_absurd", scalar_table = {["a"] = pairs_of_clubs * card.ability.extras.factor_debt_absurd }, scalar_value = "a", operation = "X" })
+                            -- the difference should also account for when, for some reason, the joker value changes like Cryptid's misprintize function
+                            -- all those numbers should be positive so i just absurd - old bkrpt ig
+                            G.GAME.bankrupt_at = G.GAME.bankrupt_at - (card.ability.extras.debt_absurd - old_bkrpt_at)
+                        end
                     else
                         if pairs_of_clubs > 0 then
+                            SMODS.scale_card(card, {ref_table = card.ability.extras, ref_value = "debt", scalar_value = "add_debt"})
                             G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extras.add_debt
-                            card.ability.extras.debt = card.ability.extras.debt + card.ability.extras.add_debt
                         end
                     end
                 end
