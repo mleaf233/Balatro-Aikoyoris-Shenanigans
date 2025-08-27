@@ -836,7 +836,7 @@ Obviously this is not a real crash LMAO don't bother reporting.
             major = G.play, offset = {x = 0, y = -1}
         })
     end
-    if G.GAME.aikoyori_variable_to_set and G.GAME.aikoyori_value_to_set_to_variable and not G.GAME.aikoyori_evaluation_value then
+    if G.GAME.aikoyori_variable_to_set and G.GAME.aikoyori_value_to_set_to_variable and not G.GAME.aikoyori_evaluation_value and G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
         attention_text({
             scale =  1.5, text = G.GAME.aikoyori_variable_to_set.." = "..tostring(G.GAME.aikoyori_value_to_set_to_variable), hold = 15, align = 'tm',
             major = G.play, offset = {x = 0, y = -1}
@@ -988,7 +988,7 @@ Obviously this is not a real crash LMAO don't bother reporting.
     if G.GAME.aikoyori_variable_to_set and G.GAME.aikoyori_value_to_set_to_variable then
         AKYRS.parser_set_var(G.GAME.aikoyori_variable_to_set , G.GAME.aikoyori_value_to_set_to_variable)
     end
-    if G.GAME.aikoyori_evaluation_value then
+    if G.GAME.aikoyori_evaluation_value and G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
         if G.GAME.aikoyori_evaluation_replace then
             
             ease_chips(G.GAME.aikoyori_evaluation_value)
