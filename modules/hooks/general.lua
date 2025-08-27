@@ -249,6 +249,12 @@ function AKYRS.expensive_calculation()
         end
     end
     if G.STATE == G.STATES.SELECTING_HAND then
+        
+        if G.GAME.akyrs_wording_enabled and G.GAME.akyrs_character_stickers_enabled and G.GAME.blind.debuff.akyrs_is_puzzle_blind then
+            if not G.GAME.blind.disabled and not G.GAME.blind.defeated then
+                SMODS.set_scoring_calculation('akyrs_puzzle_display')
+            end
+        end
         if not G.GAME.blind.debuff.initial_action_act_set and not G.GAME.blind.disabled then
             G.GAME.blind.debuff.initial_action_acted = false
             G.GAME.blind.debuff.initial_action_act_set = true

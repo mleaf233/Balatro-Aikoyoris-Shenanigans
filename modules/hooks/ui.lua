@@ -921,6 +921,7 @@ SMODS.Scoring_Calculation{
         local to_big = to_big or function(x) return x end
         return to_big(0)
     end,
+    order = 999,
     replace_ui = function(self)
         return {
             n = G.UIT.R,
@@ -933,6 +934,7 @@ SMODS.Scoring_Calculation{
 
 SMODS.Scoring_Calculation{
     key = "math_display",
+    order = 999,
     func = function (self, chips, mult, flames)
         local to_big = to_big or function(x) return x end
         if flames then

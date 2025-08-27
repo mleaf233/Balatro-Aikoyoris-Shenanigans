@@ -263,6 +263,7 @@ G.FUNCS.cash_out = function(e)
     end
     if not G.GAME.current_round.advanced_blind or G.GAME.aiko_puzzle_win then
         local ret = {cashOutHook(e)}
+        SMODS.set_scoring_calculation("multiply")
         G.GAME.aiko_puzzle_win = nil
         G.GAME.current_round.advanced_blind = false
         G.GAME.current_round.aiko_round_played_words = {}
