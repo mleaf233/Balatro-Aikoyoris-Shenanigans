@@ -2456,7 +2456,7 @@ return {
                     },
                     
                     {
-                        "{C:attention}Sell{} this card to {C:attention}reroll{} your chance",
+                        "{C:attention}Sell{} this card to see {C:attention}if you would have lost{}",
                     }
                     },
             },

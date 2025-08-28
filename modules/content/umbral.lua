@@ -489,7 +489,7 @@ SMODS.Consumable{
     
     calculate = function (self, card, context)
         if context.selling_card and context.card == card then
-            local die_question_mark = pseudorandom("akyrs_umbral_intrusive") >= 0.5
+            local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",1 ,2, "akyrs_umbral_intrusive", true)
             return {
                 message = localize("k_akyrs_umbral_intrusive_"..(die_question_mark and "would_die" or "would_win")),
                 colour = (die_question_mark and G.C.GREEN or G.C.RED),
@@ -511,7 +511,7 @@ SMODS.Consumable{
     end,
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
-        local die_question_mark = pseudorandom("akyrs_umbral_intrusive") >= 0.5
+        local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",1 ,2, "akyrs_umbral_intrusive", true)
         if die_question_mark then
             if G.STAGE == G.STAGES.RUN then G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false end
         end
