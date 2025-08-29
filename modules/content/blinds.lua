@@ -140,6 +140,7 @@ SMODS.Blind{
         infinite_discards = true,
         akyrs_is_word_blind = true,
         akyrs_is_puzzle_blind = true,
+        akyrs_cannot_be_disabled = true,
     },
     vars = {},
     set_blind = function(self)
@@ -260,6 +261,11 @@ SMODS.Blind{
         SMODS.change_discard_limit(-1e4)
         recalculateHUDUI()
         recalculateBlindUI()
+        for _, _c in ipairs(G.consumeables.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(false)
+        end
     end,
     press_play = function(self)
         
