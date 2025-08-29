@@ -152,6 +152,16 @@ SMODS.Blind{
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
+        for _, _c in ipairs(G.jokers.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(true)
+        end
+        for _, _c in ipairs(G.consumeables.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(true)
+        end
         
         --print ("Word is "..G.GAME.word_todo)
         G.E_MANAGER:add_event(
@@ -202,6 +212,17 @@ SMODS.Blind{
         )
     end,
     drawn_to_hand = function(self)
+        
+        for _, _c in ipairs(G.jokers.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(true)
+        end
+        for _, _c in ipairs(G.consumeables.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(true)
+        end
         AKYRS.simple_event_add(
             function()
                 G.FUNCS.draw_from_discard_to_deck()
@@ -216,6 +237,16 @@ SMODS.Blind{
     disable = function(self)
         G.GAME.current_round.advanced_blind = false
         
+        for _, _c in ipairs(G.jokers.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(false)
+        end
+        for _, _c in ipairs(G.consumeables.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(false)
+        end
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
@@ -289,6 +320,17 @@ SMODS.Blind{
         if context.after then
             return {
                 func = function ()
+                    
+                    for _, _c in ipairs(G.jokers.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
+                    for _, _c in ipairs(G.consumeables.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
                     AKYRS.simple_event_add(
                         function()
                             G.FUNCS.draw_from_discard_to_deck()
