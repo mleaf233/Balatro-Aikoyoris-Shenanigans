@@ -161,6 +161,7 @@ SMODS.Blind{
                     G.FUNCS.draw_from_deck_to_hand()
                     
                     --ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
+                    G.hand:change_size(6)
                     SMODS.change_play_limit(1e4)
                     SMODS.change_discard_limit(1e4)
                     return true
@@ -180,14 +181,18 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
-                for i = 1, G.GAME.current_round.hands_left - 1 do
+                for i = 2, 5 do
                     AKYRS.simple_event_add(
                         function ()
-                            local wldcrd = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thebombblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
-                            wldcrd.is_null = true
-                            wldcrd.ability.akyrs_attention = true
-                            AKYRS.change_letter_to(wldcrd,AKYRS.get_bomb_prompt({min_freq = 2000, seed = "thebombblind_carder"}))
-                            G.hand:emplace(wldcrd)
+                            local prompt_card = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thebombblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
+                            prompt_card.is_null = true
+                            prompt_card.ability.akyrs_attention = true
+                            local prompt = AKYRS.get_bomb_prompt({min_freq = 1200, min_length = i, max_length = i, seed = "thebombblind_carder"})
+                            if prompt then
+                                AKYRS.change_letter_to(prompt_card,prompt)
+                                G.hand:emplace(prompt_card)
+                                table.insert(G.playing_cards, prompt_card)
+                            end
                             return true
                         end, 0.1
                     )
@@ -200,22 +205,10 @@ SMODS.Blind{
         AKYRS.simple_event_add(
             function()
                 G.FUNCS.draw_from_discard_to_deck()
-                G.deck:shuffle('akyrthought')
+                G.deck:shuffle('akyrsbombblind')
                 return true
             end,0.2
         )
-    end,
-    debuff_hand = function (self, cards, hand, handname, check)
-        local contains_attention = false
-        for _,_c in ipairs(cards) do
-            if _c.ability.akyrs_attention then
-                contains_attention = true
-            end
-        end
-        return not contains_attention
-    end,
-    get_loc_debuff_text = function (self)
-        return localize("k_akyrs_must_defuse")
     end,
     in_pool = function(self)
         return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
@@ -226,6 +219,7 @@ SMODS.Blind{
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
+        G.hand:change_size(-6)
         SMODS.change_play_limit(-1e4)
         SMODS.change_discard_limit(-1e4)
         
@@ -238,6 +232,7 @@ SMODS.Blind{
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
+        G.hand:change_size(-6)
         SMODS.change_play_limit(-1e4)
         SMODS.change_discard_limit(-1e4)
         recalculateHUDUI()
@@ -247,21 +242,49 @@ SMODS.Blind{
         
     end,
     calculate = function (self, blind, context)
-        if context.debuff_hand and not G.GAME.aiko_current_word then
-            return {
-                debuff = true,
-                debuff_text = localize("k_akyrs_must_contain_word"),
-                func = function ()
-                    AKYRS.simple_event_add(
-                        function()
-                            if G.STATE == G.STATES.HAND_PLAYED then
-                                G.FUNCS.akyrs_force_draw_from_discard_to_hand()
-                            else
+        if context.debuff_hand then 
+            
+            table.sort(context.full_hand, AKYRS.hand_sort_function)
+            local contains_attention = false
+            for _,_c in ipairs(context.full_hand) do
+                if _c.ability.akyrs_attention then
+                    contains_attention = true
+                end
+            end
+            if not contains_attention then
+                return {
+                    debuff = true,
+                    debuff_text = localize("k_akyrs_must_defuse"),
+                    func = function ()
+                        AKYRS.simple_event_add(
+                            function()
+                                if G.STATE == G.STATES.HAND_PLAYED then
+                                    G.FUNCS.akyrs_force_draw_from_discard_to_hand()
+                                else
                             end
                             return true
                         end, 0.5)
-                end
-            }
+                    end
+
+                }
+            end
+            if not G.GAME.aiko_current_word then
+            return {
+                    debuff = true,
+                    debuff_text = localize("k_akyrs_must_contain_word"),
+                    func = function ()
+                        AKYRS.simple_event_add(
+                            function()
+                                if G.STATE == G.STATES.HAND_PLAYED then
+                                    G.FUNCS.akyrs_force_draw_from_discard_to_hand()
+                                else
+                            end
+                            return true
+                        end, 0.5)
+                    end
+                }
+            end
+            
         end
         if context.after then
             return {
@@ -274,7 +297,7 @@ SMODS.Blind{
                                 AKYRS.simple_event_add(
                                 function()
                                     local attention_no_longer_in_hand = true
-                                    for _,_c in ipairs(G.hand.cards) do
+                                    for _,_c in ipairs(G.playing_cards) do
                                         if _c.ability.akyrs_attention then
                                             attention_no_longer_in_hand = false
                                         end

@@ -74,13 +74,14 @@ target = "functions/common_events.lua"
 pattern = """                    table.insert(left_text, {n=G.UIT.O, config={w=1.2,h=1.2 , object = blind_sprite, hover = true, can_collide = false}})"""
 position = "after"
 payload = """
-local akyrs_cashouttxt = AKYRS.getCashOutText(config,scale, stake_sprite)
+local akyrs_cashouttxt = AKYRS.getCashOutText(config,scale, stake_sprite, num_dollars)
 if akyrs_cashouttxt then
     table.insert(left_text, akyrs_cashouttxt) 
 else
 """
 overwrite = true
 match_indent = true
+
 [[patches]]
 [patches.pattern]
 target = "functions/common_events.lua"
@@ -580,3 +581,14 @@ ability_text[1] and {n=G.UIT.R, config={align = "cm", padding = 0.08, colour = m
 }} or '''
 match_indent = true
 overwrite = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """    if config.name ~= 'bottom' then"""
+position = "before"
+payload = """
+num_dollars = AKYRS.setCashOutDollars(config,scale,stake_sprite, num_dollars) or num_dollars
+"""
+overwrite = true
+match_indent = true

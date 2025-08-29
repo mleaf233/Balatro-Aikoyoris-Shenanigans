@@ -231,10 +231,11 @@ function AKYRS.getBlindText(key, collection)
     end
 end
 
-function AKYRS.getCashOutText(config,scale,stake_sprite)
+function AKYRS.getCashOutText(config,scale,stake_sprite, num_dollars)
     
     if G.GAME.aiko_puzzle_win then
-        config.dollars = G.GAME.blind.dollars
+        config.saved = false
+        G.GAME.current_round.dollars = G.GAME.current_round.dollars + G.GAME.blind.dollars
         return {n=G.UIT.C, config={padding = 0.05, align = 'cm', minw = 2}, nodes={
             {n=G.UIT.R, config={align = 'cm'}, nodes={
                 {n=G.UIT.O, config={object = DynaText({string = {' '..localize('ph_puzzle_clear')..' '}, colours = {G.C.EDITION}, shadow = true, pop_in = 0, float = true, scale = .8*scale, silent = true})}}
@@ -253,6 +254,12 @@ function AKYRS.getCashOutText(config,scale,stake_sprite)
                 {n=G.UIT.T, config={text = G.GAME.blind.chip_text, scale = scale_number(G.GAME.blind.chips, scale, 100000), colour = G.C.RED, shadow = true}}
             }}
         }}
+    end
+end
+function AKYRS.setCashOutDollars(config,scale,stake_sprite, num_dollars)
+    if G.GAME.aiko_puzzle_win then
+        config.dollars = config.dollars + G.GAME.blind.dollars
+        return G.GAME.blind.dollars
     end
 end
 

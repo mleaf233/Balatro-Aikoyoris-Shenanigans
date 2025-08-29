@@ -908,11 +908,21 @@ Obviously this is not a real crash LMAO don't bother reporting.
             table.insert(cards,k)
         end
         table.sort(cards,AKYRS.hand_sort_function)
-        for i, j in ipairs(cards) do
-            if j.ability.aikoyori_letters_stickers then
-                table.insert(aiko_current_word_split,string.lower(j:get_letter_with_pretend()))
-                word_split[string.upper(j:get_letter_with_pretend())] = true
-            end
+        for i, v in ipairs(cards) do
+            if v.ability and v.ability.aikoyori_letters_stickers then
+                local alpha = v.ability.aikoyori_letters_stickers:lower()
+                if alpha == "#" and v.ability.aikoyori_pretend_letter then
+                    -- if wild is set fr tbh
+                    alpha = v.ability.aikoyori_pretend_letter:lower()
+                elseif alpha == "#" and AKYRS.config.wildcard_behaviour == 3 then -- if it's unset in mode 3 then just make it a random letter i guess
+                    alpha = '★'
+                end
+                
+                for _, ltr in ipairs(AKYRS.word_splitter(alpha)) do
+                    table.insert(aiko_current_word_split, ltr)
+                    word_split[string.upper(ltr)] = true
+                end
+            end 
         end
         local w = table.concat(aiko_current_word_split,"")
         check_for_unlock({type = "akyrs_spell_word", word = w, lowercase_word = string.lower(w)})
