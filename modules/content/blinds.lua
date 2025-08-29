@@ -1,6 +1,5 @@
 
 
-
 SMODS.Blind{
     key = "the_thought",
     dollars = 5,
@@ -31,9 +30,7 @@ SMODS.Blind{
             Event({
                 delay = 10,
                 func = function()
-                    G.hand:change_size(3)
-                    G.FUNCS.draw_from_deck_to_hand()
-                    
+                    G.hand:change_size(3)                    
                     G.GAME.current_round.discards_sub = G.GAME.current_round.discards_left + 1
                     self.discards_sub = G.GAME.current_round.discards_left + 1 -- math.max(G.GAME.current_round.discards_left, 0)
                     ease_discard(-self.discards_sub)
@@ -60,6 +57,7 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
+                G.FUNCS.draw_from_deck_to_hand()
                 for i = 1, 5 do
                     AKYRS.simple_event_add(
                         function ()
@@ -80,7 +78,6 @@ SMODS.Blind{
         AKYRS.simple_event_add(
             function()
                 G.FUNCS.draw_from_discard_to_deck()
-                G.deck:shuffle('akyrthought')
                 return true
             end,0.2
         )
@@ -116,7 +113,7 @@ SMODS.Blind{
                 AKYRS.simple_event_add(function()
                     AKYRS.simple_event_add(function()
                         if not G.GAME.akyrs_win_checked then
-                            AKYRS.force_check_win({force_draw = true})
+                            AKYRS.force_check_win()
                         end
                         return true
                     end, 0.1)
@@ -168,8 +165,6 @@ SMODS.Blind{
             Event({
                 delay = 10,
                 func = function()
-                    G.FUNCS.draw_from_deck_to_hand()
-                    
                     --ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
                     G.hand:change_size(6)
                     SMODS.change_play_limit(1e4)
@@ -191,20 +186,26 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
+                
+                G.FUNCS.draw_from_deck_to_hand()
                 for i = 2, 5 do
                     AKYRS.simple_event_add(
                         function ()
                             local prompt_card = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thebombblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
                             prompt_card.is_null = true
                             prompt_card.ability.akyrs_attention = true
-                            local prompt = AKYRS.get_bomb_prompt({min_freq = 1200, min_length = i, max_length = i, seed = "thebombblind_carder"})
-                            if prompt then
-                                AKYRS.change_letter_to(prompt_card,prompt)
-                                G.hand:emplace(prompt_card)
-                                table.insert(G.playing_cards, prompt_card)
-                            end
+                            AKYRS.simple_event_add(
+                                function ()
+                                    local prompt = AKYRS.get_bomb_prompt({min_freq = 1200, min_length = i, max_length = i, seed = "thebombblind_carder"})
+                                    if prompt then
+                                        AKYRS.change_letter_to(prompt_card,prompt)
+                                        G.hand:emplace(prompt_card)
+                                        table.insert(G.playing_cards, prompt_card)
+                                    end
+                                    return true
+                                end, 0)
                             return true
-                        end, 0.1
+                        end, 0.2
                     )
                 end
                 return true
@@ -226,7 +227,6 @@ SMODS.Blind{
         AKYRS.simple_event_add(
             function()
                 G.FUNCS.draw_from_discard_to_deck()
-                G.deck:shuffle('akyrsbombblind')
                 return true
             end,0.2
         )
@@ -333,7 +333,6 @@ SMODS.Blind{
                     end
                     AKYRS.simple_event_add(
                         function()
-                            G.FUNCS.draw_from_discard_to_deck()
                             if not G.GAME.akyrs_win_checked then
                                 
                                 AKYRS.simple_event_add(
@@ -345,7 +344,7 @@ SMODS.Blind{
                                         end
                                     end
                                     G.GAME.aiko_puzzle_win = attention_no_longer_in_hand
-                                    AKYRS.force_check_win({force_draw = true})
+                                    AKYRS.force_check_win()
                                     return true
                                 end, 0.2)
                             end
