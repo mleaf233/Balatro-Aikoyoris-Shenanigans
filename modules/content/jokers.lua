@@ -1432,9 +1432,9 @@ SMODS.Joker{
                             card.ability.extras.xmult_inc_absurd = to_big(card.ability.extras.xmult_inc_absurd)
                         end
                         if AKYRS.bal("absurd") then
-                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_inc" })
-                        else
                             SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_value = "xmult_inc_absurd" })
+                        else
+                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_inc" })
                         end
                     end
                 }
