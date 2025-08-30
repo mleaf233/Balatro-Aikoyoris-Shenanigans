@@ -267,7 +267,7 @@ G.FUNCS.cash_out = function(e)
             local challenge_center = G.CHALLENGES[G.GAME.challenge] or AKYRS.HC_CHALLENGES[G.GAME.challenge]
             if challenge_center and challenge_center.type == "highscore" then
                 G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore = G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore or {}
-                G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore[G.GAME.challenge] = G.GAME.round
+                G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore[G.GAME.challenge] = math.max(G.GAME.round, (G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore[G.GAME.challenge] or 0))
                 set_challenge_unlock()
                 G:save_settings()
             end
