@@ -33,3 +33,10 @@ payload = """else
     AKYRS.blind_handler()
 end"""
 match_indent = true
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """            if G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind:get_type() == 'Boss' then"""
+position = "at"
+payload = """            if G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind_on_deck == 'Boss' then"""
+match_indent = true

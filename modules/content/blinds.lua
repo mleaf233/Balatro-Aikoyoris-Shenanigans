@@ -199,10 +199,14 @@ SMODS.Blind{
                             prompt_card.ability.akyrs_attention = true
                             AKYRS.simple_event_add(
                                 function ()
+                                    local ante = Talisman and to_number(G.GAME.round_resets.ante) or G.GAME.round_resets.ante
+                                    local fct = 2 * (i - 1) - 1
+                                    local max_freq = (70000/(fct))/ante^1.5
+                                    local min_freq = (15000/(fct))/ante^1.03
                                     local prompt, freq = AKYRS.get_bomb_prompt(
                                     {
-                                        min_freq = math.max(500, 15000 - G.GAME.round_resets.ante * (2000)), 
-                                        max_freq = math.max(5000, 80000 - G.GAME.round_resets.ante * (8000)), 
+                                        min_freq = min_freq, 
+                                        max_freq = max_freq, 
                                         min_length = i, 
                                         max_length = i, 
                                         seed = "thebombblind_carder"
