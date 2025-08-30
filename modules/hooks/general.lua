@@ -1815,6 +1815,7 @@ end
 local rst_blind = reset_blinds
 function reset_blinds()
     if G.GAME.modifiers.akyrs_all_blinds_are then
+        rst_blind()
         for bl, cho in pairs(G.GAME.round_resets.blind_choices) do
             G.GAME.round_resets.blind_choices[bl] = G.GAME.modifiers.akyrs_all_blinds_are
         end
