@@ -1823,7 +1823,8 @@ return {
             akyrs_attention={
                 name="Attention",
                 text={
-                    "{C:red}Cannot be discarded{} and {C:blue}Must be played{}",
+                    "{C:red}Cannot be discarded{}",
+                    "{C:blue}Must be played{}",
                 },
             },
             akyrs_debuff_seal={
@@ -2137,6 +2138,7 @@ return {
             null_card = { name = 'Null', text = { 'A simple and blank card','with nothing on it'},},
             lettersMult = {name = '',text = { '{C:mult}+#2#{} Mult'},},
             lettersXMult = {name = '',text = { '{C:white,X:mult}X#3#{} Mult'},},
+            letterCardFrequency = {name = '',text = { 'Frequency: {C:attention}#4#'},},
             lettersWild = {name = 'Wild Card',text = { 'Able to be set to specific letter', 'but yields no scoring'},},
             letters = {name = 'Letter Card',text = { '{s:1.4,C:attention}#1#','Allows Words','to be played'},},
             symbols = {name = 'Symbol Card',text = { '{s:1.4,C:attention}#1#','These symbols','are used in specific circumstances'},},

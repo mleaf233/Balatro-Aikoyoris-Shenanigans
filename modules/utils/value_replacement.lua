@@ -271,3 +271,17 @@ function AKYRS.mod_skip_box(blind_type, ax, original)
     end
     return original
 end
+
+function AKYRS.blind_handler()
+    if G.GAME.blind_on_deck == 'Boss' then
+        G.GAME.current_round.voucher = SMODS.get_next_vouchers()
+        G.GAME.round_resets.blind_states.Boss = 'Defeated'
+        G.GAME.GB_BLINDS_SKIPPED_THIS_ANTE = 0
+        for k, v in ipairs(G.playing_cards) do
+            v.ability.played_this_ante = nil
+            v.ability.discarded_this_ante = nil
+        end
+    else
+        G.GAME.round_resets.blind_states[G.GAME.blind_on_deck] = 'Defeated'
+    end
+end

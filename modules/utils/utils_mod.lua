@@ -614,7 +614,8 @@ AKYRS.get_bomb_prompt = function(config)
         end)
     local freq, word
     word = pseudorandom_element(matching, seed, {})
-    return word
+    freq = AKYRS.bomb_prompts[word]
+    return word, freq
 end
 
 

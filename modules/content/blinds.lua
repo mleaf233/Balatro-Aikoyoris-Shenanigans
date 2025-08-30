@@ -158,7 +158,7 @@ SMODS.Blind{
                 delay = 10,
                 func = function()
                     --ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
-                    G.hand:change_size(6)
+                    G.hand:change_size(9)
                     SMODS.change_play_limit(1e4)
                     SMODS.change_discard_limit(1e4)
                     
@@ -199,9 +199,10 @@ SMODS.Blind{
                             prompt_card.ability.akyrs_attention = true
                             AKYRS.simple_event_add(
                                 function ()
-                                    local prompt = AKYRS.get_bomb_prompt({min_freq = 1200, min_length = i, max_length = i, seed = "thebombblind_carder"})
+                                    local prompt, freq = AKYRS.get_bomb_prompt({min_freq = math.max(500, 15000 - G.GAME.round_resets.ante * (2000)), min_length = i, max_length = i, seed = "thebombblind_carder"})
                                     if prompt then
                                         AKYRS.change_letter_to(prompt_card,prompt)
+                                        prompt_card.ability.akyrs_word_freq = freq
                                         G.hand:emplace(prompt_card)
                                         table.insert(G.playing_cards, prompt_card)
                                     end
@@ -243,7 +244,7 @@ SMODS.Blind{
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
-        G.hand:change_size(-6)
+        G.hand:change_size(-9)
         SMODS.change_play_limit(-1e4)
         SMODS.change_discard_limit(-1e4)
         
@@ -256,7 +257,7 @@ SMODS.Blind{
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
-        G.hand:change_size(-6)
+        G.hand:change_size(-9)
         SMODS.change_play_limit(-1e4)
         SMODS.change_discard_limit(-1e4)
         recalculateHUDUI()

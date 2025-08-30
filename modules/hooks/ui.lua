@@ -21,6 +21,7 @@ function Card:generate_UIBox_ability_table(vars)
                 letter,
                 (AKYRS.get_scrabble_score(self.ability.aikoyori_letters_stickers)),
                 1 + (AKYRS.get_scrabble_score(self.ability.aikoyori_letters_stickers) / 10),
+                self.ability.akyrs_word_freq
             }
         end
         
