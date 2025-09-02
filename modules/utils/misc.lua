@@ -144,11 +144,17 @@ function AKYRS.aiko_mod_startup(self)
         AKYRS.aikoyori_letters_stickers = {}
     end
     AKYRS.aikoyori_letters_stickers["correct"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
-        G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 7, y = 2 })
+        G.ASSET_ATLAS["akyrs_misc_overlay"], { x = 0, y = 0 })
     AKYRS.aikoyori_letters_stickers["misalign"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
-        G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 8, y = 2 })
+        G.ASSET_ATLAS["akyrs_misc_overlay"], { x = 1, y = 0 })
     AKYRS.aikoyori_letters_stickers["incorrect"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
-        G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 9, y = 2 })
+        G.ASSET_ATLAS["akyrs_misc_overlay"], { x = 2, y = 0 })
+    AKYRS.aikoyori_letters_stickers["correct_hc"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
+        G.ASSET_ATLAS["akyrs_misc_overlay"], { x = 3, y = 0 })
+    AKYRS.aikoyori_letters_stickers["misalign_hc"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
+        G.ASSET_ATLAS["akyrs_misc_overlay"], { x = 4, y = 0 })
+    AKYRS.aikoyori_letters_stickers["incorrect_hc"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
+        G.ASSET_ATLAS["akyrs_misc_overlay"], { x = 5, y = 0 })
 end
 
 

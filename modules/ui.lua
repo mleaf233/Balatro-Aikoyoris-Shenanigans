@@ -1,10 +1,21 @@
 local function numberToColor(num)
   if num == 1 then
-    return G.C.GREEN
+    return G.SETTINGS.colourblind_option and G.C.ORANGE or G.C.GREEN
   elseif num == 2 then
-    return G.C.ORANGE
+    return G.SETTINGS.colourblind_option and G.C.BLUE or G.C.YELLOW
   elseif num == 3 then
     return G.C.GREY
+  end
+  return G.C.TRANSPARENT_DARK
+end
+
+local function numberToTextColor(num)
+  if num == 1 then
+    return G.SETTINGS.colourblind_option and G.C.BLACK or G.C.WHITE
+  elseif num == 2 then
+    return G.SETTINGS.colourblind_option and G.C.WHITE or G.C.BLACK
+  elseif num == 3 then
+    return G.C.WHITE
   end
   return G.C.TRANSPARENT_DARK
 end
@@ -38,7 +49,7 @@ function create_UIBOX_Aikoyori_WordPuzzleBox()
             config = {
               align = "c",
               text = y[1],
-              colour = G.C.WHITE,
+              colour = numberToTextColor(y[2]),
               scale = 0.3
             }
           }

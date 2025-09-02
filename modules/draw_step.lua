@@ -1,19 +1,33 @@
+AKYRS.status_card_render_offset_x = 0.5
+AKYRS.status_card_render_offset_y = 0.2
 function AKYRS.aikoyori_draw_extras(card, layer)
+    ---@type Card
+    card = card
     if not card then return end
     if not (AKYRS.should_draw_letter(card)) then return end
 
-    local letter_key = card.ability.aikoyori_letters_stickers
+    local letter_key = card:get_letter_with_pretend()
+    local is_wild = card.ability.aikoyori_letters_stickers == "#" and card.ability.aikoyori_pretend_letter and card.ability.aikoyori_pretend_letter ~= ''
     if not letter_key then return end
+    ---@type Sprite[]
     local stickers = AKYRS.aikoyori_letters_stickers
 
     local movement_mod = 0.05 * math.sin(1.1 * (G.TIMERS.REAL + card.aiko_draw_delay)) - 0.07
     local center = card.children.center
 
     local function draw_status(status)
-        stickers[status].role.draw_major = card
-        stickers[status].VT = card.VT
-        stickers[status]:draw_shader('dissolve', 0, nil, nil, center, 0.1)
-        stickers[status]:draw_shader('dissolve', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
+        if G.SETTINGS.colourblind_option then
+            status = status .. "_hc"
+        end
+        ---@type Sprite
+        local sticker = stickers[status]
+        
+        sticker.role.draw_major = card
+        sticker.VT = card.VT
+        local scale_fac = card.T.w / G.CARD_W
+        local rox, roy = AKYRS.status_card_render_offset_x * scale_fac, AKYRS.status_card_render_offset_y * scale_fac
+        sticker:draw_shader('dissolve', 0, nil, nil, center, 0.1, nil, -rox, roy)
+        sticker:draw_shader('dissolve', nil, nil, nil, center, nil, nil, -rox, roy-0.02 + movement_mod * 0.9)
     end
 
     local round = G.GAME.current_round
@@ -26,7 +40,7 @@ function AKYRS.aikoyori_draw_extras(card, layer)
         draw_status("incorrect")
     end
     local tint = false
-    if letter_key == "#" and card.ability.aikoyori_pretend_letter then
+    if is_wild then
         tint = true
     end
 

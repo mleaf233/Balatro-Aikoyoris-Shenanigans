@@ -122,6 +122,14 @@ SMODS.Atlas {
     py = 34
 }
 
+
+SMODS.Atlas {
+    key = "misc_overlay",
+    path = "misc_overlay.png",
+    px = 71,
+    py = 95
+}
+
 SMODS.Atlas({
     key = "modicon",
     path = "aikoyoriModIcon.png",
