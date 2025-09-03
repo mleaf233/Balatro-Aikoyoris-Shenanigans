@@ -62,9 +62,14 @@ SMODS.Back{
     atlas = 'deckBacks',
     pos = {x = 2, y = 1},
     loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                self.config.discards
+            }
+        }
     end,
     config = {
-        akyrs_split_deck = true
+        akyrs_split_deck = true, discards = 2
     },
 }
 

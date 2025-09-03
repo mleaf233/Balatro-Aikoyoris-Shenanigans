@@ -59,7 +59,8 @@ return {
                 name="Split Deck",
 				text = {
 					"Start with all cards",
-                    "{C:attention}split{} in half"
+                    "{C:attention}split{} in half",
+                    "{C:red}+#1#{} Discard"
 				},
             },
             b_akyrs_cry_misprint_ultima={
