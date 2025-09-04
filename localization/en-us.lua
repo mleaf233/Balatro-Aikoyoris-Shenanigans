@@ -1875,11 +1875,11 @@ return {
                     "{C:blue}Must be played{}",
                 },
             },
-            akyrs_debuff_seal={
-                name="Debuff Seal",
+            akyrs_carmine_seal={
+                name="Carmine Seal",
                 text={
-                    "{C:red}Debuffs itself{}",
-                    "when something is drawn to hand after",
+                    "When played on {C:attention}first hand{}",
+                    "{C:attention}undebuffs{} this card if it was debuffed",
                 },
             },
             akyrs_chip_mult_xchip_xmult={
@@ -2718,7 +2718,7 @@ return {
             akyrs_sigma="Sigma",
             akyrs_oxidising="Oxidising",
             akyrs_attention="Attention",
-            akyrs_debuff_seal="Seal-Debuffed",
+            akyrs_carmine_seal="Carmine",
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",
             akyrs_sliced = "Sliced",

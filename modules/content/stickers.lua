@@ -20,15 +20,15 @@ SMODS.Sticker{
 }
 
 SMODS.Seal{
-    key = "debuff",
+    key = "carmine",
     atlas = 'aikoyoriStickers',
     pos = {x = 1, y = 0},
     badge_colour = HEX('91777c'),
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
 
     calculate = function(self, card, context)
-        if context.cardarea == G.hand and context.hand_drawn then
-            card.debuff = true
+        if context.cardarea == G.hand and context.before and G.GAME.current_round.hands_played == 0 then
+            card:set_debuff(false)
         end
     end,
 }
