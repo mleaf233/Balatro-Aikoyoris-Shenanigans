@@ -1968,12 +1968,12 @@ local cryptposting_joker = {"j_joker","j_crp_joker_2","j_crp_joker_3","j_crp_jok
 SMODS.Joker {
     pools = { ["Self-Insert"] = true, },
     key = "aikoyori",
-    atlas = 'AikoyoriJokers',
+    atlas = 'aikoSelfInsert',
     pos = {
-        x = 1, y = 3
+        x = 0, y = 0
     },
     soul_pos = {
-        x = 2, y = 3
+        x = 1, y = 0
     },
     rarity = 4,
     cost = 50,
@@ -1986,6 +1986,18 @@ SMODS.Joker {
             }
         }
     },
+    set_ability = function (self, card, initial, delay_sprites)
+        ---@type Card
+        card = card
+        local dt = os.time()
+        card.ability.akyrs_aiko_sprite = pseudorandom("akyrs_sprite_"..dt, 0 ,3)
+        AKYRS.simple_event_add(
+            function ()
+                card.children.floating_sprite:set_sprite_pos({ x = 1 + card.ability.akyrs_aiko_sprite, y = 0})
+                return true
+            end, 0
+        )
+    end,
     loc_vars = function (self, info_queue, card)
         if AKYRS.bal_val("adequate") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_aikoyori_base_ability", vars = {card.ability.extras.base.xmult}}

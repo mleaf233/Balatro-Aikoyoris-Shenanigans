@@ -946,3 +946,37 @@ G.FUNCS.refresh_contrast_mode = function(...)
     end
     return refresh_col_sel(...)
 end
+
+
+local gameMainMenuRef = Game.main_menu
+function Game:main_menu(change_context)
+    gameMainMenuRef(self, change_context)
+    UIBox({
+        definition = {
+            n = G.UIT.ROOT,
+            config = {
+                align = "cm",
+                colour = G.C.UI.TRANSPARENT_DARK
+            },
+            nodes = {
+                {
+                    n = G.UIT.T,
+                    config = {
+                        scale = 0.3,
+                        text = "Aikoyori's Shenanigans v"..AKYRS.version,
+                        colour = G.C.UI.TEXT_LIGHT
+                    }
+                }
+            }
+        },
+        config = {
+            align = "tli",
+            bond = "Weak",
+            offset = {
+                x = 0,
+                y = 0
+            },
+            major = G.ROOM_ATTACH
+        }
+    })
+end
