@@ -86,6 +86,24 @@ end
 local cardSetSpriteHook = Card.set_sprites
 function Card:set_sprites(_c,_f)
     local x = cardSetSpriteHook(self,_c,_f)
+    _c = _c or self.config.center
+    if _c and _c.set == "Joker" and G.GAME.akyrs_hatena_deck then
+        self.T.w = G.CARD_W
+        self.T.h = G.CARD_H
+        for key, spriters in pairs(self.children) do
+            if self.children[key] and key ~= "center" and key ~= "shadow" and key ~= "back" then
+                spriters.atlas = G.ASSET_ATLAS["akyrs_blank"]
+                spriters:set_sprite_pos({ x = 0, y = 0})
+            elseif key == "center" then
+                spriters.atlas = G.ASSET_ATLAS["akyrs_eggymariHatenaSprite"]
+                spriters:set_sprite_pos({ x = 0, y = 0})
+                spriters.scale.x = 71
+                spriters.scale.y = 95
+                spriters.T.w = G.CARD_W
+                spriters.T.h = G.CARD_H
+            end
+        end
+    end
     
     if AKYRS.should_draw_letter(self) then
         if self:get_letter_with_pretend() then

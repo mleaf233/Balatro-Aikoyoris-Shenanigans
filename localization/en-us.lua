@@ -678,6 +678,13 @@ return {
                     "onto one card",
                 },
             },
+            j_hatena  = {
+                name="????????",
+                text={
+                    "This joker is {C:attention}completely{} unknown",
+                    "{C:inactive}(as of now anyway)",
+                },
+            },
         },
         Edition={
             e_akyrs_texelated = {

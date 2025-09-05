@@ -1084,6 +1084,12 @@ function Card:set_ability(c,i,d)
             self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
         end
     end
+    
+    if c.set == "Joker" and G.GAME.akyrs_hatena_deck then
+        self.cost = 5
+        self.sell_cost = 3
+    end
+
     if(i) then
         self.akyrs_old_ability = AKYRS.deep_copy(self.ability)
     end
@@ -1483,6 +1489,10 @@ function Back:apply_to_run()
     end
     if G.GAME.starting_params.akyrs_ultimate_freedom then
         G.GAME.akyrs_ultimate_freedom = G.GAME.starting_params.akyrs_ultimate_freedom
+    end
+
+    if G.GAME.starting_params.akyrs_hatena_deck then
+        G.GAME.akyrs_hatena_deck = G.GAME.starting_params.akyrs_hatena_deck
     end
 
     if self.effect.config.akyrs_math_threshold then

@@ -622,3 +622,33 @@ position = "after"
 payload = """end"""
 overwrite = true
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """    if not full_UI_table.name then"""
+position = "before"
+payload = """if _c and _c.set == "Joker" and G.GAME.akyrs_hatena_deck then
+    local _c2 = {}
+    for k, v in pairs(_c) do
+        _c2[k] = v
+    end
+    _c2.key = "j_hatena"
+    _c2.set = "DescriptionDummy"
+    _c = _c2
+end"""
+overwrite = true
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """    for _, v in ipairs(info_queue) do"""
+position = "before"
+payload = """if _c and _c.set == "DescriptionDummy" and G.GAME.akyrs_hatena_deck then
+    info_queue = {}
+end"""
+overwrite = true
+match_indent = true

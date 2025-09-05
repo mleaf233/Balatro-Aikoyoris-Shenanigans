@@ -159,6 +159,7 @@ SMODS.current_mod.custom_ui = function (mod_nodes)
                 }
               },
               AKYRS.create_credits("akyrs_larantula_l_credits", "@larantula_l", 3.5),
+              AKYRS.create_credits("akyrs_mystery", "@eggymari", 3.2),
             }
           }
         }

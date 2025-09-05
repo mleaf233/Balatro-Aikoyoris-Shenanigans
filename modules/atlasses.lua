@@ -233,6 +233,13 @@ SMODS.Atlas {
     py = 95
 }
 
+SMODS.Atlas {
+    key = "eggymariHatenaSprite",
+    path = "eggymariHatenaSprite.png",
+    px = 71,
+    py = 95
+}
+
 -- we glsling so hard rn 
 
 SMODS.Shader{
