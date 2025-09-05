@@ -1091,7 +1091,7 @@ function Card:set_ability(c,i,d)
         end
     end
     
-    if (self.config.center or c).set == "Joker" and G.GAME.akyrs_hatena_deck then
+    if (self.config.center or c).set == "Joker" and AKYRS.should_conceal_card(self, (self.config.center or c)) then
         self.T.w = G.CARD_W
         self.T.h = G.CARD_H
         AKYRS.simple_event_add(
