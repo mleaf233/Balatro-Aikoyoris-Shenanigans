@@ -1763,7 +1763,7 @@ end
 
 local startMaterializeHook = Card.start_materialize
 function Card:start_materialize(cols, slnt, timefac)
-    if not cols and not AKYRS.should_conceal_card(card,card.config.center) then
+    if not cols and not AKYRS.should_conceal_card(self,self.config.center) then
         if self.ability.set == "Umbral" then
             cols = { G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y }
         elseif self.ability.set == "Alphabet" then
