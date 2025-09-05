@@ -327,6 +327,7 @@ function Card:click()
 end
 
 AKYRS.should_conceal_card = function(card, center)
+    if center and center.set == "Joker" then return G.GAME.akyrs_hatena_deck end
     if not card then return G.GAME.akyrs_hatena_deck end
     local config = (card.config and card.config.center or center)
     return (G.GAME.akyrs_hatena_deck and config.set == "Joker") or (G.GAME.akyrs_hatena_everything) or (card.ability and card.ability.akyrs_concealed)

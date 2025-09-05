@@ -636,6 +636,7 @@ if _c and AKYRS.should_conceal_card(card, _c) then
         _c2[k] = v
     end
     _c2.key = "j_hatena"
+    _c2.generate_ui = nil
     _c2.set = "DescriptionDummy"
     akyrs_should_conceal = true
     _c = _c2
