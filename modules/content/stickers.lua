@@ -207,6 +207,8 @@ SMODS.Sticker{
                 card.ability.akyrs_concealed = true
                 card:set_ability(card.config.center)
                 card:set_sprites(card.config.center, card.config.base)
+                card.cost = 5
+                card.sell_cost = 3
                 return true
             end
         end
