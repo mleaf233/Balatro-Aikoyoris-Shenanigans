@@ -1782,6 +1782,9 @@ function Card:start_materialize(cols, slnt, timefac)
             end
         end
     end
+    if AKYRS.should_conceal_card(self,self.config.center) then
+        cols = {HEX("000000")}
+    end
     local h = startMaterializeHook(self, cols, slnt, timefac)
     return h
 end
