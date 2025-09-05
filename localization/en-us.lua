@@ -681,7 +681,7 @@ return {
             j_hatena  = {
                 name="????????",
                 text={
-                    "This joker is {C:attention}completely{} unknown",
+                    "This card is {C:attention}completely{} unknown",
                     "{C:inactive}(and you will never know what it is)",
                 },
             },
@@ -1889,6 +1889,12 @@ return {
                     "{C:blue}Must be played{}",
                 },
             },
+            akyrs_concealed={
+                name="Concealed",
+                text={
+                    "This card's ability is {C:red}always hidden",
+                },
+            },
             akyrs_carmine_seal={
                 name="Carmine Seal",
                 text={
@@ -2732,6 +2738,7 @@ return {
             akyrs_sigma="Sigma",
             akyrs_oxidising="Oxidising",
             akyrs_attention="Attention",
+            akyrs_concealed="Concealed",
             akyrs_carmine_seal="Carmine",
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",

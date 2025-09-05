@@ -630,7 +630,7 @@ target = "functions/common_events.lua"
 pattern = """    if not full_UI_table.name then"""
 position = "before"
 payload = """local akyrs_should_conceal = false
-if _c and _c.set == "Joker" and AKYRS.should_conceal_card(card, _c) then
+if _c and AKYRS.should_conceal_card(card, _c) then
     local _c2 = {}
     for k, v in pairs(_c) do
         _c2[k] = v
@@ -684,7 +684,7 @@ position = "before"
 payload = """
 local multi_boxes = {}
 local info_cols = {}
-if obj and obj.set == "Joker" and AKYRS.should_conceal_card(self, obj) then
+if obj and AKYRS.should_conceal_card(card, obj) then
 
 else"""
 overwrite = true

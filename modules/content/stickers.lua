@@ -191,3 +191,32 @@ SMODS.Sticker{
         G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
     end
 }
+
+
+SMODS.Sticker{
+    key = "concealed",
+    default_compat = true,
+    atlas = "aikoyoriStickers",
+    pos = {x = 1, y = 1},
+    rate = 0,
+    badge_colour = HEX("6394ff"),
+    sets =  all_sets,
+    should_apply = function (self, card, center, area, bypass_reroll)
+        if true then
+            if G.GAME.modifiers.akyrs_spawn_concealed and pseudorandom((area == G.pack_cards and 'akyrs_packs_concealed_' or 'akyrs_concealed_')..G.GAME.round_resets.ante) > 0.7 then
+                card.ability.akyrs_concealed = true
+                card:set_ability(card.config.center)
+                card:set_sprites(card.config.center, card.config.base)
+                return true
+            end
+        end
+        return false
+    end,
+    calculate = function(self, card, context)
+    end,    
+    draw = function (self, card, layer)
+        G.shared_stickers[self.key].role.draw_major = card
+        G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center)
+        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
+    end
+}

@@ -1230,7 +1230,7 @@ function Card:load(cardTable, other_card)
     
     _c = self.config.center
 
-    if _c and _c.set == "Joker" and AKYRS.should_conceal_card(self, _c) then
+    if _c and AKYRS.should_conceal_card(self, _c) then
         for key, spriters in pairs(self.children) do
             if self.children[key] and key ~= "center" and key ~= "shadow" and key ~= "back" then
                 if spriters.atlas then
