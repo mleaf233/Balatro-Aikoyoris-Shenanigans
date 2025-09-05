@@ -1086,6 +1086,8 @@ function Card:set_ability(c,i,d)
     end
     
     if (self.config.center or c).set == "Joker" and G.GAME.akyrs_hatena_deck then
+        self.T.w = G.CARD_W
+        self.T.h = G.CARD_H
         AKYRS.simple_event_add(
             function ()
                 self.cost = 5
