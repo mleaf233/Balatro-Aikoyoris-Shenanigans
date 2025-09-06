@@ -89,7 +89,7 @@ function Card:set_sprites(_c,_f)
     _c = _c or self.config.center
     if _c and AKYRS.should_conceal_card(self, _c) then
         for key, spriters in pairs(self.children) do
-            if self.children[key] and key ~= "center" and key ~= "shadow" and key ~= "back" then
+            if self.children[key] and key ~= "center" and key ~= "shadow" and key ~= "back" and key ~= "front" then
                 if spriters.atlas then
                     spriters.atlas = G.ASSET_ATLAS["akyrs_blank"]
                     spriters:set_sprite_pos({ x = 0, y = 0})
