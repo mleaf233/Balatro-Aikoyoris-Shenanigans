@@ -1181,7 +1181,7 @@ function Card:akyrs_mod_card_value_init(center)
         self.ability = x
     end
     if G.GAME.akyrs_any_drag then
-        if not self.base.value and not self.base.suit then
+        if self and self.base and not self.base.value and not self.base.suit then
             local rank = pseudorandom_element(SMODS.Ranks,pseudoseed("akyrsmodcard"))
             local suit = pseudorandom_element(SMODS.Suits,pseudoseed("akyrsmodcard2"))
             self.is_null = true
