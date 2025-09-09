@@ -435,7 +435,9 @@ AKYRS.mod_card_values = function(table_in, config)
     if table_in == nil then
         return
     end
-    modify_values(table_in, reference, 0)
+    if type(reference) == 'table' then
+        modify_values(table_in, reference, 0)
+    end
 end
 
 AKYRS.mod_card_values_misprint = function(table_in, config)
