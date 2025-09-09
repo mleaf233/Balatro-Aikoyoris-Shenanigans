@@ -1277,6 +1277,28 @@ function Card:get_nominal(mod)
         return -10
     end
     local ret = getNominalHook(self, mod)
+    if self.ability and self.ability.akyrs_special_card_type then
+        local mult = 1
+        local rank_mult = 1
+        if mod == 'suit' then mult = 10000 end
+        local suit_nominal = self.base.suit_nominal
+        local rank_nominal = self.base.nominal
+        local face_nominal = self.base.face_nominal
+        if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then
+            mult = -10000
+        elseif self.config.center.no_suit then
+            mult = 0
+        elseif self.config.center.no_rank then
+            rank_mult = 0
+        end
+        if mod == "suit" and self.ability.akyrs_special_card_type == "rank" then
+            suit_nominal = 0
+        elseif not mod and self.ability.akyrs_special_card_type == "suit" then
+            rank_nominal = 0
+            face_nominal = 0
+        end
+        ret = 10*rank_nominal*rank_mult + suit_nominal*mult + (self.base.suit_nominal_original or 0)*0.0001*mult + 10*face_nominal*rank_mult + 0.000001*self.unique_val
+    end
     return ret
 end
 
