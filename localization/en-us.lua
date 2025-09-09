@@ -144,7 +144,7 @@ return {
                 name = "The Alignment",
                 text = {
                     "First and last played cards",
-                    "are removed from scoring",
+                    "are always unscored",
                 }
             },
             bl_akyrs_the_duality= {
