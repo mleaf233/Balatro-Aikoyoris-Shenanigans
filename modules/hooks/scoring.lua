@@ -193,7 +193,7 @@ end
 
 local calcrep = SMODS.calculate_repetitions
 SMODS.calculate_repetitions = function(card, context, reps)
-    if G.GAME.blind and G.GAME.blind.debuff.akyrs_no_retriggers then
+    if G.GAME.blind and G.GAME.blind.debuff.akyrs_no_retriggers and not G.GAME.blind.disabled then
         return {}
     end
 	local reps = calcrep(card, context, reps)
@@ -203,7 +203,7 @@ end
 
 local easedol = ease_dollars
 ease_dollars = function(amnt, insta)
-    if G.GAME.blind and G.GAME.blind.debuff.akyrs_no_gain_cash then
+    if G.GAME.blind and G.GAME.blind.debuff.akyrs_no_gain_cash and not G.GAME.blind.disabled then
         return 
     end
     return easedol(amnt, insta)
