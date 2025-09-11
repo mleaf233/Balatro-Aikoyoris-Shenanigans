@@ -1087,10 +1087,16 @@ function AKYRS.hsl2rgb(h,s,l,al)
     return {f(0),f(8),f(4),al};
 end
 -- https://gist.github.com/FGRibreau/3790217
-table.akyrs_filter = function(t, filterIter)
+table.akyrs_filter = function(t, filterIter, isIndexed)
     local out = {}
-    for k, v in pairs(t) do
-        if filterIter(v, k, t) then out[k] = v end
+    if isIndexed then
+        for k, v in ipairs(t) do
+            if filterIter(v, k, t) then table.insert(out, v) end
+        end
+    else
+        for k, v in pairs(t) do
+            if filterIter(v, k, t) then out[k] = v end
+        end
     end
 
     return out

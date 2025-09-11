@@ -1825,7 +1825,24 @@ return {
                     '{E:akyrs_shrivel,C:red}Destroy all cards played{}',
                     'and enhance all cards in hand to {C:blue}Zap Cards{}'
                 }
-            }
+            },
+            j_akyrs_d_se_dab = {
+                name = "D se Dab",
+                text = {
+                    'When at least {C:attention}3 distinct{} enhanced cards are played',
+                    'Cards with letter {C:attention}D{} in hand and in play',
+                    'permanently {C:attention}gain{} {C:white,X:chips} X#1# {} Chips',
+                    '{C:inactive,s:0.8}Cool Clothes + Attitude + New Hand Moves'
+                }
+            },
+            j_akyrs_c = {
+                name = "c",
+                text = {
+                    'Cards with letter {C:attention}C{}',
+                    ' gives {C:chips}+#1#{} Chips when scored',
+                    '{C:inactive,s:0.8}cue Tobu - Cloud 9'
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {

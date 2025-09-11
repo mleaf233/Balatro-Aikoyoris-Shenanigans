@@ -189,3 +189,78 @@ AKYRS.LetterJoker {
         end
     end,
 }
+
+AKYRS.LetterJoker {
+    key = "d_se_dab",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 1, y = 6 },
+    pools = { ["Letter"] = true },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.gain_xchips
+            }
+        }
+    end,
+    rarity = 2,
+    cost = 6,
+    config = {
+        extras = {
+            gain_xchips = 0.2,
+        }
+    },
+    calculate = function (self, card, context)
+        if context.joker_main then
+            local encha = {}
+            for _, c in ipairs(G.play.cards) do
+                table.insert(encha, c.config.center.key)
+            end
+            AKYRS.remove_dupes(encha)
+            if #encha >= 3 then
+                local all_cards = {}
+                for _, c in ipairs(G.play.cards) do
+                    table.insert(all_cards, c)
+                end
+                for _, c in ipairs(G.hand.cards) do
+                    table.insert(all_cards, c)
+                end
+                local cards_matching = table.akyrs_filter(all_cards, function (v,k,t)
+                    return string.lower(v:get_letter_with_pretend() or "") == "d"
+                end, true)
+                AKYRS.do_things_to_card(cards_matching,function (cd)
+                    cd.ability.perma_x_chips = (cd.ability.perma_x_chips or 0) + card.ability.extras.gain_xchips
+                    AKYRS.juice_like_tarot( cd )
+                    return true
+                end)
+            end
+        end
+    end,
+}
+
+AKYRS.LetterJoker {
+    key = "c",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 2, y = 6 },
+    pools = { ["Letter"] = true },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.chips
+            }
+        }
+    end,
+    rarity = 1,
+    cost = 3,
+    config = {
+        extras = {
+            chips = 20,
+        }
+    },
+    calculate = function (self, card, context)
+        if context.individual and context.cardarea == G.play and string.lower(context.other_card:get_letter_with_pretend()) == "c" then
+            return {
+                chips = card.ability.extras.chips
+            }
+        end
+    end,
+}

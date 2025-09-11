@@ -49,7 +49,7 @@ function Card:generate_UIBox_ability_table(vars)
                     newRetTable.name
             })
             newRetTable.name = newRetTable.name[1]
-            newRetTable.main = {}
+            newRetTable.main = AKYRS.deep_copy(ret.main)
             newRetTable.info = {}
             newRetTable.type = {}
 
