@@ -2323,7 +2323,7 @@ SMODS.Joker{
                     return {
                         func = function ()
                             local rarity = othercard.config.center.rarity
-                            othercard:start_dissolve({G.C.AKYRS_AKYRS_PLAYABLE},1.1)
+                            othercard:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
                             othercard:remove_from_deck()
                             for i=1, card.ability.extras.create_factor do
                                 if AKYRS.has_room(G.jokers) then
