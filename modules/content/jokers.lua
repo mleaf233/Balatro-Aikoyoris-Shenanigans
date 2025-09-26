@@ -21,14 +21,90 @@ SMODS.Joker {
     },
 
     loc_vars = function(self, info_queue, card)
+        local multer = {
+            {
+                n = G.UIT.R,
+                config = { alin = "cm", padding = 0.05},
+                nodes = {
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm" },
+                        nodes = {
+                            {
+                                n = G.UIT.T,
+                                config = { text = localize("akyrs_start_with"), colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 }
+                            }
+                        }
+                    },
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm" },
+                        nodes = {
+                            SMODS.GUI.operator(0.2),
+                            {
+                                n = G.UIT.C,
+                                config = { align = "cm", padding = 0.1 },
+                                nodes = {
+                                    AKYRS.faux_score_container(card.ability.extra, "starting_mult", { align = 'lc', w = 1, h = 0.5, scale = 0.15 })
+                                }
+                            },
+                        }
+                    },
+                    
+                }
+            },
+            {
+                n = G.UIT.R,
+                config = { alin = "cm", padding = 0.05},
+                nodes = {
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm" },
+                        nodes = {
+                            {
+                                n = G.UIT.T,
+                                config = { text = localize("akyrs_stored_open"), colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 }
+                            }
+                        }
+                    },
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm" },
+                        nodes = {
+                            SMODS.GUI.operator(0.2),
+                            {
+                                n = G.UIT.C,
+                                config = { align = "cm", padding = 0.1 },
+                                nodes = {
+                                    AKYRS.faux_score_container(card.ability.extra, "mult_stored", { align = 'lc', w = 1, h = 0.5, scale = 0.15 })
+                                }
+                            },
+                        }
+                    },
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm" },
+                        nodes = {
+                            {
+                                n = G.UIT.T,
+                                config = { text = localize("akyrs_stored_close"), colour = G.C.UI.TEXT_INACTIVE, scale = 0.3 }
+                            }
+                        }
+                    },
+                    
+                }
+            },
+        }
         if AKYRS.bal("absurd") then
             return {
                 key = self.key..'_absurd',
-                vars = { card.ability.extra.mult_stored, card.ability.extra.exp, card.ability.extra.starting_mult }
+                vars = { card.ability.extra.mult_stored, card.ability.extra.exp, card.ability.extra.starting_mult },
+                main_end = multer,
             }
         end
         return {
-            vars = { card.ability.extra.mult_stored, card.ability.extra.mult, card.ability.extra.starting_mult }
+            vars = { card.ability.extra.mult_stored, card.ability.extra.mult, card.ability.extra.starting_mult },
+            main_end = multer,
         }
     end,
     calculate = function(self, card, context)
@@ -64,6 +140,8 @@ for k, v in pairs(G.P_CENTER_POOLS["Enhanced"]) do
         NON_STONE_UPGRADES[#NON_STONE_UPGRADES + 1] = v
     end
 end
+
+
 -- observer
 SMODS.Joker {
     atlas = 'AikoyoriJokers',
@@ -144,7 +222,7 @@ SMODS.Joker {
                 end
             }
         end
-        if context.individual and AKYRS.bal("adequate") then
+        if context.individual and AKYRS.bal("adequate") and (context.cardarea == G.hand or context.cardarea == G.jokers or context.cardarea == G.play) then
             SMODS.calculate_effect({
                 message = localize { type = 'variable', key = 'a_remaining', vars = { card.ability.extra.times }},
                 card = card,
@@ -159,10 +237,17 @@ SMODS.Joker {
                                     ref_value = "mult_stored",
                                     scalar_value = "mult",
                                 })
+                                if context.other_card then
+                                    AKYRS.simple_event_add(
+                                        function()
+                                        if context.other_card then AKYRS.juice_like_tarot(context.other_card) 
+                                        end return true end
+                                    )
+                                end
                                 card.ability.extra.total_times = card.ability.extra.total_times + card.ability.extra.times_increment
                                 card.ability.extra.times = card.ability.extra.total_times
                             end,
-                            card = card
+                            card = card,
                         })
                     end
                 end
@@ -413,6 +498,7 @@ SMODS.Joker {
                     if ca and ca.cards then
                         for i,k in ipairs(ca.cards) do
                             if not k.removed then
+                                SMODS.calculate_context({ remove_playing_cards = true, removed = k})
                                 k:start_dissolve({G.C.CHIPS}, true)
                             end
                         end

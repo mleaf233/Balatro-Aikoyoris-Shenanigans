@@ -888,15 +888,19 @@ return {
             },
             j_akyrs_redstone_repeater = {
                 name = "Redstone Repeater",
-                text = { "Swaps the current {C:white,X:mult} Mult {}", "with the stored {C:mult}Mult",
-                    "then {C:white,X:mult} X#2# {} Mult", "Start with X {C:white,X:mult}   #3#   {} {C:mult}Mult{}",
-                    "{C:inactive}(Currently X {C:white,X:mult}   #1#   {} {C:mult}Mult{}{C:inactive}){}" }
+                text = { "Swaps the current {C:white,X:mult} Mult {} value", "with the stored {C:mult}Mult",
+                    "then {C:white,X:mult} X#2# {} Mult", 
+                        -- "Start with X {C:white,X:mult}   #3#   {} {C:mult}Mult{}",
+                    --"{C:inactive}(Currently X {C:white,X:mult}   #1#   {} {C:mult}Mult{}{C:inactive}){}" 
+                    }
             },
             j_akyrs_redstone_repeater_absurd = {
                 name = "Redstone Repeater",
-                text = { "Swaps the current {C:white,X:mult} Mult {}", "with the stored {C:mult}Mult",
-                    "then {C:white,X:dark_edition} ^#2# {} Mult", "Start with X {C:white,X:mult}   #3#   {} {C:mult}Mult{}",
-                    "{C:inactive}(Currently X {C:white,X:mult}   #1#   {} {C:mult}Mult{}{C:inactive}){}" }
+                text = { "Swaps the current {C:white,X:mult} Mult {} value", "with the stored {C:mult}Mult",
+                "then {C:white,X:dark_edition} ^#2# {} Mult", 
+                        -- "Start with X {C:white,X:mult}   #3#   {} {C:mult}Mult{}",
+                    --"{C:inactive}(Currently X {C:white,X:mult}   #1#   {} {C:mult}Mult{}{C:inactive}){}" 
+                    }
             },
             j_akyrs_observer = {
                 name = "Observer",
@@ -2365,7 +2369,7 @@ return {
                 text={
                     "Enhances {C:attention}#1#",
                     "selected card to",
-                    "{C:attention}Tea Cards{}",
+                    "a {C:attention}random Tea Cards{}",
                 },
             },
             c_akyrs_umbral_break_up = {
@@ -2444,7 +2448,20 @@ return {
                 name="Intrusive Thoughts",
                 text={
                     {
-                        "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}fixed 50% chance{} to",
+                        "{X:money,C:black}$X#1#{} but {C:green}fixed #2#% chance{} to",
+                        "{E:1,C:red}Set money to #3#{}",
+                    },
+                    
+                    {
+                        "{C:attention}Sell{} this card to see {C:attention}if you would have lost money{}",
+                    }
+                    },
+            },
+            c_akyrs_umbral_intrusive_thoughts_absurd = {
+                name="Intrusive Thoughts",
+                text={
+                    {
+                        "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}fixed #2#% chance{} to",
                         "{E:1,C:red}Lose the run immediately{}",
                     },
                     
@@ -2465,7 +2482,7 @@ return {
                 name="Bunker",
                 text=
                 {
-                    "Select {C:attention}#1#{} random card in hand",
+                    "Select {C:attention}#1#{} card in hand",
                     "to give a random {C:attention}Enhancement, Edition, Seal{} to it",
                     "but {C:attention}force{} it to be {C:attention}selected{}",
                 },
@@ -2516,7 +2533,7 @@ return {
                 text=
                 {
                     "Creates {C:attention}#1# {}random",
-                    "{C:dark_edition}Negative {C:tarot}Tarot{} cards",
+                    "{C:dark_edition}Negative {C:tarot}Tarot{} card",
                 },
             },
             c_akyrs_umbral_puzzle = {
@@ -2625,6 +2642,9 @@ return {
             k_akyrs_item_box_trigger = "?",
 
 
+            akyrs_start_with = "Starts with ",
+            akyrs_stored_open = "(Currently",
+            akyrs_stored_close = ")",
             k_akyrs_reciprocaled = "Reciprocal'd!",
             k_akyrs_centrifuged = "Centrifuged!",
             k_akyrs_drawn_discard = "All Back!",

@@ -252,6 +252,7 @@ SMODS.Consumable{
             end
             -- requested by autumm
             c.no_graveyard = true
+            -- no destroy context because it technically is not gone
             c:start_dissolve({ G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y, }, 1 )
         end
         
@@ -305,6 +306,7 @@ SMODS.Consumable{
             if ud == "dupe" then
                 AKYRS.copy_p_card(_card)
             else
+                SMODS.calculate_context({ remove_playing_cards = true, removed = _card})
                 _card:start_dissolve({G.C.AKYRS_UMBRAL_P,G.C.AKYRS_UMBRAL_P},1)
             end
         end
@@ -456,7 +458,7 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=3,y=1},
     config = {
-        max_highlighted = 2
+        max_highlighted = 4
     },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_canopy_card"]
@@ -483,7 +485,10 @@ SMODS.Consumable{
     pos = {x=4,y=1},
     config = {
         extras = {
-            emoney = 2
+            xmoney = 3,
+            setdollarmult = 2,
+            emoney = 2,
+            odds = 0.5,
         }
     },
     
@@ -500,9 +505,13 @@ SMODS.Consumable{
         end
     end,
     loc_vars = function (self, info_queue, card)
+        G.GAME.akyrs_umbral_intrusive_usage_set = G.GAME.akyrs_umbral_intrusive_usage_set or -4
         return {
+            key = self.key .. (AKYRS.bal("absurd") and "_absurd" or ""),
             vars = {
-                card.ability.extras.emoney,
+                AKYRS.bal("absurd") and card.ability.extras.emoney or card.ability.extras.xmoney,
+                card.ability.extras.odds * 100,
+                SMODS.signed_dollars(G.GAME.akyrs_umbral_intrusive_usage_set)
             }
         }
     end,
@@ -512,14 +521,38 @@ SMODS.Consumable{
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
         local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",1 ,2, "akyrs_umbral_intrusive", true)
+        local d_dollar = 0
         if die_question_mark then
-            if G.STAGE == G.STAGES.RUN then G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false end
-        end
-        if Talisman and type(to_big(G.GAME.dollars)) == "table" then
-            local d_dollar = to_big(G.GAME.dollars):pow(card.ability.extras.emoney) - to_big(G.GAME.dollars)
-            ease_dollars(d_dollar)
+            if AKYRS.bal("absurd") then
+                if G.STAGE == G.STAGES.RUN then 
+                    G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false 
+                end
+            else
+                d_dollar = -G.GAME.dollars + G.GAME.akyrs_umbral_intrusive_usage_set
+                AKYRS.simple_event_add(
+                    function ()
+                        G.GAME.akyrs_umbral_intrusive_usage_set = -4
+                        return true
+                    end, 0
+                )
+                ease_dollars(d_dollar)
+            end
         else
-            local d_dollar = G.GAME.dollars ^ card.ability.extras.emoney - G.GAME.dollars
+            if AKYRS.bal("absurd") then
+                if Talisman and type(to_big(G.GAME.dollars)) == "table" then
+                    d_dollar = to_big(G.GAME.dollars):pow(card.ability.extras.emoney) - to_big(G.GAME.dollars)
+                else
+                    d_dollar = G.GAME.dollars ^ card.ability.extras.emoney - G.GAME.dollars
+                end
+            else
+                d_dollar = G.GAME.dollars * ( card.ability.extras.xmoney - 1 )
+                AKYRS.simple_event_add(
+                    function ()
+                        G.GAME.akyrs_umbral_intrusive_usage_set = (G.GAME.akyrs_umbral_intrusive_usage_set or -4) * card.ability.extras.setdollarmult
+                        return true
+                    end, 0
+                )
+            end
             ease_dollars(d_dollar)
         end
         AKYRS.force_save()
@@ -791,7 +824,7 @@ SMODS.Consumable{
         return true
     end,
     config = {
-        extra = 2
+        extra = 1
     },
     loc_vars = function (self, info_queue, card)
         return {
@@ -860,6 +893,7 @@ SMODS.Consumable{
                         end
                     end
                 else
+                    SMODS.calculate_context({ remove_playing_cards = true, removed = _card})
                     _card:start_dissolve({G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y})
                 end
             end

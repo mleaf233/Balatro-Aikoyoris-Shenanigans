@@ -1101,3 +1101,23 @@ table.akyrs_filter = function(t, filterIter, isIndexed)
 
     return out
 end
+
+function AKYRS.faux_score_container(ref_t, ref_v, args)
+    local scale = args.scale or 0.4
+    local type = args.type or 'faux_mult'
+    local colour = args.colour or G.C.MULT
+    local align = args.align or 'cl'
+    local func = args.func
+    local text = args.text or type..'_text'
+    local w = args.w or 2
+    local h = args.h or 1
+    return
+    {n=G.UIT.R, config={align = align, minw = w, minh = h, r = 0.1, colour = colour, emboss = 0.05}, nodes={
+        align == 'cl' and {n=G.UIT.B, config={w = 0.1, h = 0.1}} or nil,
+        {n=G.UIT.O, config={func = func, text = text, type = type, scale = scale*2.3, object = DynaText({
+            string = {{ref_table = ref_t, ref_value = ref_v}},
+            colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = true, float = true, scale = scale*2.3
+        })}},
+        align ~= 'cl' and {n=G.UIT.B, config={w = 0.1, h = 0.1}} or nil,
+    }}
+end

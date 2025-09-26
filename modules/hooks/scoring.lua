@@ -171,20 +171,21 @@ end
 local smodgetprobvar = SMODS.get_probability_vars
 function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll, non_modifiable)
     local n, d = smodgetprobvar(trigger_obj, base_numerator, base_denominator, identifier, from_roll, non_modifiable)
-    
-    G.GAME.akyrs_prob_mod = G.GAME.akyrs_prob_mod or {}
-    for _, mod in ipairs(G.GAME.akyrs_prob_mod) do
-        if mod.n_add then
-            n = n + mod.n_add
-        end
-        if mod.d_add then
-            d = d + mod.d_add
-        end
-        if mod.n_mult then
-            n = n * mod.n_mult
-        end
-        if mod.d_mult then
-            n = n * mod.d_mult
+    if not non_modifiable then
+        G.GAME.akyrs_prob_mod = G.GAME.akyrs_prob_mod or {}
+        for _, mod in ipairs(G.GAME.akyrs_prob_mod) do
+            if mod.n_add then
+                n = n + mod.n_add
+            end
+            if mod.d_add then
+                d = d + mod.d_add
+            end
+            if mod.n_mult then
+                n = n * mod.n_mult
+            end
+            if mod.d_mult then
+                n = n * mod.d_mult
+            end
         end
     end
     return n, d

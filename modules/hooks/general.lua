@@ -49,6 +49,7 @@ function Game:init_game_object()
     ret.akyrs_last_ante = nil
     ret.akyrs_umbral_atmosphere_score_inc = 100
     ret.akyrs_umbral_atmosphere_uses = 0
+    ret.akyrs_umbral_intrusive_usage_set = -4
 
     -- this one prevents crashes
     ret.modifiers.scaling = ret.modifiers.scaling or 1
