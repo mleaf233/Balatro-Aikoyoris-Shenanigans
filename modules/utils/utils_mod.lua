@@ -406,6 +406,7 @@ AKYRS.mod_card_values = function(table_in, config)
     local randomize = config.random
 
     local function modify_values(table_in, ref, depth)
+        if not ref then return end
         if depth > 2 then return end
         for k, v in pairs(table_in) do 
             local rand = 1

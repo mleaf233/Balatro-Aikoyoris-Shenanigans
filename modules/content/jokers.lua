@@ -918,7 +918,7 @@ SMODS.Joker {
             info_queue[#info_queue+1] = G.P_CENTERS["c_moon"]
             info_queue[#info_queue+1] = G.P_CENTERS["v_grabber"]
             info_queue[#info_queue+1] = G.P_CENTERS["j_ceremonial"]
-            if Cryptid then
+            if AKYRS.is_mod_loaded("Cryptid") then
                 info_queue[#info_queue+1] = G.P_CENTERS["c_cry_summoning"]
                 info_queue[#info_queue+1] = G.P_CENTERS["j_cry_exponentia"]
                 info_queue[#info_queue+1] = G.P_BLINDS["bl_cry_tax"]
@@ -2090,7 +2090,7 @@ SMODS.Joker {
         else
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_aikoyori_base_ability_absurd", vars = {card.ability.extras.base.emult}}
         end
-        if Cryptid then
+        if AKYRS.is_mod_loaded("Cryptid")  then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_aikoyori_cryptid_ability"}
         end
         if MoreFluff then
@@ -2181,7 +2181,7 @@ SMODS.Joker {
             }
         end
         if context.before then
-            if Cryptid and #G.play.cards == 1 and G.play.cards[1]:get_id() == 14 then
+            if AKYRS.is_mod_loaded("Cryptid") and #G.play.cards == 1 and G.play.cards[1]:get_id() == 14 then
                 SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Code", area = G.consumeables, edition = "e_negative"}) end}, card)
             end
             if Entropy and #context.full_hand >= 4 then
