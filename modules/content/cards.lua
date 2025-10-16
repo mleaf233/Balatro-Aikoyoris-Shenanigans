@@ -413,6 +413,7 @@ SMODS.Enhancement{
                                 card.ability.extras.trigger_triggered = 0
                                 local c2 = AKYRS.copy_p_card(card,nil,nil,nil,nil,G.hand)
                                 c2:set_ability(G.P_CENTERS.c_base)
+                                SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
                             end
                         }, card)
                     end

@@ -244,11 +244,13 @@ SMODS.Consumable{
                 local c2 = AKYRS.copy_p_card(c, nil, nil, G.playing_card)
                 c2.ability.akyrs_special_card_type = "rank"
                 c2:set_sprites(c2.config.center,c2.config.card)
+                SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
             end
             if not SMODS.has_no_rank(c) then
                 local c2 = AKYRS.copy_p_card(c, nil, nil, G.playing_card)
                 c2.ability.akyrs_special_card_type = "suit"
                 c2:set_sprites(c2.config.center,c2.config.card)
+                SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
             end
             -- requested by autumm
             c.no_graveyard = true
@@ -283,6 +285,7 @@ SMODS.Consumable{
             for i = 1, card.ability.akyrs_create do
                 local c2 = AKYRS.copy_p_card(_c, nil, nil, G.playing_card)
                 c2 = SMODS.modify_rank(c2, ud*i)
+                SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
                 if c2 then c2:juice_up(0.3,0.3) end
             end
             AKYRS.deselect_from_area(_c)
@@ -304,7 +307,8 @@ SMODS.Consumable{
         local cds = AKYRS.pseudorandom_elements(G.hand.cards,math.ceil(#G.hand.cards/2),pseudoseed("akyrs_umbral_corrupt_cards"))
         for _,_card in ipairs(cds) do
             if ud == "dupe" then
-                AKYRS.copy_p_card(_card)
+                local c2 = AKYRS.copy_p_card(_card)
+                SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
             else
                 SMODS.calculate_context({ remove_playing_cards = true, removed = _card})
                 _card:start_dissolve({G.C.AKYRS_UMBRAL_P,G.C.AKYRS_UMBRAL_P},1)
