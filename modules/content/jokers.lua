@@ -2898,7 +2898,6 @@ SMODS.Joker{
     },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS['j_mr_bones']
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
     end,
     calculate = function (self, card, context)
         if context.setting_blind then
@@ -2954,7 +2953,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             return {
                 key = self.key .. "_absurd",
