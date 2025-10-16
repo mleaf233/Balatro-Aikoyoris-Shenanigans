@@ -11,13 +11,13 @@ SMODS.Edition{
     calculate =  function (self, card, context)
         if context.main_scoring and context.cardarea == G.play then
             return {
-                mult = card.edition.extra.x_chip,
+                xchips = card.edition.extra.x_chip,
                 Xmult = card.edition.extra.x_mult
             }
         end
         if context.pre_joker and (context.cardarea == G.jokers)  then
             return {
-                mult = card.edition.extra.x_chip,
+                xchips = card.edition.extra.x_chip,
                 Xmult = card.edition.extra.x_mult
             }
         end
