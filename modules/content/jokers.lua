@@ -3463,7 +3463,7 @@ SMODS.Joker{
         x = 6, y = 5
     },
     rarity = 3,
-    cost = 6
+    cost = 6,
     config = {
         extras = {
         }
@@ -3632,6 +3632,7 @@ SMODS.Joker {
         return false
     end,
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             vars = { card.ability.extras.taketh, card.ability.extras.addth },
         }
@@ -3657,6 +3658,58 @@ SMODS.Joker {
                         end
                     )
                 end
+            }
+        end
+    end,
+}
+
+
+SMODS.Joker {
+    
+    key = "nokotan",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Shikanokonokonokokoshitantan"] = true,},
+    pos = {
+        x = 8, y = 5
+    },
+    in_pool = function (self, args)
+        return false
+    end,
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
+        local value = 0
+            if card.area and card.area.cards then
+            local location = AKYRS.find_index(card.area.cards, card)
+            --- @type Card
+            local left_card = card.area.cards[location-1]
+            --- @type Card
+            local right_card = card.area.cards[location+1]
+            if left_card then value = value + left_card.sell_cost end
+            if right_card then value = value + right_card.sell_cost end
+        end
+        return {
+            vars = { card.ability.extras.scaleth, value * card.ability.extras.scaleth },
+        }
+    end,
+    rarity = 2,
+    cost = 6,
+    config = {
+        extras = {
+            scaleth = 4,
+        }
+    },
+    calculate = function (self, card, context)
+        if context.joker_main and card.area and card.area.cards then
+            local location = AKYRS.find_index(card.area.cards, card)
+            --- @type Card
+            local left_card = card.area.cards[location-1]
+            --- @type Card
+            local right_card = card.area.cards[location+1]
+            local value = 0
+            if left_card then value = value + left_card.sell_cost end
+            if right_card then value = value + right_card.sell_cost end
+            return {
+                mult = card.ability.extras.scaleth * value
             }
         end
     end,

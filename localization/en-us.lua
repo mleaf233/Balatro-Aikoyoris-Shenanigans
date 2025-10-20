@@ -1859,6 +1859,18 @@ return {
                     '{C:money}sell value{}',
                 }
             },
+            j_akyrs_nokotan = {
+                name = {
+                    "{f:5}鹿乃子のこ",
+                    "{s:0.7}Shikanoko Noko"
+                },
+                text = {
+                    'Gives {C:mult}Mult{} equal to',
+                    '{C:mult}#1#X{} the {C:attention}combined{} sell value of Jokers',
+                    '{C:attention}immediately{} to the left and right of this Joker',
+                    "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
