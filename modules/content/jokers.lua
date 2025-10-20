@@ -3462,8 +3462,8 @@ SMODS.Joker{
     pos = {
         x = 6, y = 5
     },
-    rarity = 2,
-    cost = 6,
+    rarity = 3,
+    cost = 6
     config = {
         extras = {
         }
@@ -3497,7 +3497,7 @@ SMODS.Joker{
                         diac = diac + 1
                     end
                 end
-                if diac >= (#G.play.cards / 2) then
+                if diac >= 1 then
                     return {
                         message = localize("k_akyrs_nijika_planet"),
                         func = function ()

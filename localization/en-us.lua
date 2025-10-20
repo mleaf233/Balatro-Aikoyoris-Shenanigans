@@ -1780,8 +1780,8 @@ return {
                 name = "{f:5}伊地知虹夏{} (Ijichi Nijika)",
                 text = { 
                     {
-                        "If {C:attention}played hand{} contains a {C:attention}Straight{} and at least",
-                        "half of played cards are of {C:diamonds}Diamonds{} suit",
+                        "If {C:attention}played hand{} contains a {C:attention}Straight{}",
+                        "and has a {C:diamonds}Diamonds{} suit",
                         "Create a {C:dark_edition}Negative {C:planet}Planet Card{} of your most played hand"
                     },
                 }
