@@ -465,10 +465,9 @@ end
 G.FUNCS.akyrs_advance_balance_intro = function(e)
   --print(inspect(e.config))
   if G.akyrs_current_balancing_page == "intro" then
-    if Playbook then
-      
+    if AKYRS.is_mod_loaded("Playbook")  then
       AKYRS.balance_box("playbook")
-    elseif Cryptid then
+    elseif AKYRS.is_mod_loaded("Cryptid") then
       AKYRS.balance_box("cryptid")
     else
       AKYRS.balance_box("details")
