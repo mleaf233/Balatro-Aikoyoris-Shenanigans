@@ -537,6 +537,13 @@ return {
                     "When {C:attention}Zodiac{} cards are used"
                 },
             },
+            dd_akyrs_hotpot_ability={
+                name="Hot Potato Ability",
+                text={
+                    "Earn {C:blue,f:hpot_plincoin}͸icks{} equal to",
+                    "final {C:chips}Chips{} in scoring"
+                },
+            },
             dd_akyrs_mukuroju_en = {
                 name = "Mukuroju no Hakamori",
                 text = { 

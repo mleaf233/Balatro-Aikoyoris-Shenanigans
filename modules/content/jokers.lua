@@ -1610,8 +1610,8 @@ SMODS.Joker{
     pos = {
         x = 3, y = 2
     },
-    rarity = 1,
-    cost = 3,
+    rarity = 3,
+    cost = 6,
     config = {
         name = "Dried Ghast",
         extras = {
@@ -1673,8 +1673,8 @@ SMODS.Joker{
     pos = {
         x = 4, y = 2
     },
-    rarity = 2,
-    cost = 6,
+    rarity = 3,
+    cost = 8,
     config = {
         name = "Ghastling",
         extras = {
@@ -2135,6 +2135,9 @@ SMODS.Joker {
         if AKYRS.is_mod_loaded("ortalab") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_ortalab_ability"}
         end
+        if AKYRS.is_mod_loaded("HotPotato") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_hotpot_ability"}
+        end
         return {
         }
     end,
@@ -2231,6 +2234,15 @@ SMODS.Joker {
                         end
                     }
                 end
+            end
+        end
+        if AKYRS.is_mod_loaded("HotPotato") then
+            if context.final_scoring_step then
+                return {
+                    func = function ()
+                        ease_spark_points(math.floor(hand_chips))
+                    end
+                }
             end
         end
         if AKYRS.is_mod_loaded("finity") and context.blind_defeated and G.GAME.blind and G.GAME.blind.boss and G.GAME.blind.config.blind.boss.showdown then
