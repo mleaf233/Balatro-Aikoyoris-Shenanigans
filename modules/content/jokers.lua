@@ -644,12 +644,13 @@ SMODS.Joker {
                 }
             end
         else
-            if context.individual and context.other_card.debuff and not context.end_of_round and 
-            (   context.cardarea == G.play or 
-                context.cardarea == G.hand ) then
-                return {
-                    xmult = card.ability.extra.mult
-                }
+            if context.joker_main then
+                local debuffed = {}
+                for _, _card in ipairs(G.play.cards) do if _card.debuff then table.insert(debuffed, _card) end end
+                for _, _card in ipairs(G.hand.cards) do if _card.debuff then table.insert(debuffed, _card) end end
+                for _, _card in ipairs(debuffed) do
+                    SMODS.calculate_effect({ xmult = card.ability.extra.mult }, _card)
+                end
             end
         end
     end,
@@ -3504,7 +3505,7 @@ SMODS.Joker{
                         message = localize("k_akyrs_nijika_planet"),
                         func = function ()
                             local pl = AKYRS.get_most_played()
-                            SMODS.add_card({soulable = true, key = pl, edition = "e_negative"})
+                            SMODS.add_card({key = pl, edition = "e_negative"})
                         end
                     }
                 end

@@ -1139,7 +1139,7 @@ SMODS.Blind {
     boss = {min = 1, max = 10, showdown = true},
     pos = { x = 0, y = 12 },
     debuff = {
-        akyrs_reduce_other = 2
+        akyrs_reduce_other = 1
     },
     loc_vars = function (self)
         return {

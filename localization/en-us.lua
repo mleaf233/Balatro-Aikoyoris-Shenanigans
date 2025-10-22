@@ -157,7 +157,7 @@ return {
             bl_akyrs_the_collapse= {
                 name = "The Collapse",
                 text = {
-                    "Cannot gain money during the round",
+                    "Money cannot change during the round",
                 }
             },
             bl_akyrs_the_bonsai= {

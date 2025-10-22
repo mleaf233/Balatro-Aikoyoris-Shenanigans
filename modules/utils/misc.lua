@@ -827,7 +827,7 @@ AKYRS.get_most_played = function()
         end
     end
     if _hand then
-        AKYRS.get_planet_for_hand(_hand)
+        _planet = AKYRS.get_planet_for_hand(_hand)
     end
     return _planet, _hand, _tally
 end
@@ -1169,4 +1169,14 @@ function AKYRS.relock_achievement(achievement_name)
             end
         end
         }), 'achievement')
+end
+
+
+function AKYRS.print_table_simple(tlb) 
+    local str = "{"
+    for k, v in pairs(tlb) do
+        str = str .. k .." = " .. tostring(type(v) == 'table' and '<table>' or v) .. ", "
+    end
+    str = str .. "}"
+    return str
 end

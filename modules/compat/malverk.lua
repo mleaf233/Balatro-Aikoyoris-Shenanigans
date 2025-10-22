@@ -33,7 +33,7 @@ if Malverk then
             'j_akyrs_yee',
             'j_akyrs_chicken_jockey',
             'j_akyrs_tetoris',
-            'j_akyrs_aikoyori',
+            'j_akyrs_aikoyori_fucked_up',
             'j_akyrs_mukuroju_no_hakamori',
             'j_akyrs_emerald',
             'j_akyrs_shimmer_bucket',
@@ -66,7 +66,7 @@ if Malverk then
         soul_keys = {
             'j_akyrs_hibana',
             'j_akyrs_tsunagite',
-            'j_akyrs_aikoyori',
+            'j_akyrs_aikoyori_fucked_up',
         }
 
     }

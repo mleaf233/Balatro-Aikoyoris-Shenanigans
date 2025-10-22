@@ -53,10 +53,11 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = '''=[SMODS _ "src/utils.lua"]'''
-pattern = '''            card_eval_status_text(card, 'debuff')'''
+pattern = '''                card_eval_status_text(card, 'debuff')
+            end'''
 position = "after"
 payload = '''
-SMODS.score_card(card, context)
+eval_card(card, context)
 '''
 match_indent = true
 
