@@ -1506,6 +1506,7 @@ return {
                     "Finishing Phase {C:blue}5",
                     "grants you a {C:dark_edition}Negative Soul Card",
                     "and resets to Phase {C:blue}1",
+                    "Rank changes every {C:attention}phase{}",
                 }
             },
             j_akyrs_turret = {
@@ -1890,6 +1891,16 @@ return {
                     "{C:inactive}(Currently {C:green}#1# in #2#{C:inactive})",
                 }
             },
+            j_akyrs_bashame = {
+                name = {
+                    "{f:5}馬車芽めめ",
+                    "{s:0.7}Bashame Meme"
+                },
+                text = {
+                    'This Joker gain {C:money}$#1#{} of {C:attention}sell value{}',
+                    'when a {C:attention}Canopy Card{} is scored',
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
@@ -1909,9 +1920,19 @@ return {
             akyrs_balance_dialog_intro = {
                 name = "", 
                 text = {
-                    "Hello! Thank you and Welcome to {C:edition}Aikoyori's Shenanigans{}",
+                    "Hello! Thank you and Welcome to {E:akyrs_rainbow_wiggle}Aikoyori's Shenanigans{}",
                     "I am {E:2,C:dark_edition}Aikoyori{} and I will guide you through",
                     "some necessary settings. Let's get started!"
+                }
+            },
+            akyrs_balance_dialog_intro_again = {
+                name = "", 
+                text = {
+                    "Hello again! Since you previous",
+                    "{E:akyrs_rainbow_wiggle}Aikoyori's Shenanigans{} gameplay",
+                    "I have detected some {E:1,C:attention}changes{}",
+                    "that needed to be addressed",
+                    "Let's get it out of the way."
                 }
             },
             akyrs_balance_dialog_cryptid = {
@@ -1930,6 +1951,27 @@ return {
                     "I'll go ahead and apply the {E:1,C:red}Absurd{} Balance.",
                     "If you want to change it to {E:2,C:green}Adequate{},",
                     "You can change it in the mod configuration at any time.",
+                }
+            },
+            akyrs_balance_dialog_multiplayer_initialise = {
+                name = "", 
+                text = {
+                    "Huh? {E:2,C:dark_edition}Balatro Multiplayer{} has been installed.",
+                    "Due to advantageous reasons I'll go ahead and put",
+                    "The game on {E:2,C:green}Adequate{} Balance.",
+                    "You won't be able to change it while",
+                    "{E:2,C:dark_edition}Balatro Multiplayer{} is active.",
+                }
+            },
+            akyrs_balance_dialog_multiplayer_start_from_already_set_profile = {
+                name = "", 
+                text = {
+                    "Eh? {E:2,C:dark_edition}Balatro Multiplayer{} has been installed.",
+                    "at some point when on this {E:1,C:red}Absurd{} save file",
+                    "Due to advantageous reasons I'll have to put",
+                    "The game on {E:2,C:green}Adequate{} Balance.",
+                    "You won't be able to change it while",
+                    "{E:2,C:dark_edition}Balatro Multiplayer{} is active.",
                 }
             },
             akyrs_balance_dialog_details = {
@@ -2802,6 +2844,7 @@ return {
             k_akyrs_balance_dialog_cryptid_accept = "Sounds Good. (End)",
             k_akyrs_balance_dialog_cryptid_decline = "I want to hear more!",
             k_akyrs_balance_dialog_details_next = "Alright, I'll pick...",
+            k_akyrs_balance_dialog_mp_accept = "Sure (End)",
             k_akyrs_balance_dialog_adequate_text = "Adequate",
             k_akyrs_balance_dialog_adequate_description = "Balanced towards vanilla",
             k_akyrs_balance_dialog_absurd_text = "Absurd (Requires Talisman)",
@@ -2841,7 +2884,7 @@ return {
             k_akyrs_joker_preview_description={
                 'Some Jokers have a small "Preview" window where the effect of the Joker',
                 'is demonstrated. If you are experiencing crashes related to "blind" being',
-                'nil when hovering on certain Jokers. Turning this off might mitigate that issue.',
+                'nil when hovering on certain Jokers, Turning this off might mitigate that issue.',
             },
             k_akyrs_toggle_crt = "Enable CRT Shaders",
             k_akyrs_toggle_crt_description = 'Toggle the game\'s CRT shader (the shader saturates everything a bit)',

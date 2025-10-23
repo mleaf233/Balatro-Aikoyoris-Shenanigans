@@ -3731,6 +3731,7 @@ SMODS.Joker {
         return false
     end,
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         local n, d = SMODS.get_probability_vars(card, 2, 2, "koshian_calc")
         card.sell_cost = n + d
         return {
@@ -3749,6 +3750,45 @@ SMODS.Joker {
     
     calculate = function (self, card, context)
         
+    end,
+}
+
+
+
+SMODS.Joker {
+    
+    key = "bashame",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Shikanokonokonokokoshitantan"] = true,},
+    pos = {
+        x = 0, y = 6
+    },
+    in_pool = function (self, args)
+        return false
+    end,
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_canopy_card"]
+        return {
+            vars = { card.ability.extra },
+        }
+    end,
+    rarity = 2,
+    cost = 5,
+    config = {
+        extra = 1
+    },
+    calculate = function (self, card, context)
+        if context.individual and context.cardarea == G.play then
+            if SMODS.get_enhancements(context.other_card)["m_akyrs_canopy_card"] then
+                return {
+                    message = localize("k_akyrs_value_up"),
+                    func = function()
+                        card.sell_cost = card.sell_cost + card.ability.extra
+                    end
+                } 
+            end
+        end
     end,
 }
 

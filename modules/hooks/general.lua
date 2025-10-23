@@ -1788,8 +1788,12 @@ function Game:main_menu(ctx)
             }
         )
     end
-
-    AKYRS.start_onboarding()
+    if (G.PROFILES[G.SETTINGS.profile].akyrs_balance == "absurd" and (MP) and true) then
+        G.AKYRS_MULTIPLAYER_NOTICE_INTRO = true
+        AKYRS.start_onboarding(nil, true)
+    else
+        AKYRS.start_onboarding()
+    end
     return r
 end
 

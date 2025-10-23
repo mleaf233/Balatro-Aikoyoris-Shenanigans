@@ -464,13 +464,20 @@ end
 
 G.FUNCS.akyrs_advance_balance_intro = function(e)
   --print(inspect(e.config))
-  if G.akyrs_current_balancing_page == "intro" then
-    if AKYRS.is_mod_loaded("Playbook")  then
+  if G.akyrs_current_balancing_page == "intro" or G.akyrs_current_balancing_page == "intro_again" then
+    if AKYRS.is_mod_loaded("Multiplayer") then
+      AKYRS.balance_box("multiplayer")
+    elseif AKYRS.is_mod_loaded("Playbook")  then
       AKYRS.balance_box("playbook")
     elseif AKYRS.is_mod_loaded("Cryptid") then
       AKYRS.balance_box("cryptid")
     else
       AKYRS.balance_box("details")
+    end
+  elseif G.akyrs_current_balancing_page == "multiplayer" then
+    G.AKYRS_MULTIPLAYER_NOTICE_INTRO = nil
+    if e.config.id == "accept" then
+      AKYRS.balance_intro_end("adequate")
     end
   elseif G.akyrs_current_balancing_page == "cryptid" or G.akyrs_current_balancing_page == "playbook" then
     if e.config.id == "accept" then
@@ -509,6 +516,31 @@ function AKYRS.UIBox_balancing_intro(page)
         page = page,
         colour = G.C.BLUE,
         minw = 4
+      }),
+    }
+  elseif page == "intro_again" then
+    localize{type = "descriptions", key = "akyrs_balance_dialog_intro_again", set = "Akyrs_Dialog", default_col = G.C.WHITE, nodes = shx, vars = {}, scale = 2}
+    child_elements = {transparent_multiline_text(shx)}
+    buttons = {
+      UIBox_button({
+        label = {localize('k_akyrs_balance_dialog_intro_next')},
+        button = 'akyrs_advance_balance_intro',
+        page = page,
+        colour = G.C.BLUE,
+        minw = 4
+      }),
+    }
+  elseif page == "multiplayer" then
+    localize{type = "descriptions", key = "akyrs_balance_dialog_multiplayer_".. (G.AKYRS_MULTIPLAYER_NOTICE_INTRO and "start_from_already_set_profile" or "initialise"), set = "Akyrs_Dialog", default_col = G.C.WHITE, nodes = shx, vars = {}, scale = 2}
+    child_elements = {transparent_multiline_text(shx)}
+    buttons = {
+      UIBox_button({
+        label = {localize('k_akyrs_balance_dialog_mp_accept')},
+        button = 'akyrs_advance_balance_intro',
+        page = page,
+        id = 'accept',
+        colour = G.C.GREEN,
+        minw = 6
       }),
     }
   elseif page == "playbook" then
@@ -632,13 +664,13 @@ function AKYRS.UIBox_balancing_intro(page)
 end
 
 
-AKYRS.start_onboarding = function (forced)
+AKYRS.start_onboarding = function (forced, meet_again)
     AKYRS.simple_event_add(
         function()
-            if not G.PROFILES[G.SETTINGS.profile].akyrs_balance or forced then
+            if not G.PROFILES[G.SETTINGS.profile].akyrs_balance or forced or meet_again then
                 G.SETTINGS.paused = true
                 G.FUNCS.overlay_menu({
-                    definition = AKYRS.UIBox_balancing_intro("intro"),
+                    definition = AKYRS.UIBox_balancing_intro("intro"..(meet_again and "_again" or "")),
                     config = {
                         align = "cm",
                         offset = {x=-2,y=10},

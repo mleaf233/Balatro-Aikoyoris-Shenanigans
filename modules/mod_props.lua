@@ -302,7 +302,7 @@ SMODS.current_mod.config_tab = function ()
         }
       },
       -- balance
-      { n = G.UIT.R, config = {align = "tm"}, nodes = {
+      not MP and { n = G.UIT.R, config = {align = "tm"}, nodes = {
           { n = G.UIT.C, config = {
             align = "cm", padding = 0.2,
           }, nodes = {
