@@ -3635,7 +3635,6 @@ SMODS.Joker {
         return false
     end,
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             vars = { card.ability.extras.taketh, card.ability.extras.addth },
         }
@@ -3679,7 +3678,6 @@ SMODS.Joker {
         return false
     end,
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         local value = 0
             if card.area and card.area.cards then
             local location = AKYRS.find_index(card.area.cards, card)
