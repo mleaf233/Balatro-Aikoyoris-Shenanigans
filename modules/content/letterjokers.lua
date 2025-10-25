@@ -253,13 +253,40 @@ AKYRS.LetterJoker {
     cost = 3,
     config = {
         extras = {
-            chips = 20,
+            chips = 24,
         }
     },
     calculate = function (self, card, context)
         if context.individual and context.cardarea == G.play and string.lower(context.other_card:get_letter_with_pretend()) == "c" then
             return {
                 chips = card.ability.extras.chips
+            }
+        end
+    end,
+}
+AKYRS.LetterJoker {
+    key = "e",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 2, y = 6 },
+    pools = { ["Letter"] = true },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.mult
+            }
+        }
+    end,
+    rarity = 1,
+    cost = 3,
+    config = {
+        extras = {
+            mult = 6,
+        }
+    },
+    calculate = function (self, card, context)
+        if context.individual and context.cardarea == G.play and string.lower(context.other_card:get_letter_with_pretend()) == "e" then
+            return {
+                mult = card.ability.extras.mult
             }
         end
     end,

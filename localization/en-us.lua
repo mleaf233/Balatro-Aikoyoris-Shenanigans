@@ -1925,6 +1925,14 @@ return {
                     'when a {C:attention}Canopy Card{} is scored',
                 }
             },
+            j_akyrs_e = {
+                name = "E",
+                text = {
+                    'Cards with letter {C:attention}E{}',
+                    ' gives {C:mult}+#1#{} Mult when scored',
+                    '{C:inactive,s:0.8}Why did they put Markiplier\'s face on Lord Farquaad again?'
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
