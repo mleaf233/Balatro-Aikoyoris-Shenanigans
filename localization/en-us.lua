@@ -1723,7 +1723,10 @@ return {
                 }
             },
             j_akyrs_bocchi = {
-                name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
+                name = {
+                    "{f:5}後藤ひとり{}" , 
+                    "{s:0.7}Gotoh Hitori"
+                },
                 text = { 
                     {
                         "This Joker gains {C:white,X:mult} X#1# {} Mult",
@@ -1734,7 +1737,10 @@ return {
                 }
             },
             j_akyrs_bocchi_absurd = {
-                name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
+                name = {
+                    "{f:5}後藤ひとり{}" , 
+                    "{s:0.7}Gotoh Hitori"
+                },
                 text = { 
                     {
                         "This Joker {C:attention}exponentiates{} its {C:white,X:mult} XMult {} by {C:white,X:dark_edition} ^#1# {}",
@@ -1745,7 +1751,10 @@ return {
                 }
             },
             j_akyrs_kita = {
-                name = "{f:5}喜多郁代{} (Kita Ikuyo)",
+                name = {
+                    "{f:5}喜多郁代{}" , 
+                    "{s:0.7}Kita Ikuyo"
+                },
                 text = { 
                     {
                         "If played hand contains a {C:attention}Flush{}",
@@ -1756,7 +1765,10 @@ return {
                 }
             },
             j_akyrs_kita_absurd = {
-                name = "{f:5}喜多郁代{} (Kita Ikuyo)",
+                name = {
+                    "{f:5}喜多郁代{}" , 
+                    "{s:0.7}Kita Ikuyo"
+                },
                 text = { 
                     {
                         "Create {C:dark_edition}Negative {C:tarot}The Lovers{}",
@@ -1765,7 +1777,10 @@ return {
                 }
             },
             j_akyrs_ryou = {
-                name = "{f:5}山田リョウ{} (Yamada Ryou)",
+                name = {
+                    "{f:5}山田リョウ{}" , 
+                    "{s:0.7}Yamada Ryou"
+                },
                 text = { 
                     {
                         "Go up to {C:red}-$#1#{} in debt",
@@ -1775,7 +1790,10 @@ return {
                 }
             },
             j_akyrs_ryou_absurd = {
-                name = "{f:5}山田リョウ{} (Yamada Ryou)",
+                name = {
+                    "{f:5}山田リョウ{}" , 
+                    "{s:0.7}Yamada Ryou"
+                },
                 text = { 
                     {
                         "Go up to {C:red}-$#1#{} in debt",
@@ -1785,7 +1803,10 @@ return {
                 }
             },
             j_akyrs_nijika = {
-                name = "{f:5}伊地知虹夏{} (Ijichi Nijika)",
+                name = {
+                    "{f:5}伊地知虹夏{}" , 
+                    "{s:0.7}Ijichi Nijika"
+                },
                 text = { 
                     {
                         "If {C:attention}played hand{} contains a {C:attention}Straight{}",
@@ -1795,7 +1816,10 @@ return {
                 }
             },
             j_akyrs_nijika_absurd = {
-                name = "{f:5}伊地知虹夏{} (Ijichi Nijika)",
+                name = {
+                    "{f:5}伊地知虹夏{}" , 
+                    "{s:0.7}Ijichi Nijika"
+                },
                 text = { 
                     {
                         "If {C:attention}played hand{} contains a {C:attention}Straight{}",

@@ -1931,6 +1931,8 @@ SMODS.Joker{
             }
         }
     end,
+    blueprint_compat = true,
+	demicoloncompat = true,
     calculate = function (self, card, context)
         if AKYRS.bal("absurd") then
             if context.setting_blind then
@@ -3132,6 +3134,7 @@ SMODS.Joker{
             }
         end
     end,
+    blueprint_compat = true,
 	demicoloncompat = true,
 }
 SMODS.Joker{
@@ -3163,6 +3166,7 @@ SMODS.Joker{
             }
         end
     end,
+    blueprint_compat = true,
 	demicoloncompat = true,
 }
 
@@ -3245,6 +3249,7 @@ SMODS.Joker{
             }
         end
     end,
+    blueprint_compat = true,
 	demicoloncompat = true,
 }
 
@@ -3318,6 +3323,7 @@ SMODS.Joker{
             }
         end
     end,
+    blueprint_compat = true,
 	demicoloncompat = true,
 }
 
@@ -3371,6 +3377,7 @@ SMODS.Joker{
             }
         end
     end,
+    blueprint_compat = true,
 	demicoloncompat = true,
 }
 
@@ -3572,6 +3579,8 @@ SMODS.Joker {
             }
         end
     end,
+    blueprint_compat = true,
+	demicoloncompat = true,
 }
 
 SMODS.Joker {
@@ -3620,6 +3629,8 @@ SMODS.Joker {
             }
         end
     end,
+    blueprint_compat = true,
+	demicoloncompat = true,
 }
 
 
@@ -3663,6 +3674,8 @@ SMODS.Joker {
             }
         end
     end,
+    blueprint_compat = true,
+	demicoloncompat = true,
 }
 
 
@@ -3714,6 +3727,8 @@ SMODS.Joker {
             }
         end
     end,
+    blueprint_compat = true,
+	demicoloncompat = true,
 }
 
 
@@ -3729,7 +3744,6 @@ SMODS.Joker {
         return false
     end,
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         local n, d = SMODS.get_probability_vars(card, 2, 2, "koshian_calc")
         card.sell_cost = n + d
         return {
@@ -3778,7 +3792,7 @@ SMODS.Joker {
         extra = 1
     },
     calculate = function (self, card, context)
-        if context.individual and context.cardarea == G.play then
+        if context.individual and context.cardarea == G.play and not context.blueprint then
             if SMODS.get_enhancements(context.other_card)["m_akyrs_canopy_card"] then
                 return {
                     message = localize("k_akyrs_value_up"),
@@ -3789,5 +3803,7 @@ SMODS.Joker {
             end
         end
     end,
+    blueprint_compat = false,
+	demicoloncompat = true,
 }
 
