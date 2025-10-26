@@ -239,6 +239,12 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+SMODS.Atlas {
+    key = "furina",
+    path = "furina.png",
+    px = 71,
+    py = 95
+}
 
 -- we glsling so hard rn 
 

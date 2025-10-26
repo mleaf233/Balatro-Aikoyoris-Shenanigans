@@ -233,7 +233,7 @@ SMODS.Enhancement{
     config = {
         extras = {
             xmult = 1,
-            xmult_add = 0.2,
+            xmult_add = 0.4,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -382,6 +382,71 @@ SMODS.Enhancement{
         end
     end
 }
+
+SMODS.Enhancement{
+    key = "net_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 1, y = 1},
+    config = {
+        extras = {
+            xmult = 0.5,
+        },
+        h_dollars = 8
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xmult,
+                SMODS.signed_dollars(card.ability.h_dollars),
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.hand then
+            return {
+                xmult = card.ability.extras.xmult
+            }
+        end
+    end
+}
+
+SMODS.Enhancement{
+    key = "droplet_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 2, y = 1},
+    config = {
+        extras = {
+            n = 1,
+            d = 3,
+            discard = 1,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        local n, d = SMODS.get_probability_vars(card,card.ability.extras.n,card.ability.extras.d,"akyrs_droplet")
+        return {
+            vars = {
+                n,d,
+                card.ability.extras.discard,
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.discard and context.other_card == card then
+            return {
+                func = function ()
+                    local success = SMODS.pseudorandom_probability(card,"akyrs_droplet",card.ability.extras.n,card.ability.extras.d)
+                    if success then
+                        ease_discard(card.ability.extras.discard)
+                        SMODS.calculate_effect({
+                            localize("k_akyrs_gain_discard")
+                        })
+                    end
+                end,
+            }
+        end
+    end
+}
+
 
 SMODS.Enhancement{
     key = "zap_card",

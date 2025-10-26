@@ -873,6 +873,26 @@ return {
                     "this card scores"
                 }
             },
+            m_akyrs_net_card = {
+                name = "Net Card",
+                text = {
+                    {
+                        "{C:white,X:mult}X#1#{} Mult",
+                        "when held in hand",
+                    },
+                    {
+                        "{C:money}#2#{} when held in hand",
+                        "at the end of the round",
+                    }
+                }
+            },
+            m_akyrs_droplet_card = {
+                name = "Droplet Card",
+                text = {
+                    "{C:green}#1# in #2#{} chance to give",
+                    "{C:red}+#3#{} Discard when discarded",
+                }
+            },
         },
         Joker={
             -- toga
@@ -1875,7 +1895,7 @@ return {
                 name = "c",
                 text = {
                     'Cards with letter {C:attention}C{}',
-                    ' gives {C:chips}+#1#{} Chips when scored',
+                    ' gives {C:chips}+#1#{} Chips each when scored',
                     '{C:inactive,s:0.8}cue Tobu - Cloud 9'
                 }
             },
@@ -1929,8 +1949,23 @@ return {
                 name = "E",
                 text = {
                     'Cards with letter {C:attention}E{}',
-                    ' gives {C:mult}+#1#{} Mult when scored',
+                    ' gives {C:mult}+#1#{} Mult each when scored',
                     '{C:inactive,s:0.8}Why did they put Markiplier\'s face on Lord Farquaad again?'
+                }
+            },
+            j_akyrs_catchphrase = {
+                name = "Catchphrase",
+                text = {
+                    'Cards with letter {C:attention}E{}',
+                    'held in hand gives {C:mult}+#1#{} Mult each when scored',
+                    '{C:inactive,s:0.8}Why did they put Markiplier\'s face on Lord Farquaad again?'
+                }
+            },
+            j_akyrs_furina = {
+                name = "Furina, the Hydro Archon",
+                text = {
+                    'Gain {C:red}+#1#{} Discard',
+                    "When hand is {C:attention}played"
                 }
             },
         },
@@ -2361,6 +2396,7 @@ return {
                 text={
                     "{C:attention}Letters{} appear on playing cards",
                     "Words can be made with playing cards",
+                    "{C:akyrs_playable}+#1#{} Card Selection"
                 },
             },
             v_akyrs_crossing_field={
@@ -2368,6 +2404,7 @@ return {
                 text={
                     "{C:attention}Letters{} give {C:mult}Mult{}",
                     "based on their {C:attention}Scrabble value{}",
+                    "{C:akyrs_playable}+#1#{} Card Selection"
                 },
             },
         },
@@ -2685,6 +2722,24 @@ return {
                     "to all chances {C:inactive}(if possible)",
                 },
             },
+            c_akyrs_umbral_bounce= {
+                name="Bounce",
+                text=
+                {
+                    "Enhances {C:attention}#1#",
+                    "selected card to",
+                    "{C:attention}Net Cards{}",
+                },
+            },
+            c_akyrs_umbral_hydrate= {
+                name="Hydrate",
+                text=
+                {
+                    "Enhances {C:attention}#1#",
+                    "selected card to",
+                    "{C:attention}Droplet Card{}",
+                },
+            },
             c_akyrs_umbral_free_will = {
                 name="Free Will",
                 text=
@@ -2802,6 +2857,7 @@ return {
             k_akyrs_woah_undertale = "Woah..",
             k_akyrs_story_of_undertale = "Story of Undertale..",
             k_akyrs_value_up = "Value UP!",
+            k_akyrs_gain_discard = "<SPLASH>",
 
 
             k_akyrs_ryo_borrowed_money = "Borrowed Money...",

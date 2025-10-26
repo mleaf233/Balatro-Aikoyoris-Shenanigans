@@ -291,3 +291,30 @@ AKYRS.LetterJoker {
         end
     end,
 }
+AKYRS.LetterJoker {
+    key = "catchphrase",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 4, y = 6 },
+    pools = { ["Letter"] = true },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.mult
+            }
+        }
+    end,
+    rarity = 2,
+    cost = 3,
+    config = {
+        extras = {
+            mult = 8,
+        }
+    },
+    calculate = function (self, card, context)
+        if context.individual and context.cardarea == G.hand and string.lower(context.other_card:get_letter_with_pretend()) == "h" then
+            return {
+                mult = card.ability.extras.mult
+            }
+        end
+    end,
+}

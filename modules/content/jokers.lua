@@ -2796,7 +2796,7 @@ SMODS.Joker{
     cost = 2,
     config = {
         extras = {
-            mult = 4.000,
+            mult = 6.000,
             eeemult = 1.1
         }
     },
@@ -3642,9 +3642,6 @@ SMODS.Joker {
     pos = {
         x = 7, y = 5
     },
-    in_pool = function (self, args)
-        return false
-    end,
     loc_vars = function (self, info_queue, card)
         return {
             vars = { card.ability.extras.taketh, card.ability.extras.addth },
@@ -3687,9 +3684,6 @@ SMODS.Joker {
     pos = {
         x = 8, y = 5
     },
-    in_pool = function (self, args)
-        return false
-    end,
     loc_vars = function (self, info_queue, card)
         local value = 0
             if card.area and card.area.cards then
@@ -3740,9 +3734,6 @@ SMODS.Joker {
     pos = {
         x = 9, y = 5
     },
-    in_pool = function (self, args)
-        return false
-    end,
     loc_vars = function (self, info_queue, card)
         local n, d = SMODS.get_probability_vars(card, 2, 2, "koshian_calc")
         card.sell_cost = n + d
@@ -3776,9 +3767,6 @@ SMODS.Joker {
     pos = {
         x = 0, y = 6
     },
-    in_pool = function (self, args)
-        return false
-    end,
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_canopy_card"]
@@ -3801,6 +3789,79 @@ SMODS.Joker {
                     end
                 } 
             end
+        end
+    end,
+    blueprint_compat = false,
+	demicoloncompat = true,
+}
+
+
+SMODS.Joker {
+    key = "furina",
+    atlas = 'furina',
+    pools = { ["Genshin Impact"] = true,},
+    pos = {
+        x = 0, y = 0
+    },
+    soul_pos = {
+        x = 1, y = 0, draw = function (card, scale_mod, rotate_mod)
+            card.children.floating_sprite:draw_shader('dissolve',0, nil, nil, card.children.center,scale_mod, rotate_mod,0,0 - 0.3,nil, 0.6)
+            card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod,0,0-0.5)
+        end
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = { card.ability.extra },
+        }
+    end,
+    rarity = 4,
+    cost = 5,
+    config = {
+        extra = 1
+    },
+    calculate = function (self, card, context)
+        if context.press_play then
+            return {
+                func = function ()
+                    ease_discard(card.ability.extra)
+                end
+            }
+        end
+    end,
+    blueprint_compat = false,
+	demicoloncompat = true,
+}
+
+SMODS.Joker {
+    key = "furina",
+    atlas = 'furina',
+    pools = { ["Genshin Impact"] = true,},
+    pos = {
+        x = 0, y = 0
+    },
+    soul_pos = {
+        x = 1, y = 0, draw = function (card, scale_mod, rotate_mod)
+            card.children.floating_sprite:draw_shader('dissolve',0, nil, nil, card.children.center,scale_mod, rotate_mod,0,0 - 0.3,nil, 0.6)
+            card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod,0,0-0.5)
+        end
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = { card.ability.extra },
+        }
+    end,
+    rarity = 4,
+    cost = 5,
+    config = {
+        extra = 1
+    },
+    calculate = function (self, card, context)
+        if context.press_play then
+            return {
+                func = function ()
+                    ease_discard(card.ability.extra)
+                end
+            }
         end
     end,
     blueprint_compat = false,

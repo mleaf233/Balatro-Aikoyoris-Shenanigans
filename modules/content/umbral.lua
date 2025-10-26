@@ -436,7 +436,7 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=2,y=1},
     config = {
-        max_highlighted = 1
+        max_highlighted = 2
     },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_brick_card"]
@@ -930,14 +930,66 @@ SMODS.Consumable{
             end
         )
     end
-    
-
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_bounce",
+    atlas = "umbra",
+    pos = {x=0,y=3},
+    config = {
+        max_highlighted = 2,
+    },
+    loc_vars = function (self, info_queue, card)
+        
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_net_card"]
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(
+            G.hand.highlighted,
+            function (_card)
+                _card:set_ability(G.P_CENTERS["m_akyrs_net_card"])
+            end
+        )
+    end
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_hydrate",
+    atlas = "umbra",
+    pos = {x=7,y=2},
+    config = {
+        max_highlighted = 2,
+    },
+    loc_vars = function (self, info_queue, card)
+        
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_droplet_card"]
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(
+            G.hand.highlighted,
+            function (_card)
+                _card:set_ability(G.P_CENTERS["m_akyrs_droplet_card"])
+            end
+        )
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_d1",
     atlas = "umbra",
-    pos = {x=5,y=2},
+    pos = {x=8,y=2},
     config = {
         extras = {
             d = 1,
