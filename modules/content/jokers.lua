@@ -2141,6 +2141,9 @@ SMODS.Joker {
         if AKYRS.is_mod_loaded("HotPotato") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_hotpot_ability"}
         end
+        if AKYRS.is_mod_loaded("GSPhanta") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_phanta_ability"}
+        end
         return {
         }
     end,
@@ -2157,21 +2160,21 @@ SMODS.Joker {
     calculate = function (self, card, context)
         if context.skip_blind then
             if Cryptposting then
-                return {
+                SMODS.calculate_effect({
                     func = function()
                         local jkr = pseudorandom_element(cryptposting_joker,pseudoseed("aikocryptposting"))
                         SMODS.add_card({set = "Joker", key = jkr})
                     end
-                }
+                }, card)
             end
         end
         if context.setting_blind then
             if AKYRS.is_mod_loaded("GrabBag") then
-                return {
+                SMODS.calculate_effect({
                     func = function()
                         SMODS.add_card({set = "Ephemeral", area = G.consumeables, edition = "e_negative"})
                     end
-                }
+                }, card)
             end
         end
         if context.akyrs_ortalab_zodiac_used then
@@ -2214,6 +2217,11 @@ SMODS.Joker {
                     SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Bakery", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end
             end
+            if AKYRS.is_mod_loaded("GSPhanta") then
+                if next(context.poker_hands["Four of a Kind"]) and G.P_CENTER_POOLS.phanta_hanafuda then
+                    SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Hanafuda", area = G.consumeables, edition = "e_negative"}) end}, card)
+                end
+            end
             if AKYRS.is_mod_loaded("vallkarri") then
                 if G.GAME.current_round.hands_left == G.GAME.current_round.discards_left then
                     SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Aesthetic", area = G.consumeables, edition = "e_negative"}) end}, card)
@@ -2229,23 +2237,23 @@ SMODS.Joker {
             if context.after then
                 local cards_below_hand = math.max(G.hand.config.card_limit - #G.play.cards ,1)
                 if cards_below_hand > 1 then
-                    return {
+                    SMODS.calculate_effect ({
                         message = localize("k_akyrs_score_mult_pre")..cards_below_hand..localize("k_akyrs_score_mult_append"),
                         colour = G.C.PURPLE,
                         func = function ()
                             AKYRS.mod_score({mult = cards_below_hand})
                         end
-                    }
+                    }, card)
                 end
             end
         end
         if AKYRS.is_mod_loaded("HotPotato") then
             if context.final_scoring_step then
-                return {
+                SMODS.calculate_effect ({
                     func = function ()
                         ease_spark_points(math.floor(hand_chips) * 10.0)
                     end
-                }
+                }, card)
             end
         end
         if AKYRS.is_mod_loaded("finity") and context.blind_defeated and G.GAME.blind and G.GAME.blind.boss and G.GAME.blind.config.blind.boss.showdown then

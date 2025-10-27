@@ -574,6 +574,14 @@ return {
                     "{C:attention}ten{} times the final {C:chips}Chips{} in scoring"
                 },
             },
+            dd_akyrs_phanta_ability={
+                name="Phanta Ability",
+                text={
+                    "If {C:attention}played hand{} contains",
+                    "a {C:attention}Four of a Kind{}, create a",
+                    "{C:dark_edition}Negative{} {C:attention}Hanafuda{} card",
+                },
+            },
             dd_akyrs_mukuroju_en = {
                 name = "Mukuroju no Hakamori",
                 text = { 
