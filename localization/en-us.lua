@@ -104,6 +104,16 @@ return {
                     "The challenge is to not crash the game."
 				},
             },
+            b_akyrs_mega_letter_deck = {
+                name = 'Mega Letter Deck',
+                text = 
+                { 
+                    'Letter Deck',
+                    "but {C:blue}+#2#{} Hand Size", 
+                    "you only have {C:red}1 hand{}",
+                    "{C:red}X#1#{} base Blind Size",
+                },
+            },
         },
         Blind={
             bl_akyrs_the_thought= {

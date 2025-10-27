@@ -25,6 +25,38 @@ SMODS.Back{
         vouchers = {'v_akyrs_alphabet_soup','v_akyrs_crossing_field'}
     },
 }
+
+SMODS.Back{
+    key = "mega_letter_deck",
+    name = "Mega Letter Deck",
+    atlas = 'deckBacks',
+    pos = {x = 3, y = 0},
+    loc_vars = function (self, info_queue, card)
+        return { vars = {
+            self.config.ante_scaling,
+            self.config.discards,
+            self.config.hand_size
+        } }
+    end,
+    config = {
+        akyrs_starting_letters = AKYRS.scrabble_letters,
+        starting_deck_size = 100,
+        akyrs_selection = 1e100,
+        discards = 2,
+        akyrs_wording_enabled = true,
+        akyrs_start_with_no_cards = true,
+        akyrs_letters_mult_enabled = true,
+        akyrs_hide_normal_hands = true,
+        ante_scaling = 8,
+        hand_size = 25,
+        vouchers = {'v_akyrs_alphabet_soup','v_akyrs_crossing_field'}
+    },
+    apply = function (self, back)
+        G.GAME.starting_params.hands = 1
+        G.GAME.round_resets.hands = 1
+    end
+}
+
 SMODS.Back{
     key = "math_deck",
     name = "Math Deck",
