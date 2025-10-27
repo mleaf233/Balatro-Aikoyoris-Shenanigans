@@ -13,6 +13,17 @@ SMODS.Sticker{
     sets =  all_sets,
     calculate = function(self, card, context)
     end,
+    should_apply = function (self, card, center, area, bypass_reroll)
+        if self.sets[card.ability.set] then
+            if G.GAME.modifiers.akyrs_spawn_self_destruct and center.eternal_compat and pseudorandom((area == G.pack_cards and 'akyrs_packs_sale_' or 'akyrs_sale_')..G.GAME.round_resets.ante) > 0.9 then
+                self:apply(card, true)
+                card.cost = 1
+                card.sell_cost = 1
+                return true
+            end
+        end
+        return false
+    end,
     apply = function(self, card, val)
         card.ability[self.key] = val
         card:set_cost()
@@ -72,7 +83,7 @@ SMODS.Sticker{
     badge_colour = HEX("b74912"),
     sets =  all_sets,
     should_apply = function (self, card, center, area, bypass_reroll)
-        if true then
+        if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_oxidising and pseudorandom((area == G.pack_cards and 'akyrs_packs_oxi_' or 'akyrs_oxi_')..G.GAME.round_resets.ante) > 0.7 then
                 card.ability.akyrs_oxidising = 1
                 return true
@@ -172,7 +183,7 @@ SMODS.Sticker{
     pos = {x = 0, y = 1},
     rate = 0,
     badge_colour = HEX("FF6D6D"),
-    sets =  all_sets,
+    sets =  { ["Default"] = true, ["Enhanced"] = true, ["Base"] = true },
     apply = function(self, card, val)
         card.ability[self.key] = val
     end,
@@ -202,7 +213,7 @@ SMODS.Sticker{
     badge_colour = HEX("6394ff"),
     sets =  all_sets,
     should_apply = function (self, card, center, area, bypass_reroll)
-        if true then
+        if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_concealed and pseudorandom((area == G.pack_cards and 'akyrs_packs_concealed_' or 'akyrs_concealed_')..G.GAME.round_resets.ante) > 0.7 then
                 card.ability.akyrs_concealed = true
                 card:set_ability(card.config.center)
@@ -221,4 +232,127 @@ SMODS.Sticker{
         G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center)
         G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
     end
+}
+
+SMODS.Sticker{
+    key = "crystalised",
+    default_compat = true,
+    atlas = "aikoyoriStickers",
+    pos = {x = 2, y = 1},
+    rate = 0,
+    badge_colour = HEX("d285ff"),
+    sets =  { ["Default"] = true, ["Enhanced"] = true, ["Base"] = true },
+    calculate = function(self, card, context)
+        if context.debuff_hand and AKYRS.find_index(context.full_hand, card) then
+            return {
+                debuff = true,
+                debuff_text = localize("k_akyrs_crystalised_warning"),
+                juice_card = G.GAME.blind,
+                no_juice = true,
+            }
+        end
+        if context.after and (context.cardarea == G.play or context.cardarea == 'unscored') then
+            return {
+                func = function()
+                    AKYRS.simple_event_add(
+                        function ()
+                            self:apply(card, false)
+                            return true
+                        end
+                    )
+                end
+            }
+        end
+    end,    
+    draw = function (self, card, layer)
+        G.shared_stickers[self.key].role.draw_major = card
+        G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center)
+        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
+    end
+}
+
+SMODS.Sticker{
+    key = "latticed",
+    default_compat = true,
+    atlas = "aikoyoriStickers",
+    pos = {x = 3, y = 1},
+    rate = 0,
+    badge_colour = HEX("54bcc0"),
+    sets =  { ["Joker"] = true },
+    should_apply = function (self, card, center, area, bypass_reroll)
+        if self.sets[card.ability.set] then
+            if G.GAME.modifiers.akyrs_spawn_latticed and center.eternal_compat and pseudorandom((area == G.pack_cards and 'akyrs_packs_latticed_' or 'akyrs_latticed_')..G.GAME.round_resets.ante) > 0.7 then
+                self:apply(card, true)
+                return true
+            end
+        end
+        return false
+    end,
+    draw = function (self, card, layer)
+        G.shared_stickers[self.key].role.draw_major = card
+        G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center)
+        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
+    end
+}
+
+SMODS.Sticker{
+    key = "sus",
+    default_compat = true,
+    atlas = "aikoyoriStickers",
+    pos = {x = 2, y = 0},
+    rate = 0,
+    badge_colour = HEX("72c8dd"),
+    sets =  { ["Default"] = true, ["Enhanced"] = true, ["Base"] = true },
+    calculate = function (self, card, context)
+    end,
+    draw = function (self, card, layer)
+        G.shared_stickers[self.key].role.draw_major = card
+        G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center)
+        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
+    end
+}
+
+SMODS.Sticker{
+    key = "sale",
+    default_compat = true,
+    atlas = "aikoyoriStickers",
+    pos = {x = 4, y = 1},
+    rate = 0,
+    sets =  all_sets,
+    should_apply = function (self, card, center, area, bypass_reroll)
+        if self.sets[card.ability.set] then
+            if G.GAME.modifiers.akyrs_spawn_steam_sale and center.eternal_compat and pseudorandom((area == G.pack_cards and 'akyrs_packs_sale_' or 'akyrs_sale_')..G.GAME.round_resets.ante) > 0.4 then
+                self:apply(card, true)
+                card.cost = 1
+                card.sell_cost = 1
+                return true
+            end
+        end
+        return false
+    end,
+    badge_colour = HEX("749265"),
+    sets =  all_sets,
+    config = {
+        extras = {
+            reduce = 0.5
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                self.config.extras.reduce
+            }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.end_of_round and not context.repetition and not context.individual then
+            if card.ability.akyrs_sale then
+                return {
+                    dollars = -self.config.extras.reduce
+                }
+            end
+        end
+    end,
+    calculate = function (self, card, context)
+    end,
 }

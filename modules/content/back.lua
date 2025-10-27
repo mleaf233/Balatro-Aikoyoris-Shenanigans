@@ -57,23 +57,6 @@ SMODS.Back{
     },
 }
 
-SMODS.Back{
-    key = "split_deck",
-    name = "Split Deck",
-    atlas = 'deckBacks',
-    pos = {x = 2, y = 1},
-    loc_vars = function (self, info_queue, card)
-        return {
-            vars = {
-                self.config.discards
-            }
-        }
-    end,
-    config = {
-        akyrs_split_deck = true, discards = 2
-    },
-}
-
 
 SMODS.Back{
     key = "hardcore_challenges",
@@ -131,4 +114,57 @@ SMODS.Back{
     end,
     loc_vars = function (self, info_queue, card)
     end,
+}
+
+SMODS.Back{
+    key = "ranking_deck",
+    name = "Ranking Deck",
+    atlas = 'deckBacks',
+    pos = {x = 4, y = 1},
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                self.config.ante_scaling
+            }
+        }
+    end,
+    config = {
+        akyrs_split_rank_deck = true,
+        ante_scaling = 2.5,
+    },
+}
+
+SMODS.Back{
+    key = "suitable_deck",
+    name = "Suitable Deck",
+    atlas = 'deckBacks',
+    pos = {x = 5, y = 1},
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                self.config.ante_scaling
+            }
+        }
+    end,
+    config = {
+        akyrs_split_suit_deck = true,
+        ante_scaling = 1.5,
+    },
+}
+
+SMODS.Back{
+    key = "split_deck",
+    name = "Split Deck",
+    atlas = 'deckBacks',
+    pos = {x = 2, y = 1},
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                self.config.discards
+            }
+        }
+    end,
+    config = {
+        akyrs_split_deck = true, discards = 2
+    },
 }

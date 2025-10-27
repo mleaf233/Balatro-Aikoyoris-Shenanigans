@@ -395,6 +395,11 @@ end
 local cardSellHook = Card.sell_card
 
 function Card:sell_card()
+    if self.ability.akyrs_latticed then
+        AKYRS.nope_buzzer(self,nil,G.C.playable)
+        self:highlight(false)
+        return
+    end
     if (not (AKYRS.sigmaable_areas(self.area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) then
         self.akyrs_is_being_sold = true
         return cardSellHook(self)
@@ -515,6 +520,22 @@ function end_round()
                             func = function()
                                 card:start_dissolve({ G.C.RED }, nil, 1.6)
                                 AKYRS.remove_value_from_table(G.playing_cards,card)
+                                return true
+                            end,
+                            delay = 0.5,
+                        }), 'base')
+                    end
+                    if card.ability.akyrs_sus then
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                local ros = pseudorandom_element({"r","s"},"akyrs_sus_random")
+                                if ros == "r" then
+                                    rank = pseudorandom_element(SMODS.Ranks,"akyrs_sus_r")
+                                    SMODS.change_base(card, nil, rank.key)
+                                elseif ros == "s" then
+                                    suit = pseudorandom_element(SMODS.Suits,"akyrs_sus_s")
+                                    SMODS.change_base(card, suit.key, nil)
+                                end
                                 return true
                             end,
                             delay = 0.5,
@@ -941,9 +962,11 @@ Obviously this is not a real crash LMAO don't bother reporting.
             end
         end
         if all_wildcards then
-            G.GAME.aiko_current_word = string.lower(AKYRS.example_words[#aiko_current_word_split])
-            wordData.valid = true
-            wordData.word = G.GAME.aiko_current_word
+            if AKYRS.example_words[#aiko_current_word_split] then
+                G.GAME.aiko_current_word = string.lower(AKYRS.example_words[#aiko_current_word_split])
+                wordData.valid = true
+                wordData.word = G.GAME.aiko_current_word
+            end
         else
             if (AKYRS.WORD_CHECKED[aiko_current_word_split]) then
                 --print("WORD "..word_hand_str.." IS IN MEMORY AND THUS SHOULD USE THAT")
@@ -1550,6 +1573,12 @@ function Back:apply_to_run()
     end
     if self.effect.config.akyrs_split_deck then
         G.GAME.starting_params.akyrs_split_deck = self.effect.config.akyrs_split_deck
+    end
+    if self.effect.config.akyrs_split_rank_deck then
+        G.GAME.starting_params.akyrs_split_rank_deck = self.effect.config.akyrs_split_rank_deck
+    end
+    if self.effect.config.akyrs_split_suit_deck then
+        G.GAME.starting_params.akyrs_split_suit_deck = self.effect.config.akyrs_split_suit_deck
     end
     if self.effect.config.akyrs_ultimate_freedom then
         G.GAME.starting_params.akyrs_ultimate_freedom = self.effect.config.akyrs_ultimate_freedom

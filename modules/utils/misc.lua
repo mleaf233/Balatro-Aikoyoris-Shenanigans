@@ -754,6 +754,7 @@ end
 
 function AKYRS.filter_table(tbl, predicate, ordered_in, ordered_out) 
     if not tbl or not predicate then return {} end
+    if #tbl == 0 then return {} end
     local table_out = {}
     if ordered_in then
         for k,v in ipairs(tbl) do
@@ -815,7 +816,9 @@ AKYRS.mod_score_instant = function(score_mod)
     if score_mod.card then
         card_eval_status_text(score_mod.card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= comp and 'k_akyrs_score_add' or 'k_akyrs_score_minus',vars={amount}}, akyrs_no_sound = true, colour =  G.C.PURPLE, instant = true})
     end
-    play_sound('gong')
+    play_sound('gong', 0.5 + percent, 0.5)
+    -- 12 equal temperament moment :heart:
+    percent = percent * 1.05946309436
 end
 
 AKYRS.get_most_played = function()

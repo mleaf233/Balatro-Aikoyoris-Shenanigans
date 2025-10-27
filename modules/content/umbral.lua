@@ -2,7 +2,7 @@ SMODS.ConsumableType{
     key = "Umbral",
     primary_colour = HEX("ffd45b"),
     secondary_colour = HEX("925ac3"),
-    collection_rows = { 4, 5 },
+    collection_rows = { 5, 5 },
     shop_rate = 3,
     default = "c_akyrs_umbral_break_up"
 }
@@ -1010,7 +1010,85 @@ SMODS.Consumable{
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
         G.GAME.akyrs_prob_mod = G.GAME.akyrs_prob_mod or {}
-        table.insert(G.GAME.akyrs_prob_mod, {n_add = card.ability.extras.n, d_add = card.ability.extras.d})
+        table.insert(G.GAME.akyrs_prob_mod, {n_add = card.ability.extras.n, d_add = card.ability.extras.d, id = "d1"})
+    end
+}
+SMODS.Consumable{
+    set = "Umbral",
+    key = "umbral_exit_plan",
+    atlas = "umbra",
+    pos = {x=0,y=3},
+    config = {
+        extras = {
+            n = 1,
+            d = 2,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        local n, d = SMODS.get_probability_vars(card ,card.ability.extras.n, card.ability.extras.d, "akyrs_umbral_exit_plan" )
+        return {
+            vars = {
+                n, d
+            }
+        }
+    end,
+    can_use = function (self, card)
+        if G.GAME.blind and G.GAME.blind.in_blind then
+            return true
+        elseif card.area ~= G.consumeables and AKYRS.has_room(G.consumeables, card) then
+            return true
+        end
+        return false
+    end,
+    keep_on_use = function (self, card)
+        if G.GAME.blind and G.GAME.blind.in_blind then
+            return false
+        end
+        return true
+    end,
+    use = function (self, card, area, copier)
+        if G.GAME.blind and G.GAME.blind.in_blind then
+            local should = SMODS.pseudorandom_probability(card, "akyrs_umbral_exit_plan" ,card.ability.extras.n, card.ability.extras.d )
+            if should then 
+                G.GAME.blind:disable()
+            else
+                -- nope
+                AKYRS.simple_event_add(function()
+                    attention_text({
+                        text = localize('k_nope_ex'),
+                        scale = 1.3,
+                        hold = 1.4,
+                        major = card,
+                        backdrop_colour = G.C.AKYRS_UMBRAL_P,
+                        align = 'cm',
+                        offset = { x = 0, y = 0 },
+                        silent = true
+                    })
+                    G.E_MANAGER:add_event(Event({
+                        trigger = 'after',
+                        delay = 0.06 * G.SETTINGS.GAMESPEED,
+                        blockable = false,
+                        blocking = false,
+                        func = function()
+                            play_sound('tarot2', 0.76, 0.4); return true
+                        end
+                    }))
+                    play_sound('tarot2', 1, 0.4)
+                    card:juice_up(0.3, 0.5)
+                    return true
+                end)
+            end
+        else
+            if card.area and card.area ~= G.consumeables then
+                if AKYRS.has_room(G.consumeables, card) then
+                    G.consumeables:emplace(card)
+                    card:add_to_deck()
+                else
+                    alert_no_space(card, G.consumeables)
+                end
+            end
+        end
+
     end
 }
 SMODS.Consumable{

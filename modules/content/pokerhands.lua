@@ -154,7 +154,9 @@ for i = 3, 45 do
                 end
             end
             if all_wildcards then
-                G.GAME.aiko_current_word = string.lower(AKYRS.example_words[i-2])
+                if AKYRS.example_words[i-2] then
+                    G.GAME.aiko_current_word = string.lower(AKYRS.example_words[i-2])
+                end
                 return { hand }
             end
             local wordData = {}

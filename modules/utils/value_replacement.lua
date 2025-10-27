@@ -314,4 +314,20 @@ AKYRS.mod_playing_cards = function(self)
             AKYRS.set_special_card_type(_c2, "rank")
         end
     end
+    if self.GAME.starting_params.akyrs_split_rank_deck then
+        local cards = {}
+        for i = 1, #G.playing_cards do
+            ---@type Card
+            local _c = G.playing_cards[i]
+            AKYRS.set_special_card_type(_c, "rank")
+        end
+    end
+    if self.GAME.starting_params.akyrs_split_suit_deck then
+        local cards = {}
+        for i = 1, #G.playing_cards do
+            ---@type Card
+            local _c = G.playing_cards[i]
+            AKYRS.set_special_card_type(_c, "suit")
+        end
+    end
 end

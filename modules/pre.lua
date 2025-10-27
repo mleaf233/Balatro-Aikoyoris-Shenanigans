@@ -39,7 +39,8 @@ AKYRS.C = {
     THING_HC = HEX('5dbaa0'),
 }
 
-SMODS.optional_features.cardareas.unscored = true
+SMODS.optional_features.cardareas.deck = true
+SMODS.optional_features.cardareas.discard = true
 SMODS.optional_features.retrigger_joker = true
 
 AKYRS.HC_CHALLENGES = {}

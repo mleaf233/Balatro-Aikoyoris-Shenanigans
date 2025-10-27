@@ -80,6 +80,20 @@ return {
                     "{C:red}+#1#{} Discard"
 				},
             },
+            b_akyrs_ranking_deck={
+                name="Ranking Deck",
+				text = {
+					"Start with {C:attention}no suit",
+                    "{C:red}X#1#{} blind size",
+				},
+            },
+            b_akyrs_suitable_deck={
+                name="Suitable Deck",
+				text = {
+					"Start with {C:attention}no ranks",
+                    "{C:red}X#1#{} blind size",
+				},
+            },
             b_akyrs_cry_misprint_ultima={
                 name="Ultima Misprint Deck",
 				text = {
@@ -686,8 +700,10 @@ return {
             dd_akyrs_copper_scrape_tip  = {
                 name="Scraping",
                 text={
-                    "Fixed {C:green}25% chance{} to {C:attention}scrape{} off",
-                    "{C:attention}a layer{} of oxidation when a consumable is {C:attention}used{}",
+                    "Fixed {C:green}25% chance{}",
+                    "to {C:attention}scrape{} off",
+                    "{C:attention}a layer{} of oxidation",
+                    "when a consumable is {C:attention}used{}",
                 },
             },
             dd_akyrs_break_up_tip  = {
@@ -2113,6 +2129,34 @@ return {
                     "This card's ability is {C:red}always hidden",
                 },
             },
+            akyrs_crystalised={
+                name="Crystalised",
+                text={
+                    "Hand will {C:red}not score{} when played",
+                    "{C:attention}Remove{} this sticker {C:attention}when played",
+                },
+            },
+            akyrs_latticed={
+                name="Latticed",
+                text={
+                    "{C:red}Cannot{} be sold by normal means",
+                },
+            },
+            akyrs_sus={
+                name="Sus",
+                text={
+                    "{C:red}Randomly{} changes either",
+                    "{C:attention}suit{} or {C:attention}rank{}",
+                    "at the end of the round",
+                },
+            },
+            akyrs_sale={
+                name="90% Sale",
+                text={
+                    "Lose {C:money}$#1#{} at",
+                    "end of round",
+                },
+            },
             akyrs_carmine_seal={
                 name="Carmine Seal",
                 text={
@@ -2251,10 +2295,138 @@ return {
                 },
             },
             akyrs_copper_sticker={
-                name="Gold Sticker",
+                name="Copper Sticker",
                 text={
                     "Used this Joker",
                     "to win on {C:attention}Copper",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_inner_sticker={
+                name="Inner Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Inner",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_outer_sticker={
+                name="Outer Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Outer",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_lime_sticker={
+                name="Lime Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Lime",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_lemon_sticker={
+                name="Lemon Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Lemon",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_turquoise_sticker={
+                name="Turquoise Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Turquoise",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_amethyst_sticker={
+                name="Amethyst Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Amethyst",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_wooden_sticker={
+                name="Wooden Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Wooden",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_bismuth_sticker={
+                name="Bismuth Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Bismuth",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_high_contrast_sticker={
+                name="High Contrast Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}High Contrast",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_hydrogel_sticker={
+                name="Hydrogel Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Hydrogel",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_hydrogel_sticker={
+                name="Hydrogel Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Hydrogel",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_spotify_sticker={
+                name="Spotify Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Spotify",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_aluminium_sticker={
+                name="Aluminium Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Aluminium",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_steam_sticker={
+                name="Steel Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Steam",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_netherite_sticker={
+                name="Netherite Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Netherite",
+                    "{C:attention}Stake{} difficulty",
+                },
+            },
+            akyrs_doom_sticker={
+                name="Doomsday Sticker",
+                text={
+                    "Used this Joker",
+                    "to win on {C:attention}Doom",
                     "{C:attention}Stake{} difficulty",
                 },
             },
@@ -2360,8 +2532,8 @@ return {
         },
         Spectral={},
         Stake={
-            stake_akyrs_oxidising = {
-                name = "Oxidising Stake",
+            stake_akyrs_copper = {
+                name = "Copper Stake",
                 text = {
                     "Cards can have {C:attention}Oxidising{} Sticker",
                     "{s:0.8}Applies White Stake",
@@ -2378,7 +2550,103 @@ return {
                 text = {
                     "{C:blue}+1{} Hand",
                 }
-            }
+            },
+            stake_akyrs_lime = {
+                name = "Lime Stake",
+                text = {
+                    "{C:red}X1.5{} Blind Size",
+                    "{s:0.8}Applies Oxidising Stake",
+                }
+            },
+            stake_akyrs_lemon = {
+                name = "Lemon Stake",
+                text = {
+                    "{C:attention}Faster{} Ante Scaling",
+                    "{s:0.8}Applies Oxidising Stake",
+                }
+            },
+            stake_akyrs_turquoise = {
+                name = "Turquoise Stake",
+                text = {
+                    "Starts with extra {C:money}$1{}",
+                    "Applies Lime and Lemon Stake, together",
+                }
+            },
+            stake_akyrs_amethyst = {
+                name = "Amethyst Stake",
+                text = {
+                    "A random Playing Card gain a {C:attention}Crystalised{} Sticker every round",
+                    "{S:0.8}(Hand will not score when played, remove sticker when played)",
+                    "Start with {C:blue}+1{} Hand",
+                    "{s:0.8}Applies Turquoise Stake",
+                }
+            },
+            stake_akyrs_wooden = {
+                name = "Wooden Stake",
+                text = {
+                    "Add a random Playing Card to deck when blind is {C:attention}selected{}",
+                    "{s:0.8}Applies Amethyst Stake",
+                }
+            },
+            stake_akyrs_bismuth = {
+                name = "Bismuth Stake",
+                text = {
+                    "Jokers can have {C:attention}Latticed{} Sticker",
+                    "{S:0.8}(Cannot be sold through normal means)",
+                    "{s:0.8}Applies Wooden Stake",
+                }
+            },
+            stake_akyrs_high_contrast = {
+                name = "High Contrast Stake",
+                text = {
+                    "{C:attention}Even faster{} Ante Scaling",
+                    "{s:0.8}Applies Bismuth Stake",
+                }
+            },
+            stake_akyrs_hydrogel = {
+                name = "Hydrogel Stake",
+                text = {
+                    "A random Playing Card gain a {C:attention}Sus{} Sticker every round",
+                    "{S:0.8}(Hand will not score when played, remove sticker when played)",
+                    "{s:0.8}Applies Turquoise Stake",
+                }
+            },
+            stake_akyrs_spotify = {
+                name = "Spotify Stake",
+                text = {
+                    "A random Joker gain {C:money}Rental{} Sticker",
+                    "when a {C:attention}Boss Blind{} is defeated",
+                    "{s:0.8}Applies Hydrogel Stake",
+                }
+            },
+            stake_akyrs_aluminium = {
+                name = "Aluminium Stake",
+                text = {
+                    "{C:red}+1{} Win Ante",
+                    "{s:0.8}Applies Spotify Stake",
+                }
+            },
+            stake_akyrs_steam = {
+                name = "Steam Stake",
+                text = {
+                    "Many cards in the shop has {C:red}Sale{} Sticker",
+                    "{s:0.8}Applies Aluminium Stake",
+                }
+            },
+            stake_akyrs_netherite = {
+                name = "Netherite Stake",
+                text = {
+                    "Starts with extra {C:money}$2{} and {C:red}+1{} Discard",
+                    "{s:0.8}Applies Steam Stake and Gold Stake, together",
+                }
+            },
+            stake_akyrs_doom = {
+                name = "Doomsday Stake",
+                text = {
+                    "Cards can have {C:attention}Self-Destructive{} Sticker",
+                    "{s:0.8}Applies Netherite Stake",
+                }
+            },
         },
         Tag={
             tag_akyrs_spell_itself_tag={
@@ -2754,6 +3022,15 @@ return {
                     "{C:attention}Droplet Card{}",
                 },
             },
+            c_akyrs_umbral_exit_plan= {
+                name="Exit Plan",
+                text=
+                {
+                    "{C:green}#1# in #2#{} chance to",
+                    "{C:attention}disable{} the blind's effect",
+                    "{C:inactive}(Use outside blind to keep)",
+                },
+            },
             c_akyrs_umbral_free_will = {
                 name="Free Will",
                 text=
@@ -2894,6 +3171,7 @@ return {
             k_akyrs_blind_difficult_remaster = "Re:Master Blinds",
 
             k_akyrs_confrontation_has_face_in_hand_warning = "Must not hold face cards in hand",
+            k_akyrs_crystalised_warning = "Crystalised Card will make hand not score!",
 
             k_akyrs_title = "Aikoyori's Shenanigans",
             k_akyrs_join_akyrs_discord = "Join my Discord",
@@ -3006,6 +3284,10 @@ return {
             akyrs_oxidising="Oxidising",
             akyrs_attention="Attention",
             akyrs_concealed="Concealed",
+            akyrs_crystalised="Crystalised",
+            akyrs_latticed="Latticed",
+            akyrs_sus="Sus",
+            akyrs_sale="90% Sale",
             akyrs_carmine_seal="Carmine",
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",
