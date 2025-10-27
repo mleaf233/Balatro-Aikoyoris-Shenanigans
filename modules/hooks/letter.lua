@@ -49,29 +49,27 @@ end
 local cardReleaseRecalcHook = Card.stop_drag
 function Card:stop_drag()
     local area = self.area
-    local tempted = nil
+    local tempted = false
     self.akyrs_oldarea = self.area or self.akyrs_oldarea
     for i, k in ipairs(G.CONTROLLER.collision_list) do
-        if (k:is(CardArea) and k.config.akyrs_emplace_func and not k.config.akyrs_sol_emplace_func) then
-            local result, not_count_for_temptation = AKYRS.emplace_funcs[k.config.akyrs_emplace_func](k, self)
-            if (result) or AKYRS.card_conf_any_drag(k,self) or AKYRS.card_any_drag() then
+        if (k:is(CardArea)) then
+            if (k.config.akyrs_emplace_func and AKYRS.emplace_funcs[k.config.akyrs_emplace_func](k, self)) or AKYRS.card_conf_any_drag(k,self) or AKYRS.card_any_drag() then
                 area = k
-                tempted = not_count_for_temptation
+                tempted = true
                 break
             end
         end
         
-        if (k:is(Card)) and false and k.area and k.area.config.akyrs_emplace_func then
-            local result, not_count_for_temptation = AKYRS.emplace_funcs[k.config.akyrs_emplace_func](k.area, self)
-            if (result)or AKYRS.card_conf_any_drag(k,self) or AKYRS.card_any_drag() then
+        if (k:is(Card)) and false then
+            if (k.area and k.area.config.akyrs_emplace_func and AKYRS.emplace_funcs[k.config.akyrs_emplace_func](k.area, self)) or AKYRS.card_conf_any_drag(k,self) or AKYRS.card_any_drag() then
                 area = k.area
-                tempted = not_count_for_temptation
+                tempted = true
                 break
             end
         end
     end
     if area and area ~= self.area then
-        if (G.GAME.akyrs_ultimate_freedom or (area.config.card_limit + AKYRS.edition_extend_card_limit(self) >= #area.cards + 1 or area == G.hand or area == G.deck)) then
+        if G.GAME.akyrs_ultimate_freedom or (area.config.card_limit + AKYRS.edition_extend_card_limit(self) >= #area.cards + 1 or area == G.hand or area == G.deck) then
             if self.akyrs_oldarea == G.hand or self.akyrs_oldarea == G.deck then
                 AKYRS.remove_value_from_table(G.playing_cards,self)
             end
@@ -80,6 +78,7 @@ function Card:stop_drag()
                     cardarea:remove_card(self)
                 end
             end
+            
             if tempted then
                 G.GAME.akyrs_temptation_resisted = false
             end

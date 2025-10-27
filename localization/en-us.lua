@@ -2629,7 +2629,7 @@ return {
             stake_akyrs_steam = {
                 name = "Steam Stake",
                 text = {
-                    "Many cards in the shop has {C:red}Sale{} Sticker",
+                    "Many cards in the shop have {C:red}Sale{} Sticker",
                     "{s:0.8}Applies Aluminium Stake",
                 }
             },
