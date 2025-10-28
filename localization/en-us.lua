@@ -2618,7 +2618,7 @@ return {
                 text = {
                     "A random Playing Card gain a {C:attention}Sus{} Sticker every round",                    
                     "{s:0.8}(Randomly changes either suit or rank at the end of the round)",
-                    "{s:0.8}Applies Turquoise Stake",
+                    "{s:0.8}Applies High Contrast Stake",
                 }
             },
             stake_akyrs_spotify = {
