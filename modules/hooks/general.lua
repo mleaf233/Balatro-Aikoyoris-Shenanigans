@@ -1052,9 +1052,10 @@ Obviously this is not a real crash LMAO don't bother reporting.
                 if todo_table[i] and string.upper(char) == string.upper(todo_table[i]) then
                     G.GAME.current_round.aiko_round_correct_letter[string.lower(char)] = true
                     table.insert(word_for_display,{string.lower(char), 1})
-                elseif letter_count[string.lower(char)] and letter_count[string.lower(char)] > 0 and not G.GAME.current_round.aiko_round_correct_letter[string.lower(char)] then
-                    G.GAME.current_round.aiko_round_misaligned_letter[string.lower(char)] = true
-                    
+                elseif letter_count[string.lower(char)] and letter_count[string.lower(char)] > 0 then
+                    if not G.GAME.current_round.aiko_round_correct_letter[string.lower(char)] then
+                        G.GAME.current_round.aiko_round_misaligned_letter[string.lower(char)] = true
+                    end
                     table.insert(word_for_display,{string.lower(char), letter_count[string.lower(char)] > 0 and 2 or 3})
                     letter_count[string.lower(char)] = letter_count[string.lower(char)] - 1
                 else
