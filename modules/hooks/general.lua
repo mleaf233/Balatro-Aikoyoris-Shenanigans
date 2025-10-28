@@ -282,6 +282,10 @@ function Game:start_run(args)
     AKYRS.reset_math_parser({
         vars = G.GAME.akyrs_parser_var or AKYRS.math_default_const,
     })
+    if self.aiko_wordle then
+        self.aiko_wordle:remove() self.aiko_wordle = nil
+    end
+
     if not self.aiko_wordle and AKYRS.checkBlindKey("bl_akyrs_the_thought") then
         --print("CHECK SUCCESS")
         self.aiko_wordle = UIBox {

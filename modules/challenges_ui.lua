@@ -132,6 +132,7 @@ G.FUNCS.akyrs_change_hc_challenge_list_page = function(args)
     if ch_list then 
     if ch_list.config.object then 
         ch_list.config.object:remove() 
+        ch_list.config.object = nil
     end
     ch_list.config.object = UIBox{
         definition =  G.UIDEF.akyrs_hc_challenge_list_page(args.cycle_config.current_option-1),

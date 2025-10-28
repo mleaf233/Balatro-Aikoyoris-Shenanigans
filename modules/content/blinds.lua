@@ -604,6 +604,7 @@ AKYRS.picker_initial_action = function()
                         if i > #G.hand.cards then
                             break
                         end
+                        ---@type Card
                         local card = pseudorandom_element(G.hand.cards,pseudoseed("akyrpickerseed"))
                         if card and not card.highlighted then
                             card:highlight(true)

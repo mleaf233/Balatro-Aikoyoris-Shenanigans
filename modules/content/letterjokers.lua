@@ -156,7 +156,7 @@ AKYRS.LetterJoker {
     key = "g",
     atlas = 'guestJokerArts',
     pos = { x = 1, y = 0 },
-    pools = { ["Letter"] = true },
+    pools = { ["Letter"] = true, ["Meme"] = true  },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_zap_card"]
         info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_credit_larantula"]
@@ -194,7 +194,7 @@ AKYRS.LetterJoker {
     key = "d_se_dab",
     atlas = 'AikoyoriJokers',
     pos = { x = 1, y = 6 },
-    pools = { ["Letter"] = true },
+    pools = { ["Letter"] = true, ["Meme"] = true  },
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
@@ -241,7 +241,7 @@ AKYRS.LetterJoker {
     key = "c",
     atlas = 'AikoyoriJokers',
     pos = { x = 2, y = 6 },
-    pools = { ["Letter"] = true },
+    pools = { ["Letter"] = true, ["Meme"] = true },
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
@@ -268,7 +268,7 @@ AKYRS.LetterJoker {
     key = "e",
     atlas = 'AikoyoriJokers',
     pos = { x = 3, y = 6 },
-    pools = { ["Letter"] = true },
+    pools = { ["Letter"] = true, ["Meme"] = true },
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
@@ -291,11 +291,12 @@ AKYRS.LetterJoker {
         end
     end,
 }
+
 AKYRS.LetterJoker {
     key = "catchphrase",
     atlas = 'AikoyoriJokers',
     pos = { x = 4, y = 6 },
-    pools = { ["Letter"] = true },
+    pools = { ["Letter"] = true, ["Meme"] = true },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_credit_gud"]
         return {
@@ -316,6 +317,53 @@ AKYRS.LetterJoker {
             return {
                 mult = card.ability.extras.mult
             }
+        end
+    end,
+}
+
+AKYRS.LetterJoker {
+    key = "press_f",
+    atlas = 'pressf',
+    pos = { x = 0, y = 0 },
+    soul_pos = { x = 1, y = 0 },
+    pools = { ["Letter"] = true, ["Meme"] = true },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_credit_lyman"]
+        return {
+            vars = {
+                card.ability.extras.mult
+            }
+        }
+    end,
+    rarity = 2,
+    cost = 3,
+    config = {
+        extras = {
+            mult = 8,
+        }
+    },
+    calculate = function (self, card, context)
+        -- im too lazy rn so i just copied vremade code and changed it
+        if context.destroy_card and not context.blueprint then
+            if #context.full_hand == 1 and context.destroy_card == context.full_hand[1] and string.lower(context.full_hand[1]:get_letter_with_pretend()) == "f" then
+                if AKYRS.has_room(G.consumeables) then
+                    AKYRS.simple_event_add(function()
+                            SMODS.add_card {
+                                set = 'Umbral',
+                                key_append = 'akyrs_press_f'
+                            }
+                            return true
+                        end, 0)
+                    return {
+                        message = localize('k_akyrs_plus_umbral'),
+                        colour = G.C.AKYRS_UMBRAL_P,
+                        remove = true
+                    }
+                end
+                return {
+                    remove = true
+                }
+            end
         end
     end,
 }

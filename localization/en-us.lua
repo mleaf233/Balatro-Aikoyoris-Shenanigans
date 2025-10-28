@@ -413,6 +413,12 @@ return {
                     "{X:dark_edition,C:white}@gudusername_53951{}"
                 },
             },
+            dd_akyrs_credit_lyman={
+                name="Art Credit",
+                text={
+                    "{X:dark_edition,C:white}@lyman{}"
+                },
+            },
             dd_akyrs_hibana_conditions={
                 name="Cycle Option",
                 text={
@@ -2014,6 +2020,15 @@ return {
                     '{C:attention}#1#{} Cards are free in shop',
                     "{C:attention}Changes{} to a different consumable type",
                     "at the end of the round",
+                }
+            },
+            j_akyrs_press_f = {
+                name = "Press {X:grey}F{} to Pay Respect",
+                text = {
+                    "If {C:attention}hand{} contains",
+                    "a single {C:attention}F{}, destroy it and",
+                    "create an {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} card",
+                    "{C:inactive}(Must have room)",
                 }
             },
         },

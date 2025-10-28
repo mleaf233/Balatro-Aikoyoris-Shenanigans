@@ -73,13 +73,14 @@ function AKYRS.check_word(str_arr_in)
     -- If no wildcards, check directly
     if wild_count == 0 then
         local word_str = table.concat(str_arr_in)
-        return { valid = AKYRS.words[word_str], word = AKYRS.words[word_str] and word_str or nil }
+        local firstletter = string.sub(word_str, 1,1)
+        return { valid = AKYRS_WORDS[firstletter][word_str], word = AKYRS_WORDS[firstletter][word_str] and word_str or nil }
     end
-
     local function backtrack(index)
         if index > wild_count then
             local word_str = table.concat(str_arr_in)
-            if AKYRS.words[word_str] and #word_str == #str_arr_in then
+            local firstletter = string.sub(word_str, 1, 1)
+            if AKYRS_WORDS[firstletter] and AKYRS_WORDS[firstletter][word_str] and #word_str == #str_arr_in then
                 return { valid = true, word = word_str }
             end
             return nil

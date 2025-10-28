@@ -591,7 +591,7 @@ function Card:highlight(is_higlighted)
     local ret = cardhighlighthook(self, is_higlighted)
 
     if self.base and (self.area and self.area == G.hand) and self.ability.aikoyori_letters_stickers == "#" then
-        if self.highlighted and self.area and self.area ~= G.play and self.area.config.type ~= 'shop' then
+        if is_higlighted and self.area and self.area ~= G.play and self.area.config.type ~= 'shop' then
 
             self.children.use_button = UIBox {
                 definition = AKYRS.UIDEF.wildcards_ui(self),
@@ -600,7 +600,10 @@ function Card:highlight(is_higlighted)
                     offset = { x = 1, y = -0.75 },
                     parent = self }
             }
-        elseif self.children.use_button and self.highlighted then
+        end
+    end
+    if not is_higlighted then
+        if self.children.use_button then
             self.children.use_button:remove()
             self.children.use_button = nil
         end

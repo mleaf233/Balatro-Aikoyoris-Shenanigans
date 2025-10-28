@@ -182,7 +182,7 @@ AKYRS.DescriptionDummy{
 
     end,
 }
-
+-- credits
 AKYRS.DescriptionDummy{
     key = "credit_larantula",
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
@@ -199,6 +199,13 @@ AKYRS.DescriptionDummy{
 AKYRS.DescriptionDummy{
     key = "credit_gud",
 }
+
+AKYRS.DescriptionDummy{
+    key = "credit_lyman",
+}
+
+
+--popup
 
 AKYRS.DescriptionDummy{
     key = "tldr_tldr",
