@@ -9,13 +9,24 @@ priority = 0
 target = "game.lua"
 pattern = "    boot_timer('prep stage', 'splash prep',1)"
 position = "before"
-payload = """assert(AKYRS,[[ 
-
+payload = """
+if not AKYRS then
+    AKYRS_LOAD_FAIL = true
+end
+assert(not AKYRS_LOAD_FAIL,[[ 
 (X^X)
 
-Hey! If you're reading this message, that means Aikoyori's Shenanigans has crashed :<
+Hey! If you're reading this message, that means Aikoyori's Shenanigans has crashed due to outdated dependencies :<
+(In simple words, your Steamodded and/or Lovely Injector that you have is too old for the mod)
 
 Update your **Steamodded** and **Lovely Injector** to latest stable version.
+
+Generally, every major update of the mod bumps the requirements to the latest available stable version of these.
+
+To Update Steamodded, download AND replace your existing Steamodded folder with a new one
+
+To Update Lovely Injector, replace the `version.dll` in your installation (i.e. where you open the game) with a newer version
+>>> LOVELY INJECTOR IS NOT SUPPOSED TO BE IN THE MODS FOLDER. IT SHOULD BE NEXT THE BALATRO.EXE <<<
 
 P.S. If you report the crash to me and I see either of those being outdated you are going to be strapped on a rocket to Mars >:>
 
@@ -25,6 +36,21 @@ AKYRS.aiko_mod_startup(self)"""
 overwrite = true
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = "main.lua"
+pattern = "            background = G.C.BLACK"
+position = "after"
+payload = """
+if AKYRS_LOAD_FAIL then
+    background = G.C.AKYRS_AIKOYORI_BG
+end
+
+"""
+overwrite = true
+match_indent = true
 
 
 [[patches]]
