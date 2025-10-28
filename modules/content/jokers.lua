@@ -3776,7 +3776,6 @@ SMODS.Joker {
         x = 0, y = 6
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_canopy_card"]
         return {
             vars = { card.ability.extra },
