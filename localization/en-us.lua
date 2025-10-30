@@ -3352,7 +3352,8 @@ return {
             
             k_akyrs_card_preview = "Enable Card Previews",
             k_akyrs_toggle_crt = "Enable CRT Shaders",
-            k_akyrs_toggle_full_dictionary = "Enable Full Dictionary",
+            k_akyrs_restart_required = "* = Restart Required",
+            k_akyrs_toggle_full_dictionary = "Enable Full Dictionary*",
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Supercommon",
             k_akyrs_unique = "Unique",

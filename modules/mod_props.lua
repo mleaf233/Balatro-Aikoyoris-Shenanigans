@@ -382,6 +382,13 @@ SMODS.current_mod.config_tab = function ()
         AKYRS.create_hover_tooltip{ tooltip_key = "dd_akyrs_full_dictionary" }
         } 
       },
+      {
+        n = G.UIT.R,
+        config = { align = "cm", padding = 0.2 },
+        nodes = {
+          { n = G.UIT.T, config = { text = localize("k_akyrs_restart_required"), scale = 0.4, colour = G.C.UI.TEXT_INACTIVE } }
+        }
+      },
     }
   }
 end
