@@ -3351,6 +3351,10 @@ return {
                 'Adequate',
             },
             
+            k_akyrs_balance_dialog_adequate_text = "Adequate"
+            k_akyrs_balance_dialog_adequate_description = "Balanced towards Vanilla"
+            k_akyrs_balance_dialog_absurd_text = "Absurd"
+            k_akyrs_balance_dialog_absurd_description = "(Requires Talisman) Bigger Number, Crazier effects, Direr Consequences."
             
             k_akyrs_card_preview = "Enable Card Previews",
             k_akyrs_toggle_crt = "Enable CRT Shaders",

@@ -1968,7 +1968,7 @@ SMODS.Joker{
         name = "Chicken Jockey",
         extras = {
             xmult = 1,
-            xmult_inc = 2,
+            xmult_inc = 1,
             emult = 1,
             emult_inc = 1,
             decrease_popcorn = 9,
