@@ -252,7 +252,7 @@ function AKYRS.expensive_calculation()
     end
     if G.STATE == G.STATES.SELECTING_HAND then
         
-        if G.GAME.akyrs_wording_enabled and G.GAME.akyrs_character_stickers_enabled and G.GAME.blind.debuff.akyrs_is_puzzle_blind then
+        if AKYRS.should_calculate_word() and G.GAME.blind.debuff.akyrs_is_puzzle_blind then
             if not G.GAME.blind.disabled and not G.GAME.blind.defeated and not G.GAME.blind.debuff.akyrs_scoring_set then
                 AKYRS.set_scoring_parameter_backup('akyrs_puzzle_display')
                 G.GAME.blind.debuff = G.GAME.blind.debuff or {}
