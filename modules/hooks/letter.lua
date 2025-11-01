@@ -280,7 +280,9 @@ G.FUNCS.cash_out = function(e)
             end
 
         end
-        SMODS.set_scoring_calculation("multiply")
+        if G.GAME.akyrs_previous_scoring_key then
+            SMODS.set_scoring_calculation(G.GAME.akyrs_previous_scoring_key)
+        end
         G.GAME.aiko_puzzle_win = nil
         G.GAME.current_round.advanced_blind = false
         G.GAME.current_round.aiko_round_played_words = {}

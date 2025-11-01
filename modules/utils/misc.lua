@@ -695,28 +695,6 @@ function AKYRS.balala(joker, poker)
     AKYRS.simple_event_add(function()error("it's balala time!",4) return true end,0)
 end
 
-
-function AKYRS.score_catches_fire_or_not()
-    if not G.GAME or not G.GAME.blind then return false end
-
-
-    if type(G.GAME.blind.chips) == "string" then
-        local stud = tonumber(AKYRS.remove_comma(G.GAME.blind.chips))
-        if stud ~= stud then
-            return false
-        end
-        G.GAME.blind.chips = Talisman and to_big(stud) or stud
-
-    end
-    if Talisman then
-        G.GAME.current_round.current_hand.chips = to_big(G.GAME.current_round.current_hand.chips)
-        G.GAME.current_round.current_hand.mult = to_big(G.GAME.current_round.current_hand.mult)
-        G.GAME.blind.chips = to_big(G.GAME.blind.chips)
-    end
-    return G.GAME.current_round.current_hand.chips * G.GAME.current_round.current_hand.mult > G.GAME.blind.chips
-end
-
-
 function AKYRS.C2S(card)
     return (card.base.value .. " of " .. card.base.suit)
 end
@@ -1192,4 +1170,9 @@ function AKYRS.get_consumable_set()
         end
     end
     return sets
+end
+
+function AKYRS.set_scoring_parameter_backup(parameter)
+    G.GAME.akyrs_previous_scoring_key = G.GAME.current_scoring_calculation
+    SMODS.set_scoring_calculation(parameter)
 end

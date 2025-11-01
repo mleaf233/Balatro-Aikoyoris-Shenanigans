@@ -1310,17 +1310,10 @@ SMODS.Joker{
             end
             if context.final_scoring_step and G.GAME.blind then
                 
-                    local comp = false
-                    if Talisman then
-                        comp = G.GAME.blind.chips:lt(G.GAME.current_round.current_hand.chips * G.GAME.current_round.current_hand.mult)
-                    else
-                        
-                        comp = G.GAME.current_round.current_hand.chips * G.GAME.current_round.current_hand.mult >= G.GAME.blind.chips
-                    end
                     G.E_MANAGER:add_event(
                         Event{
                             func = function ()
-                                if AKYRS.score_catches_fire_or_not() then
+                                if SMODS.last_hand_oneshot then
                                     card.ability.extra.xmult = 1
                                 else 
                                     
@@ -1330,7 +1323,7 @@ SMODS.Joker{
                             end
                         }
                     )
-                    if comp then
+                    if SMODS.last_hand_oneshot then
                         return {
                             message = localize("k_akyrs_extinguish")
                         }
