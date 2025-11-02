@@ -222,7 +222,7 @@ SMODS.Joker {
                 end
             }
         end
-        if context.individual and AKYRS.bal("adequate") and (context.cardarea == G.hand or context.cardarea == G.jokers or context.cardarea == G.play) not context.blueprint then
+        if context.individual and AKYRS.bal("adequate") and (context.cardarea == G.hand or context.cardarea == G.jokers or context.cardarea == G.play) and not context.blueprint then
             SMODS.calculate_effect({
                 message = localize { type = 'variable', key = 'a_remaining', vars = { card.ability.extra.times }},
                 card = card,
