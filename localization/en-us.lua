@@ -3129,6 +3129,57 @@ return {
                     "{C:akyrs_playable}+#1#{} Card Selection Limit",
                 },
             },
+        },
+        Replicant= {
+            c_akyrs_replicant_forecast = {
+                name = "Forecast",
+                text = {
+                    "Receive up to {C:attention}#1#{}",
+                    "{C:akyrs_replicant_o}Replicant{} Cards",
+                    "{C:inactive}(Room must be accounted for)",
+                }
+            },
+            c_akyrs_replicant_connection = {
+                name = "Connection",
+                text = {
+                    "Up to {C:attention}#1#{} cards are allowed be selected",
+                    "to make #2# duplicates which {C:attention}differentiates",
+                    "itself from the original by {C:attention}rank and suit{}",
+                }
+            },
+            c_akyrs_replicant_steganography = {
+                name = "Steganography",
+                text = {
+                    "Receive up to {C:attention}#1#{}",
+                    "Concealed {C:red}Rare{} Jokers",
+                    "{C:inactive}(Room must be accounted for)",
+                }
+            },
+            c_akyrs_replicant_database = {
+                name = "Database",
+                text = {
+                    "Up to {C:attention}#1#{} random are selected",
+                    "to {C:attention}return{} them back to deck",
+                    "Temporarily receives {C:red}+#2#{} Discard"
+                }
+            },
+            c_akyrs_replicant_short_form_content = {
+                name = "Short Form Content",
+                text = {
+                    "{C:attention}Rids{} the {C:attention}next{}",
+                    "Small and Big Blinds",
+                    "{C:attention}#1#{} Ante when Boss Blind is {C:attention}defeated",
+                }
+            },
+            c_akyrs_replicant_smart_home = {
+                name = "Smart Home",
+                text = {
+                    "Select a Poker Hand",
+                    "to {C:attention}upgrade {}#1# times",
+                    "then {C:purple}Crystalised{} stickers",
+                    "are applied to selected cards",
+                }
+            },
         }
     },
     misc = {
@@ -3184,7 +3235,9 @@ return {
         collabs={},
         dictionary={
             b_umbral_cards = "Umbral Cards",
+            b_replicant_cards = "Replicant Cards (WIP)",
             k_umbral = "Umbral",
+            k_replicant = "Replicant",
 
             b_akyrs_alphabets="Alphabet Cards",
             k_aikoyoriextrabases = "Extra Base",
@@ -3294,6 +3347,7 @@ return {
 
             k_akyrs_plus_alphabet = "+1 Alphabet",
             k_akyrs_plus_umbral = "+1 Umbral Card",
+            k_akyrs_plus_replicant = "+1 Replicant Card",
 
             k_akyrs_solitaire_redeal = "Redeal",
 
@@ -3365,6 +3419,7 @@ return {
             k_akyrs_unique = "Unique",
             k_akyrs_alphabet_pack = "Alphabets",
             k_akyrs_umbral_pack = "Umbral Pack",
+            k_akyrs_replicant_pack = "Replicant Pack",
         },
         high_scores={},
         labels={
@@ -3386,7 +3441,8 @@ return {
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Supercommon",
             k_akyrs_unique = "Unique",
-            umbral = "Umbral"
+            umbral = "Umbral",
+            replicant = "Replicant"
         },
         poker_hand_descriptions=poker_hand_desc,
         poker_hands=poker_hands_name,

@@ -1868,6 +1868,8 @@ function Card:start_materialize(cols, slnt, timefac)
     if not cols and not AKYRS.should_conceal_card(self,self.config.center) then
         if self.ability.set == "Umbral" then
             cols = { G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y }
+        elseif self.ability.set == "Replicant" then
+            cols = { G.C.AKYRS_REPLICANT_O, G.C.AKYRS_REPLICANT_P }
         elseif self.ability.set == "Alphabet" then
             if AKYRS.non_letter_symbols_reverse[self.ability.extra.letter] then
                 cols = {HEX("3b82f6")}

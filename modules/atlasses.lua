@@ -246,6 +246,19 @@ SMODS.Atlas {
     py = 18
 }
 
+SMODS.Atlas {
+    key = "replicant",
+    path = "aikoReplicancyCard.png",
+    px = 71,
+    py = 95
+}
+SMODS.Atlas {
+    key = "replicant_undisc",
+    path = "undiscoveredReplicancy.png",
+    px = 71,
+    py = 95
+}
+
 -- credits
 
 

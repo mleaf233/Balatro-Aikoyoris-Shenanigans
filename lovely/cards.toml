@@ -11,21 +11,39 @@ pattern = "      G.GAME.consumeable_usage_total = G.GAME.consumeable_usage_total
 position = "after"
 payload = """G.GAME.consumeable_usage_total.akyrs_umbral = G.GAME.consumeable_usage_total.akyrs_umbral or 0
 if card.config.center.set == 'Umbral' then 
-G.GAME.consumeable_usage_total = G.GAME.consumeable_usage_total or {}
-G.GAME.consumeable_usage_total.akyrs_umbral = (G.GAME.consumeable_usage_total.akyrs_umbral or 0) + 1
-G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
+        G.GAME.consumeable_usage_total = G.GAME.consumeable_usage_total or {}
+        G.GAME.consumeable_usage_total.akyrs_umbral = (G.GAME.consumeable_usage_total.akyrs_umbral or 0) + 1
         G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
-        G.GAME.akyrs_last_umbral = card.config.center_key
+                trigger = 'immediate',
+                func = function()
+                G.E_MANAGER:add_event(Event({
+                trigger = 'immediate',
+                func = function()
+                G.GAME.akyrs_last_umbral = card.config.center_key
+                        return true
+                end
+                }))
                 return true
-        end
+                end
         }))
-        return true
-        end
-}))
+end
+G.GAME.consumeable_usage_total.akyrs_replicant = G.GAME.consumeable_usage_total.akyrs_replicant or 0
+if card.config.center.set == 'Replicant' then 
+        G.GAME.consumeable_usage_total = G.GAME.consumeable_usage_total or {}
+        G.GAME.consumeable_usage_total.akyrs_replicant = (G.GAME.consumeable_usage_total.akyrs_replicant or 0) + 1
+        G.E_MANAGER:add_event(Event({
+                trigger = 'immediate',
+                func = function()
+                G.E_MANAGER:add_event(Event({
+                trigger = 'immediate',
+                func = function()
+                G.GAME.akyrs_last_replicant = card.config.center_key
+                        return true
+                end
+                }))
+                return true
+                end
+        }))
 end
 """
 overwrite = true
