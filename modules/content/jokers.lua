@@ -181,7 +181,7 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
-        if context.akyrs_score_change and AKYRS.bal("absurd") then
+        if context.akyrs_score_change and AKYRS.bal("absurd") and not context.blueprint then
             -- this does not need scaling
             card.ability.extra.times = card.ability.extra.times - 1
             return {
@@ -222,7 +222,7 @@ SMODS.Joker {
                 end
             }
         end
-        if context.individual and AKYRS.bal("adequate") and (context.cardarea == G.hand or context.cardarea == G.jokers or context.cardarea == G.play) then
+        if context.individual and AKYRS.bal("adequate") and (context.cardarea == G.hand or context.cardarea == G.jokers or context.cardarea == G.play) not context.blueprint then
             SMODS.calculate_effect({
                 message = localize { type = 'variable', key = 'a_remaining', vars = { card.ability.extra.times }},
                 card = card,

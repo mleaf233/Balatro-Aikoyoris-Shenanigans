@@ -2068,7 +2068,7 @@ return {
             j_akyrs_catchphrase = {
                 name = "Catchphrase",
                 text = {
-                    'Cards with letter {C:attention}E{}',
+                    'Cards with letter {C:attention}H{}',
                     'held in hand gives {C:mult}+#1#{} Mult each when scored',
                     '{C:inactive,s:0.8}Why did they put Markiplier\'s face on Lord Farquaad again?'
                 }

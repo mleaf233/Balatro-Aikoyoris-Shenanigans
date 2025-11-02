@@ -1176,3 +1176,23 @@ function AKYRS.set_scoring_parameter_backup(parameter)
     G.GAME.akyrs_previous_scoring_key = G.GAME.current_scoring_calculation
     SMODS.set_scoring_calculation(parameter)
 end
+
+-- structure
+-- a table contains smaller tables of
+--  - func = a function event (anything)
+--  - delay = delay before the next event is executed
+
+--- @param event_def {func: fun()?, delay: number?}[] a table of stuff i just explained
+function AKYRS.create_event_chain( event_def, index )
+    index = index or 1
+    if not event_def[index] then return end
+    AKYRS.simple_add_event(
+        function ()
+            event_def[index].func()
+            delay(event_def[index].delay)
+            AKYRS.create_event_chain(event_def, index + 1)
+            return true
+        end, 0
+    )
+
+end
