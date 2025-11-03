@@ -937,7 +937,7 @@ return {
                 name = "Insolate Card",
                 text = {
                     "This card gains {C:white,X:mult} X#1# {} Mult when scored",
-                    "if played hand {C:attention}does not contain{} a suit more than {C:attention}once",
+                    "if played hand {C:attention}contains{} a suit more than {C:attention}once",
                     "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive}Mult){}" 
                 }
             },

@@ -84,7 +84,8 @@ SMODS.Edition{
     on_apply = function (card)
         if not card.akyrs_upgrade_sliced then
             local x = AKYRS.deep_copy(card.config.center)
-            AKYRS.mod_card_values(card.ability,{multiply = 0.5, reference = x, unkeywords = AKYRS.blacklist_mod})
+            AKYRS.mod_card_values(x.config,{multiply = 0.5, reference = x.config, unkeywords = AKYRS.blacklist_mod})
+            card:set_ability(x)
             card.akyrs_upgrade_sliced = true
         end
     end,

@@ -153,7 +153,6 @@ SMODS.Consumable{
         local cards = AKYRS.pseudorandom_elements(G.hand.cards,card.ability.extras,pseudoseed("akyrs_umbral_gambit_c"))
         local rank = pseudorandom_element({"King","Queen","Ace"},pseudoseed("akyrs_umbral_gambit_r"))
         AKYRS.do_things_to_card(cards,function (_card)
-            AKYRS.set_special_card_type(_card, nil)
             _card = SMODS.change_base(_card,nil,rank)
         end, {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true})
     end

@@ -233,7 +233,7 @@ SMODS.Enhancement{
     config = {
         extras = {
             xmult = 1,
-            xmult_add = 0.3,
+            xmult_add = 0.1,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -249,10 +249,10 @@ SMODS.Enhancement{
         end
         if context.main_scoring and context.cardarea == G.play then
             local r = AKYRS.get_suit_freq_from_cards(G.play.cards,true)
-            local s = true
+            local s = false
             for k,v in pairs(r) do
                 if v > 1 then
-                    s = false
+                    s = true
                     break
                 end
             end
