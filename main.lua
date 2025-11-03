@@ -47,7 +47,9 @@ assert(SMODS.load_file("./modules/content/back.lua"))()
 assert(SMODS.load_file("./modules/content/rarity.lua"))()
 assert(SMODS.load_file("./modules/content/alphabet_cards.lua"))()
 assert(SMODS.load_file("./modules/content/umbral.lua"))()
-assert(SMODS.load_file("./modules/content/replicancy.lua"))()
+if AKYRS.config.experimental_features then
+    assert(SMODS.load_file("./modules/content/replicancy.lua"))()
+end
 assert(SMODS.load_file("./modules/content/planets.lua"))()
 assert(SMODS.load_file("./modules/content/constellation.lua"))()
 assert(SMODS.load_file("./modules/content/boosters.lua"))()

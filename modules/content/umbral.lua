@@ -560,32 +560,38 @@ SMODS.Consumable{
                     G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false 
                 end
             else
-                d_dollar = -G.GAME.dollars + G.GAME.akyrs_umbral_intrusive_usage_set
                 AKYRS.simple_event_add(
                     function ()
+                        d_dollar = -G.GAME.dollars + G.GAME.akyrs_umbral_intrusive_usage_set
+                        ease_dollars(d_dollar)
                         G.GAME.akyrs_umbral_intrusive_usage_set = -4
                         return true
                     end, 0
                 )
-                ease_dollars(d_dollar)
             end
         else
             if AKYRS.bal("absurd") then
-                if Talisman and type(to_big(G.GAME.dollars)) == "table" then
-                    d_dollar = to_big(G.GAME.dollars):pow(card.ability.extras.emoney) - to_big(G.GAME.dollars)
-                else
-                    d_dollar = G.GAME.dollars ^ card.ability.extras.emoney - G.GAME.dollars
-                end
-            else
-                d_dollar = G.GAME.dollars * ( card.ability.extras.xmoney - 1 )
                 AKYRS.simple_event_add(
                     function ()
+                        if Talisman and type(to_big(G.GAME.dollars)) == "table" then
+                            d_dollar = to_big(G.GAME.dollars):pow(card.ability.extras.emoney) - to_big(G.GAME.dollars)
+                        else
+                            d_dollar = G.GAME.dollars ^ card.ability.extras.emoney - G.GAME.dollars
+                        end
+                        ease_dollars(d_dollar)
+                        return true
+                    end, 0
+                )
+            else
+                AKYRS.simple_event_add(
+                    function ()
+                        d_dollar = G.GAME.dollars * ( card.ability.extras.xmoney - 1 )
                         G.GAME.akyrs_umbral_intrusive_usage_set = (G.GAME.akyrs_umbral_intrusive_usage_set or -4) * card.ability.extras.setdollarmult
+                        ease_dollars(d_dollar)
                         return true
                     end, 0
                 )
             end
-            ease_dollars(d_dollar)
         end
         AKYRS.force_save()
     end

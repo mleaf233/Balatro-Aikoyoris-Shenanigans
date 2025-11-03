@@ -237,6 +237,10 @@ AKYRS.DescriptionDummy{
     key = "full_dictionary",
 }
 
+AKYRS.DescriptionDummy{
+    key = "experimental_feature",
+}
+
 --popup
 
 AKYRS.DescriptionDummy{

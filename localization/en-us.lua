@@ -443,6 +443,19 @@ return {
                     'This also impacts {C:attention}The Bomb{} boss blinds\' prompt choice',
                 },
             },
+            dd_akyrs_experimental_feature = {
+                name = "Experimental Features",
+                text = {
+                    '{s:1.5}Here be dragons!',
+                    '{s:1.4}If you have to think to enable it, {s:1.4,E:akyrs_shrivel,C:red}don\'t.',
+                    'Enable experimental features for the mod',
+                    'These may be broken, nonfunctional at all, or {C:red}outright brick your saves{}',
+                    '{C:inactive}(very unlikely but it can and will happen)',
+                    'This is mainly for my use so that I can release bugfixes',
+                    'for the mod while working on new content at the same time',
+                    'I will not stop you from enabling it but it is unfinished after all',
+                },
+            },
             -- tooltips
             dd_akyrs_maxwell_example={
                 name="Example",
@@ -3415,6 +3428,7 @@ return {
             k_akyrs_toggle_crt = "Enable CRT Shaders",
             k_akyrs_restart_required = "* = Restart Required",
             k_akyrs_toggle_full_dictionary = "Enable Full Dictionary*",
+            k_akyrs_toggle_experimental_feature = "Enable Experimental Features*",
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Supercommon",
             k_akyrs_unique = "Unique",

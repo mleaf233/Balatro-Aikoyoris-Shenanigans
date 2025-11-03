@@ -4,4 +4,5 @@ return {
 	balance = nil,
 	turn_on_crt = true,
 	full_dictionary = false,
+	experimental_features = false,
 }

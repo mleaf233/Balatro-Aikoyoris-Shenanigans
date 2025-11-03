@@ -1563,8 +1563,8 @@ SMODS.Blind {
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
-        akyrs_anteth_power_of_x_blind_req = 2,
-        akyrs_anteth_power_of_x_blind_req_multiplier = 2,
+        akyrs_anteth_power_of_x_blind_req = 1.2,
+        akyrs_anteth_power_of_x_blind_req_multiplier = 1.2,
         akyrs_anteth_power_of_x_blind_req_power = 1.2,
     },
     
