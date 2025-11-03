@@ -2876,6 +2876,7 @@ return {
 				text = {
                     "Create a {C:planet}Planet Card{}",
                     "for the selected {C:attention}poker hand",
+                    "{C:inactive}(Selecting {C:attention}#1#{C:inactive}, creating {C:attention}#2#{C:inactive})",
 				},
             },
             c_akyrs_umbral_gambit = {

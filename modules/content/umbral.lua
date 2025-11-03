@@ -117,6 +117,25 @@ SMODS.Consumable{
     can_use = function (self, card)
         return true
     end,
+    loc_vars = function (self, info_queue, card)
+        if not G.hand then return {
+            vars = {
+                "???", "???"
+            }
+        } end
+        local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+        local pl = AKYRS.get_planet_for_hand(h)
+        if pl then
+            info_queue[#info_queue+1] = G.P_CENTERS[pl]
+        end
+        return {
+            vars = {
+                localize(h, "poker_hands") ~= "ERROR" and localize(h, "poker_hands") or "???", 
+                pl and localize({type = "name_text", set = "Planet", key = pl}) or "???",
+            }
+        }
+        
+    end,
     use = function (self, card, area, copier)
         AKYRS.simple_event_add(function ()
             table.sort(G.hand.highlighted,AKYRS.hand_sort_function_immute)
