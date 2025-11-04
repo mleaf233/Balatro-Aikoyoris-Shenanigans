@@ -1,7 +1,7 @@
 
 AKYRS.DescriptionDummies = {}
 
-
+---@type SMODS.Center
 AKYRS.DescriptionDummy = SMODS.Center:extend{
     set = 'DescriptionDummy',
     obj_buffer = {},

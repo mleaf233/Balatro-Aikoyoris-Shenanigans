@@ -246,9 +246,8 @@ SMODS.Consumable{
         max_highlighted = 1
     },
     loc_vars = function (self, info_queue, card)
-        if AKYRS.config.show_joker_preview then
-            info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_break_up_tip"]
-        end
+        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_break_up_tip"]
+
         return {
             vars = {
                 card.ability.max_highlighted

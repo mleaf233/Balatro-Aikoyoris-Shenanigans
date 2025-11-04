@@ -814,6 +814,18 @@ return {
                     "For example, this is a {C:attention}Pure Flush{}",
                 },
             },
+            dd_akyrs_break_up_tip_no_preview  = {
+                name="Pure Cards",
+                text={
+                    "{C:attention}Pure Cards{} can form {C:attention}Pure Hands",
+                    "{C:attention}Pure Hands{} give more",
+                    "base {C:chips}Chips{} and {C:mult}Mult",
+                    "but can only be played if played hand",
+                    "only has {C:attention}Pure Cards{}",
+                    "For example, you can make a {C:attention}Pure Flush{}",
+                    "with five {C:clubs}Pure Clubs{} card",
+                },
+            },
             dd_akyrs_letter_puzzle_umbral_expl  = {
                 name="Letter & Puzzle",
                 text={
