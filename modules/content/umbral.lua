@@ -246,7 +246,9 @@ SMODS.Consumable{
         max_highlighted = 1
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_break_up_tip"]
+        if AKYRS.config.show_joker_preview then
+            info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_break_up_tip"]
+        end
         return {
             vars = {
                 card.ability.max_highlighted
@@ -891,7 +893,7 @@ SMODS.Consumable{
         max_highlighted = 2,
     },
     loc_vars = function (self, info_queue, card)
-        if G.GAME.akyrs_character_stickers_enabled then
+        if G.GAME.akyrs_character_stickers_enabled and AKYRS.config.show_joker_preview then
             info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_letter_puzzle_umbral_expl"]
         end
         return {
