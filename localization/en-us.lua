@@ -2975,7 +2975,7 @@ return {
                 {
                     "Enhances {C:attention}#1#",
                     "selected card to",
-                    "{C:attention}Brick Card{}",
+                    "{C:attention}Brick Cards{}",
                 },
             },
             c_akyrs_umbral_overgrowth = {

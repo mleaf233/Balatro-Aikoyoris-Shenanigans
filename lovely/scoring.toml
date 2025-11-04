@@ -284,7 +284,18 @@ target = '=[SMODS _ "src/overrides.lua"]'
 pattern = """			if SUITS[v.base.suit][v.base.value] and not v_nr and not v_ns then"""
 position = "at"
 payload = """
-if v and v.base and v.base.suit and v.base.value SUITS[v.base.suit][v.base.value] and not v_nr and not v_ns then
+if v and v.base and v.base.suit and v.base.value and SUITS[v.base.suit][v.base.value] and not v_nr and not v_ns then
+"""
+overwrite = true
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = """			if not v_nr then"""
+position = "at"
+payload = """if not v_nr and v.base and v.base.value then
 """
 overwrite = true
 match_indent = true
