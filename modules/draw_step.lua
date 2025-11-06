@@ -133,7 +133,7 @@ SMODS.DrawStep{
 }
 
 SMODS.draw_ignore_keys["akyrs_redeem_voucher"] = true
-SMODS.draw_ignore_keys["akyrs_open_packs"] = true
+SMODS.draw_ignore_keys["akyrs_collection_ui"] = true
 
 
 SMODS.DrawStep {
@@ -143,6 +143,6 @@ SMODS.DrawStep {
         --Draw any tags/buttons
         if self.children.akyrs_wildcard then self.children.akyrs_wildcard:draw() end
         if self.children.akyrs_redeem_voucher then self.children.akyrs_redeem_voucher:draw() end
-        if self.children.akyrs_open_packs and self.highlighted then self.children.akyrs_open_packs:draw() end
+        if self.children.akyrs_collection_ui then self.children.akyrs_collection_ui:draw() end
     end,
 } 

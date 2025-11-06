@@ -3325,6 +3325,8 @@ return {
             
             k_akyrs_use_from_drag = "USE",
             k_akyrs_use_from_drag_2 = "[Ethically]",
+            b_akyrs_normal_jokers = "Normal Jokers",
+            b_akyrs_letter_jokers = "Letter Jokers",
 
 
             k_akyrs_ryo_borrowed_money = "Borrowed Money...",

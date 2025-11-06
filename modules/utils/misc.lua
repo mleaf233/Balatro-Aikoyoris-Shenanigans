@@ -282,6 +282,7 @@ AKYRS.card_area_preview = function(cardArea, desc_nodes, config)
     local func_delay = config.func_delay or 0.2
     local margin_left = config.ml or 0.2
     local margin_top = config.mt or 0
+    local node_orientation = config.orientation or G.UIT.R
     local alignment = config.alignment or "cm"
     local scale = config.scale or 1
     local type = config.type or "title"
@@ -307,7 +308,7 @@ AKYRS.card_area_preview = function(cardArea, desc_nodes, config)
         end
     end
     local uiEX = {
-        n = G.UIT.R,
+        n = node_orientation,
         config = { align = alignment , padding = padding, no_fill = true, minh = box_height },
         nodes = {
             {n = G.UIT.O, config = { object = cardArea }}
@@ -348,7 +349,7 @@ AKYRS.card_area_preview = function(cardArea, desc_nodes, config)
             },"akyrs_desc")
         end
     end
-    return uiEX
+    return uiEX, cardarea
 end
 
 AKYRS.temp_card_area = CardArea(
@@ -1215,4 +1216,192 @@ function AKYRS.weighted_randomiser(list_of_things, seed)
         end
         randomised = randomised - thing.weight
     end
+end
+
+function AKYRS.create_card_collection_underlay(card, info)
+    info = info or {}
+    local tally = info.tally or {}
+
+    card.children.akyrs_collection_ui = UIBox {
+        definition = {
+            n = G.UIT.ROOT,
+            config = { padding = 0, colour = G.C.CLEAR, can_collide = false },
+            nodes = {
+                {
+                    n = G.UIT.C,
+                    config = { colour = HEX("22222266"), padding = 0.05, r = 0.2, minw = 1, minh = 2, align = "mb" },
+                    nodes = {
+                        {
+                            n = G.UIT.R,
+                            config = { padding = 0.1, align = "cm" },
+                            nodes = {
+                                {
+                                    n = G.UIT.C, config = { padding = 0.1 },
+                                    nodes = { 
+                                        { n = G.UIT.T, config = { text = info.text or "?????", scale = 0.4, colour = G.C.UI.TEXT_LIGHT } }
+                                    }
+                                },
+                            }
+                        },
+                        { n = G.UIT.R, config = { h = 0.5, w = 0.1 }, nodes = {{ n = G.UIT.B, config = { h = info.height or 1.7, w = 0.1 } },}},
+                        {
+                            n = G.UIT.R,
+                            config = { padding = 0.1, align = "cm"  },
+                            nodes = {
+                                {
+                                    n = G.UIT.C, config = { padding = 0.1, colour = G.C.GREEN, r = 0.1, align = "cm"  },
+                                    nodes = { 
+                                        { n = G.UIT.T, config = { text = tally.tally or "???" , scale = 0.4, colour = G.C.UI.TEXT_LIGHT } }
+                                    }
+                                },
+                                {
+                                    n = G.UIT.C, config = {  },
+                                    nodes = { 
+                                        { n = G.UIT.T, config = { text = "/" , scale = 0.6, colour = G.C.ORANGE } }
+                                    }
+                                },
+                                {
+                                    n = G.UIT.C, config = { padding = 0.1, colour = G.C.GREY, r = 0.1, align = "cm"  },
+                                    nodes = { 
+                                        { n = G.UIT.T, config = { text = tally.of or "???", scale = 0.4, colour = G.C.UI.TEXT_LIGHT } }
+                                    }
+                                },
+                            }
+                        },
+                    }
+                }
+            }
+        },
+        config = { align = "cm",
+            offset = { x = 0, y = 0.1 },
+            --bond = "Weak",
+            r_bond = "Weak",
+            parent = card }
+    }
+end
+
+function AKYRS.fake_blind_chip(key, args)
+    if not key or not G.P_BLINDS[key] then return end
+    args = args or {}
+    local blind = G.P_BLINDS[key]
+    local temp_blind = AnimatedSprite(0,0, 1.3, 1.3, G.ANIMATION_ATLAS[blind.discovered and blind.atlas or 'blind_chips'],
+    blind.discovered and blind.pos or G.b_undiscovered.pos)
+    temp_blind.states.click.can = false
+    temp_blind.states.drag.can = false
+    temp_blind.states.hover.can = true
+    local card = Card(0 ,0 , 1.3, 1.3, G.P_CARDS.empty, G.P_CENTERS.c_base)
+    temp_blind.states.click.can = false
+    card.states.drag.can = false
+    card.states.hover.can = true
+    card.children.center = temp_blind
+    temp_blind:set_role({major = card, role_type = 'Glued', draw_major = card})
+    card.set_sprites = function(...)
+        local args = {...}
+        if not args[1].animation then return end
+        local c = card.children.center
+        Card.set_sprites(...)
+        card.children.center = c
+    end
+    temp_blind:define_draw_steps({
+        { shader = 'dissolve', shadow_height = 0.05 },
+        { shader = 'dissolve' }
+    })
+    temp_blind.float = true
+    card.states.collide.can = true
+    card.config.blind = blind
+    card.config.force_focus = true
+    if blind.discovered and not blind.alerted then
+        blinds_to_be_alerted[#blinds_to_be_alerted + 1] = card
+    end
+    card.hover = function()
+        if not G.CONTROLLER.dragging.target or G.CONTROLLER.using_touch then
+            if not card.hovering and card.states.visible then
+                card.hovering = true
+                card.hover_tilt = 3
+                card:juice_up(0.05, 0.02)
+                play_sound('chips1', math.random() * 0.1 + 0.55, 0.12)
+                if args.show_popup then
+                    card.config.h_popup = create_UIBox_blind_popup(blind, card.config.blind.discovered)
+                    card.config.h_popup_config = card:align_h_popup()
+                end
+                Node.hover(card)
+                if card.children.alert then
+                    card.children.alert:remove()
+                    card.children.alert = nil
+                    card.config.blind.alerted = true
+                    G:save_progress()
+                end
+            end
+        end
+        card.stop_hover = function()
+            card.hovering = false; Node.stop_hover(card); card.hover_tilt = 0
+        end
+    end
+    return card
+end
+
+function AKYRS.fake_card_sprite(sprite, args)
+    if not sprite or not sprite.atlas or not sprite.pos then return end
+    args = args or {}
+    local blind = G.P_BLINDS[key]
+    local temp_spr = Sprite(0, 0, args.w or 1, args.h or 1, G.ASSET_ATLAS[sprite.atlas], sprite.pos)
+    temp_spr.states.click.can = false
+    temp_spr.states.drag.can = false
+    temp_spr.states.hover.can = true
+    local card = Card(0 ,0 , args.w or 1, args.h or 1, G.P_CARDS.empty, G.P_CENTERS.c_base)
+    temp_spr.states.click.can = false
+    card.states.drag.can = false
+    card.states.hover.can = true
+    card.children.center = temp_spr
+    temp_spr:set_role({major = card, role_type = 'Glued', draw_major = card})
+    card.set_sprites = function(...)
+        local args = {...}
+        if not args[1].animation then return end
+        local c = card.children.center
+        Card.set_sprites(...)
+        card.children.center = c
+    end
+    temp_spr:define_draw_steps({
+        { shader = 'dissolve', shadow_height = 0.05 },
+        { shader = 'dissolve' }
+    })
+    temp_spr.float = true
+    card.states.collide.can = true
+    card.config.force_focus = true
+    card.hover = function()
+        if not G.CONTROLLER.dragging.target or G.CONTROLLER.using_touch then
+            if not card.hovering and card.states.visible then
+                card.hovering = true
+                card.hover_tilt = 3
+                card:juice_up(0.05, 0.02)
+                play_sound('chips1', math.random() * 0.1 + 0.55, 0.12)
+                Node.hover(card)
+            end
+        end
+        card.stop_hover = function()
+            card.hovering = false; Node.stop_hover(card); card.hover_tilt = 0
+        end
+    end
+    return card
+end
+
+---@return Card
+function AKYRS.card_collection_ui_template(key, override_sprite, p_card)
+    local tg = G.ROOM
+
+    local c = Card(tg.T.x,tg.T.y,G.CARD_W * 0.7,G.CARD_H * 0.7,G.P_CARDS[p_card],G.P_CENTERS[key], { bypass_discovery_center = true, bypass_discovery_ui = true })
+    c.no_ui = true
+    if override_sprite then
+        ---@type Sprite
+        AKYRS.simple_event_add(
+            function ()
+                local cnt = c.children.center
+                cnt.atlas = G.ASSET_ATLAS[override_sprite.atlas_key or "Joker"]
+                cnt:set_sprite_pos(override_sprite.pos or { x = 0, y = 0})
+                return true
+            end, 0, "akyrs_misc"
+        )
+        
+    end
+    return c
 end

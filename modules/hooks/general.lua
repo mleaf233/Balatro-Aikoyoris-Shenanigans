@@ -1136,7 +1136,7 @@ AKYRS.original_set_ability = Card.set_ability
 function Card:set_ability(c,i,d)
     if self and self.ability and self.ability.akyrs_sigma then return end
     -- this one is for collection
-    if not (self.config.center.set == "Enhanced" or self.config.center.set == "Default") and (AKYRS.card_any_drag()) and not AKYRS.is_mod_loaded("Cryptlib") then
+    if self.config.center and not (self.config.center.set == "Enhanced" or self.config.center.set == "Default") and (AKYRS.card_any_drag()) and not AKYRS.is_mod_loaded("Cryptlib") then
         self.is_null = true
     end
     local r = AKYRS.original_set_ability(self,c,i,d)
@@ -1515,6 +1515,25 @@ function CardArea:align_cards()
         end
         --table.sort(self.cards, function (a, b) return a.T.y + a.T.y/2 < b.T.y + b.T.y/2 end)
     end
+    if self.config.type == 'akyrs_collections' then
+        for k, card in ipairs(self.cards) do
+            card.T.r = 0.1*(-#self.cards/2 - 0.5 + k)/(#self.cards)+ (G.SETTINGS.reduced_motion and 0 or 1)*0.02*math.sin(2*G.TIMERS.REAL+card.T.x)
+            local max_cards = math.max(#self.cards, self.config.temp_limit)
+            card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/math.max(max_cards-1, 1) - 0.5*(#self.cards-max_cards)/math.max(max_cards-1, 1)) + 0.5*(self.card_w - card.T.w)
+            if #self.cards > 2 or (#self.cards > 1 and self == G.consumeables) or (#self.cards > 1 and self.config.spread) then
+                card.T.x = self.T.x + (self.T.w-self.card_w)*((k-1)/(#self.cards-1)) + 0.5*(self.card_w - card.T.w)
+            elseif #self.cards > 1 and self ~= G.consumeables then
+                card.T.x = self.T.x + (self.T.w-self.card_w)*((k - 0.5)/(#self.cards)) + 0.5*(self.card_w - card.T.w)
+            else
+                card.T.x = self.T.x + self.T.w/2 - self.card_w/2 + 0.5*(self.card_w - card.T.w)
+            end
+            local highlight_height = G.HIGHLIGHT_H/2
+            --if not card.highlighted then highlight_height = 0 end
+            card.T.y = self.T.y + self.T.h/2 - card.T.h/2 - highlight_height+ (G.SETTINGS.reduced_motion and 0 or 1)*0.03*math.sin(0.666*G.TIMERS.REAL+card.T.x)
+            card.T.x = card.T.x + card.shadow_parrallax.x/30
+        end
+        table.sort(self.cards, function (a, b) return a.T.x + a.T.w/2 - 100*(a.pinned and a.sort_id or 0) < b.T.x + b.T.w/2 - 100*(b.pinned and b.sort_id or 0) end)
+    end   
     if G.GAME.akyrs_ultimate_freedom and not self.states.collide.can then
         self.states.collide.can = true
     end
@@ -1529,7 +1548,7 @@ function CardArea:draw()
 
     self.ARGS.draw_layers = self.ARGS.draw_layers or self.config.draw_layers or {'shadow', 'card'}
     for k, v in ipairs(self.ARGS.draw_layers) do
-        if self.config.type == 'akyrs_credits' or self.config.type == 'akyrs_solitaire_tableau' or self.config.type == 'akyrs_solitaire_foundation' or self.config.type == 'akyrs_solitaire_waste' or self.config.type == 'akyrs_cards_temporary_dragged' and self.cards then 
+        if self.config.type == 'akyrs_credits' or self.config.type == 'akyrs_solitaire_tableau' or self.config.type == 'akyrs_solitaire_foundation' or self.config.type == 'akyrs_solitaire_waste' or self.config.type == 'akyrs_cards_temporary_dragged' or self.config.type == 'akyrs_collections' and self.cards then 
             for i = 1, #self.cards do 
                 if self.cards[i] ~= G.CONTROLLER.focused.target or self == G.hand then
                     if G.CONTROLLER.dragging.target ~= self.cards[i] then self.cards[i]:draw(v) end

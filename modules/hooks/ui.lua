@@ -639,7 +639,7 @@ function AKYRS.UIDEF.use_ui(card)
                                                     }
                                                 },
                                             }
-                                        }
+                                        },
                                     }
                                 },
                             }
@@ -668,12 +668,12 @@ function Card:highlight(is_higlighted)
             }
         end
     end
-    if AKYRS.is_in_typical_area(self.area) and AKYRS.card_any_drag() then
+    if AKYRS.is_in_typical_area(self.area) and AKYRS.card_any_drag() and self.ability.set ~= "Default" and self.ability.set ~= "Enhanced" then
         self.children.akyrs_redeem_voucher = UIBox {
             definition = AKYRS.UIDEF.use_ui(self),
             config = { align =
                 "cl",
-                offset = { x = 1, y = 0.25 },
+                offset = { x = 1, y = 0.65 },
                 parent = self }
         }
     end
@@ -1076,4 +1076,346 @@ function Tag:generate_UI(_size)
         tag_sprite:set_sprite_pos({x = 0, y = 9})
     end
     return tag_sprite_tab, tag_sprite
+end
+
+
+
+local additionsTabHook = buildAdditionsTab
+function buildAdditionsTab(mod)
+        if mod == AKYRS then
+            --[[
+        local consumable_nodes = {}
+        for _, key in ipairs(SMODS.ConsumableType.visible_buffer) do
+            local id = 'your_collection_'..key:lower()..'s'
+            local tally = modsCollectionTally(G.P_CENTER_POOLS[key])
+            if tally.of > 0 then
+                consumable_nodes[#consumable_nodes+1] = UIBox_button({button = id, label = {localize('b_'..key:lower()..'_cards')}, count = tally, minw = 4, id = id, colour = G.C.SECONDARY_SET[key], text_colour = G.C.UI[key]})
+            end
+        end
+        if #consumable_nodes > 3 then
+            consumable_nodes = { UIBox_button({ button = 'your_collection_consumables', label = {localize('b_stat_consumables'), localize{ type = 'variable', key = 'c_types', vars = {#consumable_nodes} } }, count = modsCollectionTally(G.P_CENTER_POOLS.Consumeables), minw = 4, minh = 4, id = 'your_collection_consumables', colour = G.C.FILTER }) }
+        end
+
+        local leftside_nodes = {}
+        for _, v in ipairs { { k = 'Joker', minh = 1.7, scale = 0.6 }, { k = 'Back', b = 'decks' }, { k = 'Voucher' } } do
+            v.b = v.b or v.k:lower()..'s'
+            v.l = v.l or v.b
+            local tally = modsCollectionTally(G.P_CENTER_POOLS[v.k])
+            if tally.of > 0 then
+                leftside_nodes[#leftside_nodes+1] = UIBox_button({button = 'your_collection_'..v.b, label = {localize('b_'..v.l)}, count = modsCollectionTally(G.P_CENTER_POOLS[v.k]),  minw = 5, minh = v.minh, scale = v.scale, id = 'your_collection_'..v.b})
+            end
+        end
+        if #consumable_nodes > 0 then
+            leftside_nodes[#leftside_nodes + 1] = {
+                n = G.UIT.R,
+                config = { align = "cm", padding = 0.1, r = 0.2, colour = G.C.BLACK },
+                nodes = {
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm", maxh = 2.9 },
+                        nodes = {
+                            { n = G.UIT.T, config = { text = localize('k_cap_consumables'), scale = 0.45, colour = G.C.L_BLACK, vert = true, maxh = 2.2 } },
+                        }
+                    },
+                    { n = G.UIT.C, config = { align = "cm", padding = 0.15 }, nodes = consumable_nodes }
+                }
+            }
+        end
+
+        local rightside_nodes = {}
+        for _, v in ipairs { { k = 'Enhanced', b = 'enhancements', l = 'enhanced_cards'}, { k = 'Seal' }, { k = 'Edition' }, { k = 'Booster', l = 'booster_packs' }, { b = 'tags', p = G.P_TAGS }, { b = 'blinds', p = G.P_BLINDS, minh = 2.0 }, } do
+            v.b = v.b or v.k:lower()..'s'
+            v.l = v.l or v.b
+            v.p = v.p or G.P_CENTER_POOLS[v.k]
+            local tally = modsCollectionTally(v.p)
+            if tally.of > 0 then
+                rightside_nodes[#rightside_nodes+1] = UIBox_button({button = 'your_collection_'..v.b, label = {localize('b_'..v.l)}, count = modsCollectionTally(v.p),  minw = 5, minh = v.minh, id = 'your_collection_'..v.b})
+            end
+        end
+        local has_other_gameobjects = create_UIBox_Other_GameObjects()
+        if has_other_gameobjects then
+            rightside_nodes[#rightside_nodes+1] = UIBox_button({button = 'your_collection_other_gameobjects', label = {localize('k_other')}, minw = 5, id = 'your_collection_other_gameobjects', focus_args = {snap_to = true}})
+        end
+
+        local t = {n=G.UIT.R, config={align = "cm",padding = 0.2, minw = 7}, nodes={
+            {n=G.UIT.C, config={align = "cm", padding = 0.15}, nodes = leftside_nodes },
+        {n=G.UIT.C, config={align = "cm", padding = 0.15}, nodes = rightside_nodes }
+        }}
+
+        local modNodes = {}
+        table.insert(modNodes, t)
+            ]]
+		return {
+        label = localize("b_additions"),
+        chosen = SMODS.LAST_SELECTED_MOD_TAB == "additions" or false,
+        tab_definition_function = function()
+            SMODS.LAST_SELECTED_MOD_TAB = "additions"
+            
+            -- todo: check design mockup on notes
+            -- jokers [non-letter/letter] consumables -- done
+            -- blinds boosters vouchers editions others
+            -- seals deck tags
+            local first_row = {}
+            local second_row = {}
+            local third_row = {}
+            local joker_normal = AKYRS.card_collection_ui_template('j_akyrs_tldr_joker')
+            local joker_letter = AKYRS.card_collection_ui_template('j_akyrs_catchphrase')
+            local consumables_planet = AKYRS.card_collection_ui_template('c_akyrs_p_lacerta')
+            local consumables_umbral = AKYRS.card_collection_ui_template('c_akyrs_umbral_intrusive_thoughts')
+            local consumables_alphabet = AKYRS.card_collection_ui_template('c_akyrs_a')
+            local blind_card = AKYRS.fake_blind_chip("bl_akyrs_the_thought")
+            local booster_umbral = AKYRS.card_collection_ui_template("p_akyrs_jumbo_umbral_pack_1")
+            local voucher_alphabet = AKYRS.card_collection_ui_template("v_akyrs_alphabet_soup")
+            local editioned_joker = AKYRS.card_collection_ui_template("j_oops")
+            local other_cards = AKYRS.card_collection_ui_template("j_joker", { atlas_key = "akyrs_eggymariHatenaSprite" })
+            local tag_card = AKYRS.fake_card_sprite({ atlas = "akyrs_aikoyoriTags", pos = { x = 0, y = 0}})
+            local thai_tea_card = AKYRS.card_collection_ui_template("m_akyrs_thai_tea_card", nil, "S_6")
+            local deck_overlaid = AKYRS.card_collection_ui_template("j_joker", { atlas_key = "akyrs_deckBacks" })
+            local sealed_card = AKYRS.card_collection_ui_template("c_base", nil, "C_7")
+            sealed_card:set_seal("akyrs_carmine", true, true)
+            editioned_joker:set_edition("e_akyrs_noire", true, true)
+            joker_normal.click = function (self)
+                G.FUNCS.akyrs_your_collection_non_letter_jokers(self)
+            end
+            joker_letter.click = function (self)
+                G.FUNCS.akyrs_your_collection_letter_jokers(self)
+            end
+            consumables_planet.click = function (self)
+                G.FUNCS.your_collection_consumables(self)
+            end
+            consumables_umbral.click = function (self)
+                G.FUNCS.your_collection_consumables(self)
+            end
+            consumables_alphabet.click = function (self)
+                G.FUNCS.your_collection_consumables(self)
+            end
+            blind_card.click = function (self)
+                G.FUNCS.your_collection_blinds(self)
+            end
+            booster_umbral.click = function (self)
+                G.FUNCS.your_collection_boosters(self)
+            end
+            voucher_alphabet.click = function (self)
+                G.FUNCS.your_collection_vouchers(self)
+            end
+            editioned_joker.click = function (self)
+                G.FUNCS.your_collection_editions(self)
+            end
+            other_cards.click = function (self)
+                G.FUNCS.your_collection_other_gameobjects(self)
+            end
+            tag_card.click = function (self)
+                G.FUNCS.your_collection_tags(self)
+            end
+            thai_tea_card.click = function (self)
+                G.FUNCS.your_collection_enhancements(self)
+            end
+            sealed_card.click = function (self)
+                G.FUNCS.your_collection_seals(self)
+            end
+            deck_overlaid.click = function (self)
+                G.FUNCS.your_collection_decks(self)
+            end
+            AKYRS.create_card_collection_underlay(joker_normal,{
+                text = localize("b_akyrs_normal_jokers"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Joker, nil, {
+                    no_count = function (center)
+                        return not center.akyrs_is_letter
+                    end
+                })
+            })
+            AKYRS.create_card_collection_underlay(joker_letter,{
+                text = localize("b_akyrs_letter_jokers"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Joker, nil, {
+                    no_count = function (center)
+                        return center.akyrs_is_letter
+                    end
+                })
+            })
+            AKYRS.create_card_collection_underlay(consumables_umbral,{
+                text = localize("b_stat_consumables"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Consumeables, nil)
+            })
+            AKYRS.create_card_collection_underlay(blind_card,{
+                height = 1.8,
+                text = localize("b_blinds"),
+                tally = AKYRS.modsCollectionTally(G.P_BLINDS, nil)
+            })
+            AKYRS.create_card_collection_underlay(booster_umbral,{
+                text = localize("b_booster_packs"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Booster, nil)
+            })
+            AKYRS.create_card_collection_underlay(voucher_alphabet,{
+                text = localize("b_vouchers"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Voucher, nil)
+            })
+            AKYRS.create_card_collection_underlay(editioned_joker,{
+                text = localize("b_editions"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Edition, nil)
+            })
+            AKYRS.create_card_collection_underlay(tag_card,{
+                text = localize("b_tags"),
+                height = 1.2,
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Tag, nil)
+            })
+            AKYRS.create_card_collection_underlay(other_cards,{
+                text = localize("k_other"),
+            })
+            AKYRS.create_card_collection_underlay(thai_tea_card,{
+                text = localize("b_enhanced_cards"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Enhanced, nil)
+            })
+            AKYRS.create_card_collection_underlay(sealed_card,{
+                text = localize("b_seals"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Seal, nil)
+            })
+            AKYRS.create_card_collection_underlay(deck_overlaid,{
+                text = localize("b_decks"),
+                tally = AKYRS.modsCollectionTally(G.P_CENTER_POOLS.Back, nil)
+            })
+            -- jonkler
+            first_row[#first_row+1] = AKYRS.card_area_preview(
+                nil,
+                nil,
+                {
+                    orientation = G.UIT.C,
+                    override = true,
+                    w = 3.6,
+                    h = 0.8,
+                    type = "akyrs_collections",
+                    cards = {joker_normal, joker_letter},
+                    highlight_limit = 0,
+                }
+            )
+            -- consumable
+            first_row[#first_row+1] = AKYRS.card_area_preview(
+                nil,
+                nil,
+                {
+                    orientation = G.UIT.C,
+                    override = true,
+                    w = 2.2,
+                    h = 0.8,
+                    type = "akyrs_collections",
+                    cards = {consumables_planet, consumables_umbral, consumables_alphabet},
+                    highlight_limit = 0,
+                }
+            )
+            --
+            second_row[#second_row+1] = AKYRS.card_area_preview(
+                nil,
+                nil,
+                {
+                    orientation = G.UIT.C,
+                    override = true,
+                    w = 6.0,
+                    h = 0.8,
+                    type = "akyrs_collections",
+                    cards = {blind_card, booster_umbral, voucher_alphabet, editioned_joker, tag_card},
+                    highlight_limit = 0,
+                }
+            )
+            third_row[#third_row+1] = AKYRS.card_area_preview(
+                nil,
+                nil,
+                {
+                    orientation = G.UIT.C,
+                    override = true,
+                    w = 6.0,
+                    h = 1,
+                    type = "akyrs_collections",
+                    cards = {thai_tea_card, sealed_card, other_cards, deck_overlaid},
+                    highlight_limit = 0,
+                }
+            )
+            return {
+                n = G.UIT.ROOT,
+                config = {
+                    emboss = 0.05,
+                    minh = 6,
+                    r = 0.1,
+                    minw = 6,
+                    align = "tm",
+                    padding = 0.2,
+                    colour = G.C.BLACK
+                },
+                nodes = {
+                    {
+                        n = G.UIT.R,
+                        config = { padding = 0.25 },
+                        nodes = first_row,
+                    },
+                    {
+                        n = G.UIT.R,
+                        config = { padding = 0.25 },
+                        nodes = second_row,
+                    },
+                    {
+                        n = G.UIT.R,
+                        config = { padding = 0.25 },
+                        nodes = third_row,
+                    },
+                }
+            }
+        end
+    }
+	end
+	return additionsTabHook(mod)
+end
+
+
+function AKYRS.modsCollectionTally(pool, set, extras)
+    local set = set or nil
+    local obj_tally = {tally = 0, of = 0}
+    extras = extras or {}
+
+    for _, v in pairs(pool) do
+        if v.mod and G.ACTIVE_MOD_UI.id == v.mod.id and not v.no_collection and ((extras.no_count and extras.no_count(v)) or not extras.no_count) then
+            if set then
+                if v.set and v.set == set then
+                    obj_tally.of = obj_tally.of+1
+                    if v.discovered then 
+                        obj_tally.tally = obj_tally.tally+1
+                    end
+                end
+            else
+                obj_tally.of = obj_tally.of+1
+                if v.discovered then 
+                    obj_tally.tally = obj_tally.tally+1
+                end
+            end
+        end
+    end
+
+    return obj_tally
+end
+
+
+create_UIBox_your_collection_aikoshen_jokers = function(letter)
+    local jkrs = {}
+    for i, v in ipairs(G.P_CENTER_POOLS.Joker) do
+        if v.akyrs_is_letter == letter then
+            table.insert(jkrs, v)
+        end
+    end
+    return SMODS.card_collection_UIBox(jkrs, {5,5,5}, {
+        no_materialize = true, 
+        modify_card = function(card, center) card.sticker = get_joker_win_sticker(center) end,
+        h_mod = 0.95,
+    })
+end
+
+
+G.FUNCS.akyrs_your_collection_non_letter_jokers = function(e)
+    G.SETTINGS.paused = true
+    G.FUNCS.overlay_menu{
+        definition = create_UIBox_your_collection_aikoshen_jokers(),
+    }
+end
+
+G.FUNCS.akyrs_your_collection_letter_jokers = function(e)
+    G.SETTINGS.paused = true
+    G.FUNCS.overlay_menu{
+        definition = create_UIBox_your_collection_aikoshen_jokers(true),
+    }
 end

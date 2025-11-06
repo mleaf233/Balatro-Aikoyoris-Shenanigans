@@ -1,5 +1,6 @@
 ---@type SMODS.Joker
 AKYRS.LetterJoker = SMODS.Joker:extend{
+    akyrs_is_letter = true,
     in_pool = function (self, args)
         return G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled or false
     end
