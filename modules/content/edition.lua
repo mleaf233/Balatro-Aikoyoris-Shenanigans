@@ -83,8 +83,8 @@ SMODS.Edition{
     in_shop = true,
     on_apply = function (card)
         if not card.ability.akyrs_upgrade_sliced then
-            local x = AKYRS.deep_copy(G.P_CENTERS[card.config.center_key])
-            AKYRS.mod_card_values(x.config,{multiply = 0.5, reference = x.config, unkeywords = AKYRS.blacklist_mod})
+            local x = AKYRS.deep_copy(G.P_CENTERS[card.config.center_key].config)
+            AKYRS.mod_card_values(x,{multiply = 0.5, unkeywords = AKYRS.blacklist_mod})
             for n, v in pairs(x) do
                 card.ability[n] = x[n] or card.ability[n]
             end
