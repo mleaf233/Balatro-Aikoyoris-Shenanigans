@@ -3970,7 +3970,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "sushi",
     atlas = 'AikoyoriJokers',
-    pos = { x = 3, y = 8 },
+    pos = { x = 5, y = 6 },
     pools = { Food = true },
     config = {
         extras = {

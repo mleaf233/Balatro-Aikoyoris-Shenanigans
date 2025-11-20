@@ -245,7 +245,7 @@ SMODS.Enhancement{
         }
     end,
     calculate = function (self, card, context)
-        if context.before and context.cardarea == G.hand then
+        if context.before and context.cardarea == G.play then
             return {
                 func = function ()
                     local r = AKYRS.get_suit_freq_from_cards(G.play.cards,true)

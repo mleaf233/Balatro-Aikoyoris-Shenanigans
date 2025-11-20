@@ -205,7 +205,7 @@ SMODS.Back{
     key = "inversion_deck",
     name = "Inversion Deck",
     atlas = 'deckBacks',
-    pos = {x = 2, y = 0},
+    pos = {x = 6, y = 1},
     loc_vars = function (self, info_queue, card)
         return {
         }
@@ -219,7 +219,7 @@ SMODS.Back{
     key = "down_deck",
     name = "Down Deck",
     atlas = 'deckBacks',
-    pos = {x = 2, y = 0},
+    pos = {x = 8, y = 1},
     loc_vars = function (self, info_queue, card)
         return {
             vars = {

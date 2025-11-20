@@ -374,7 +374,7 @@ AKYRS.LetterJoker {
 AKYRS.LetterJoker {
     key = "ojisan_koubun",
     atlas = 'AikoyoriJokers',
-    pos = { x = 4, y = 8 },
+    pos = { x = 6, y = 6 },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_TAGS["tag_double"]
         return {
