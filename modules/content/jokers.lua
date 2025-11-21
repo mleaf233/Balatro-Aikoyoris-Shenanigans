@@ -2908,7 +2908,7 @@ SMODS.Joker{
         return {
             key = self.key .. AKYRS.bal_val("","_absurd"),
             vars = {
-                AKYRS.bal_val(card.ability.extras.mult,card.ability.extras.eeemult)
+                AKYRS.bal_val(card.ability.extras.mult,1 + card.ability.extras.eeemult)
             }
         }
     end,
