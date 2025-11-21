@@ -29,7 +29,7 @@ SMODS.current_mod.extra_tabs = function()
   }
 end
 
-AKYRS.create_credits = function(sprite_atlas, name, width)
+AKYRS.create_credits_big = function(sprite_atlas, name, width)
   local cards_print = AKYRS.word_to_cards(name)
 
   return {
@@ -64,6 +64,47 @@ AKYRS.create_credits = function(sprite_atlas, name, width)
             scale = 0.5,
             type = "akyrs_credits",
           }),
+        }
+      },
+    }
+  }
+end
+AKYRS.create_credits = function(sprite_atlas, name, width, colour, credits_nodes)
+  return {
+    n = G.UIT.R,
+    config = { padding = 0.1 },
+    nodes = {
+      sprite_atlas and {
+        n = G.UIT.C,
+        config = { align = "cm", padding = 0.1 },
+        nodes = {
+          AKYRS.embedded_ui_sprite(sprite_atlas, { x = 0, y = 0 }, nil, {
+            w = 200,
+            h = 200,
+            manual_scale = 200,
+            padding = 0,
+            rounded = 0.5
+          }),
+        }
+      },
+      {
+        n = G.UIT.C,
+        config = { align = "cm" },
+        nodes = {
+          {
+            n = G.UIT.R,
+            config = {},
+            nodes = {
+              {
+                n = G.UIT.T, config = {
+                  text = name,
+                  colour = colour or G.C.WHITE,
+                  scale = 0.4,
+                }
+              }
+            }
+          },
+          credits_nodes or nil
         }
       },
     }
@@ -231,15 +272,15 @@ SMODS.current_mod.extra_tabs = function ()
                     { n = G.UIT.T, config = { text = localize("k_akyrs_additional_art_by"), scale = 0.5, colour = G.C.WHITE } }
                   }
                 },
-                AKYRS.create_credits("akyrs_larantula_l_credits", "@larantula_l", 3.1),
+                AKYRS.create_credits("akyrs_larantula_l_credits", "@larantula_l", 3.1, nil,
                 {
                   n = G.UIT.R,
                   config = { padding = 0.02 },
                   nodes = {
                     AKYRS.create_link_sprite_btn("youtube", "https://www.youtube.com/@Larantula"),
                   }
-                },
-                AKYRS.create_credits("akyrs_plasma_credits", "@eggymari", 2.7),
+                }),
+                AKYRS.create_credits("akyrs_plasma_credits", "@eggymari", 2.7, nil, 
                 {
                   n = G.UIT.R,
                   config = { padding = 0.02 },
@@ -247,16 +288,16 @@ SMODS.current_mod.extra_tabs = function ()
                     AKYRS.create_link_sprite_btn("youtube", "https://www.youtube.com/@PlasmaPhrase"),
                     AKYRS.create_link_sprite_btn("twitter", "https://twitter.com/plasmaphrase"),
                   }
-                },
+                }),
                 AKYRS.create_credits("akyrs_gud_credits", "@gudusername_53951", 3.6),
-                AKYRS.create_credits("akyrs_lyman_credits", "@Lyman", 1.9),
+                AKYRS.create_credits("akyrs_lyman_credits", "@Lyman", 1.9, nil,
                 {
                   n = G.UIT.R,
                   config = { padding = 0.02 },
                   nodes = {
                     AKYRS.create_link_sprite_btn("pixeljoint", "https://pixeljoint.com/p/172299.htm"),
                   }
-                },
+                }),
               }
             },
             {
@@ -270,14 +311,14 @@ SMODS.current_mod.extra_tabs = function ()
                     { n = G.UIT.T, config = { text = localize("k_akyrs_additional_help_by"), scale = 0.5, colour = G.C.WHITE } }
                   }
                 },
-                AKYRS.create_credits("akyrs_drmonty_credits", "@dr_monty_the_snek", 3.5),
+                AKYRS.create_credits("akyrs_drmonty_credits", "@dr_monty_the_snek", 3.5, nil,
                 {
                   n = G.UIT.R,
                   config = {},
                   nodes = {
-                    { n = G.UIT.T, config = { text = localize("k_akyrs_drmonty_help"), scale = 0.5, colour = G.C.WHITE } }
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_drmonty_help"), scale = 0.3, colour = G.C.WHITE } }
                   }
-                },
+                }),
               }
             }
           }

@@ -365,9 +365,9 @@ function CardArea:sort(mezod)
     local x = ca_sort(self, mezod)
     self.config.sort = method or self.config.sort
     if self.config.sort == 'akyrs_alpha asc' then 
-        table.sort(self.cards, function (a, b) return string.lower(a:get_letter_with_pretend()) < string.lower(b:get_letter_with_pretend()) end )
+        table.sort(self.cards, function (a, b) return string.lower(a:get_letter_with_pretend()) == string.lower(b:get_letter_with_pretend()) and a:get_letter_with_pretend() < b:get_letter_with_pretend() or string.lower(a:get_letter_with_pretend()) < string.lower(b:get_letter_with_pretend()) end )
     elseif self.config.sort == 'akyrs_alpha desc' then 
-        table.sort(self.cards, function (a, b) return string.lower(a:get_letter_with_pretend()) > string.lower(b:get_letter_with_pretend()) end )
+        table.sort(self.cards, function (a, b) return string.lower(a:get_letter_with_pretend()) == string.lower(b:get_letter_with_pretend()) and a:get_letter_with_pretend() > b:get_letter_with_pretend() or string.lower(a:get_letter_with_pretend()) > string.lower(b:get_letter_with_pretend()) end )
     end
 end
 

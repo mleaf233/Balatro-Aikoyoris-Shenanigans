@@ -2901,7 +2901,7 @@ SMODS.Joker{
     config = {
         extras = {
             mult = 6.000,
-            eeemult = 1.1
+            eeemult = 0.1
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -2919,7 +2919,7 @@ SMODS.Joker{
                 colour = AKYRS.C.PISSANDSHITTIUM,
                 remove_default_message = true,
                 mult = AKYRS.bal_val(card.ability.extras.mult,nil),
-                emult = AKYRS.bal_val(nil,card.ability.extras.eeemult),
+                emult = AKYRS.bal_val(nil,1 + card.ability.extras.eeemult),
             }
         end
     end,
@@ -4001,9 +4001,94 @@ SMODS.Joker {
                         ref_table = card.ability.extras,
                         ref_value = "chips",
                         scalar_value = "reduce_chips",
-                        message = localize("k_akyrs_downgrade_ex"),
+                        scaling_message = { message = localize("k_akyrs_downgrade_ex") },
                     })
                     if card.ability.extras.chips <= 0 then
+                        AKYRS.simple_event_add(function ()
+                            card.pinch.x = true
+                            SMODS.calculate_effect(
+                                { message = localize("k_akyrs_ate_up")},
+                                card
+                            )
+                            card:remove()
+                            return true
+                        end, 0.5)
+                    end
+                end,
+            }
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "biochamber",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 7, y = 6 },
+    pools = {  },
+    config = {
+    },
+    rarity = 2,
+    cost = 7,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.press_play then
+            return {
+                func = function()
+                    AKYRS.simple_event_add(
+                        function() 
+                            if AKYRS.has_room(G.jokers) then
+                                SMODS.add_card{ key = "j_akyrs_nutrient"}
+                            end
+                            return true
+                        end, 0
+                    )
+                end
+            }
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "nutrient",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 7, y = 6 },
+    pools = { Food = true },
+    config = {
+        extras = {
+            xc = 1.6,
+            reduce = -0.2
+        }
+    },
+    rarity = 1,
+    cost = 1,
+    in_pool = function (self, args)
+        return false
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xc,
+                -card.ability.extras.reduce
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.end_of_round and context.cardarea == G.jokers then
+            return {
+                func = function()
+                    SMODS.scale_card(card,{
+                        ref_table = card.ability.extras,
+                        ref_value = "xc",
+                        scalar_value = "reduce",
+                        scaling_message = { message = localize("k_akyrs_downgrade_ex") },
+                    })
+                    if card.ability.extras.xc <= 1 then
                         card.pinch.x = true
                         SMODS.calculate_effect(
                             { message = localize("k_akyrs_ate_up")},
@@ -4011,9 +4096,15 @@ SMODS.Joker {
                         )
                         AKYRS.simple_event_add(function ()
                             card:remove()
+                            return true
                         end, 0.5)
                     end
-                end,
+                end
+            }
+        end
+        if context.joker_main then
+            return {
+                xchips = card.ability.extras.xc
             }
         end
     end,
