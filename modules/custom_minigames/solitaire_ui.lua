@@ -36,11 +36,11 @@ AKYRS.SOL.get_UI_definition = function(params)
     local height = params.height or 6
     
     return {
-        n = G.UIT.ROOT, 
+        n = G.UIT.C, 
         config = {
             w = width, minh = height,
             r = 0.1,
-            colour = G.C.UI.TRANSPARENT_DARK
+            colour = params.transparent and G.C.UI.TRANSPARENT_DARK or HEX("3f3f3f")
         },
         nodes =                 {
             { -- top row with stock waste and foundation

@@ -23,11 +23,11 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     //Adding in a center swirl, changes with time
     
-    MY_HIGHP_OR_MEDIUMP number speed = time*vort_speed  + uv.x;
+    MY_HIGHP_OR_MEDIUMP number speed = time*vort_speed  + uv.x * 50.12;
     //MY_HIGHP_OR_MEDIUMP number new_pixel_angle = atan(uv.y, uv.x) + (2.2 + 0.4*min(6.,speed))*uv_len - 1. -  speed*0.05 - min(6.,speed)*speed*0.02 + vort_offset;
     
     MY_HIGHP_OR_MEDIUMP vec2 mid = (love_ScreenSize.xy/length(love_ScreenSize.xy))/2.;
-    MY_HIGHP_OR_MEDIUMP vec2 sv = (mid.xy * 0.1) + uv.xy + vec2(0., sin(speed * 0.70) * 0.05 );
+    MY_HIGHP_OR_MEDIUMP vec2 sv = (mid.xy * 0.1) + uv.xy + vec2(0., sin(speed * 0.6) * 0.006 * pow((1.0 - abs(-uv.x))*2.5,2.0) );
     /*
     MY_HIGHP_OR_MEDIUMP vec2 sv = vec2((uv_len * cos(new_pixel_angle) + mid.x), (uv_len * sin(new_pixel_angle) + mid.y)) - mid;
     */

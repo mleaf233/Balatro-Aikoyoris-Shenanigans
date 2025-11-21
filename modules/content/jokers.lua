@@ -4110,3 +4110,37 @@ SMODS.Joker {
         end
     end,
 }
+
+SMODS.Joker {
+    key = "shine_bright_like_a_diamond",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 8, y = 6 },
+    pools = {  },
+    config = {
+        extras = {
+            xc = 1.6,
+            reduce = -0.2
+        }
+    },
+    rarity = 2,
+    cost = 4,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.press_play then
+            return {
+                func = function()
+                    AKYRS.simple_event_add(function() 
+                        SMODS.add_card({suit = "Diamonds", rank = "Ace", area = G.play})
+                        return true
+                    end, 0)
+                end
+            }
+        end
+    end,
+}

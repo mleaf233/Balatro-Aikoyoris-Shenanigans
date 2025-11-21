@@ -172,6 +172,18 @@ SMODS.current_mod.custom_ui = function (mod_nodes)
   local cards1 = {
     aikocard
   }
+  aikocard.click = function (self)
+    Card.click(self)
+    self.akyrs_clicked_cnt = (self.akyrs_clicked_cnt or 0) + 1
+    self:juice_up(1.5,1.5)
+    play_sound('generic1')
+    if self.akyrs_clicked_cnt >= 10 then
+      G.SETTINGS.paused = true
+      G.FUNCS.overlay_menu({
+        definition = AKYRS.SOL.get_UI_definition(),
+      })
+    end 
+  end
   local node1 = {
     n = G.UIT.C,
     config = { w = 8, align = "tm", r = 0.1 , h = 6, padding = 0.2, colour = G.C.AKYRS_HAIR_DARKER},

@@ -2176,6 +2176,16 @@ return {
                     "and the end of the round",
                 }
             },
+            j_akyrs_shine_bright_like_a_diamond = {
+                name = {
+                    "Shine Bright like a Diamond",
+                },
+                text = {
+                    "Add a permanent copy of",
+                    "{C:attention}Ace{} of {C:diamonds}Diamonds{}",
+                    "to every {C:attention}played{} hand",
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
