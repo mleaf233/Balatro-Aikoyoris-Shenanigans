@@ -8,7 +8,7 @@ priority = 0
 target = '=[SMODS ortalab "objects/zodiac.lua"]'
 pattern = """    -- Add a zodiac to the indicator area"""
 position = "after"
-payload = """SMODS.calculate_context({akyrs_ortalab_zodiac_added = true, zodiac_key = _tag.key})"""
+payload = """if not from_load then SMODS.calculate_context({akyrs_ortalab_zodiac_added = true, zodiac_key = _tag.key}) end"""
 overwrite = true
 match_indent = true
 

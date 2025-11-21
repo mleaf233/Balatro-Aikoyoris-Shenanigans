@@ -3184,6 +3184,7 @@ return {
                     "Add {C:green}#1#{} to {C:green}numerator{}",
                     "and {C:green}#2#{} to {C:green}denominator{}",
                     "to all chances {C:inactive}(if possible)",
+                    "{C:inactive}(Note: Applies last)",
                 },
             },
             c_akyrs_umbral_bounce= {
