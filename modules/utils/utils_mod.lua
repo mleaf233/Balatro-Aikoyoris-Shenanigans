@@ -701,3 +701,19 @@ function AKYRS.invert_selection(area)
         table.insert(area.highlighted, c)
     end
 end
+
+AKYRS.aiko_click = function (self)
+    Card.click(self)
+    self.akyrs_clicked_cnt = (self.akyrs_clicked_cnt or -1) + 1
+    self:juice_up(1.5,1.5)
+    local pitch = AKYRS.shift_semitone(0.76, AKYRS.semitones_from_tone_table(AKYRS.NOTE_MAJOR,self.akyrs_clicked_cnt))
+    play_sound('generic1', pitch)
+    play_sound('gong', pitch)
+    if self.akyrs_clicked_cnt >= 7 then
+        G.SETTINGS.paused = true
+        self.akyrs_clicked_cnt = -1
+        G.FUNCS.overlay_menu({
+        definition = AKYRS.SOL.get_UI_definition(),
+        })
+    end 
+end

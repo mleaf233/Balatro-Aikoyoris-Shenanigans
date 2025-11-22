@@ -1865,6 +1865,7 @@ function Game:main_menu(ctx)
     if self.title_top then
         local tg = self.title_top
         local card = Card(tg.T.x,tg.T.y,G.CARD_W,G.CARD_H,nil,G.P_CENTERS['j_akyrs_aikoyori'])
+        card.click = AKYRS.aiko_click
         card.bypass_discovery_center = true
         card.T.w = card.T.w * 1.4
         card.T.h = card.T.h * 1.4

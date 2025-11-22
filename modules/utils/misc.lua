@@ -1414,3 +1414,21 @@ function AKYRS.split(str, pattern)
     end
     return a
 end
+
+
+-- pitch related
+AKYRS.NOTE_MAJOR = {0, 2, 4, 5, 7, 9, 11}
+AKYRS.NOTE_MINOR = {0, 2, 3, 5, 7, 8, 10}
+
+function AKYRS.shift_semitone(percent,semitone)
+    return percent*(1.05946309436 ^ semitone)
+end
+
+function AKYRS.semitones_from_tone_table(tone_table, tone)
+    local octaves = 0
+    if tone >= #tone_table then
+        octaves = math.floor(tone/#tone_table)
+        tone = math.fmod(tone,#tone_table)
+    end
+    return tone_table[tone + 1] + octaves * 12
+end
