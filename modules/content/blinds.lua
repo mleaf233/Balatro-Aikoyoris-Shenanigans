@@ -832,7 +832,7 @@ SMODS.Blind{
         return true
     end,
     calculate = function (self, blind, context)
-        if context.modify_scoring_hand then
+        if context.modify_scoring_hand and not blind.disabled then
             local index = AKYRS.find_index(context.full_hand, context.other_card)
             if index and index == 1 or index == #context.full_hand then
                 return {
@@ -860,7 +860,7 @@ SMODS.Blind{
         return true
     end,
     calculate = function (self, blind, context)
-        if context.before then
+        if context.before and not blind.disabled then
             for i = 1, #G.play.cards do
                 if i == 1 or i ==  #G.play.cards then
                     G.play.cards[i]:set_debuff(true)

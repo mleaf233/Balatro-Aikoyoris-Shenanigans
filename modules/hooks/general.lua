@@ -985,8 +985,8 @@ Obviously this is not a real crash LMAO don't bother reporting.
             end
         end
         if all_wildcards then
-            if AKYRS.example_words[#aiko_current_word_split] then
-                G.GAME.aiko_current_word = string.lower(AKYRS.example_words[#aiko_current_word_split])
+            if AKYRS.example_words[#aiko_current_word_split - 2] then
+                G.GAME.aiko_current_word = string.lower(AKYRS.example_words[#aiko_current_word_split - 2])
                 wordData.valid = true
                 wordData.word = G.GAME.aiko_current_word
             end
