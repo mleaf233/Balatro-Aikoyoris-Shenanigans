@@ -397,4 +397,11 @@ if SMODS.DynaTextEffect then
             letter.offset.y = math.cos((G.TIMERS.REAL * 534.15 + index * 14511.415) * 7.95) * 5
         end
     }
+    SMODS.DynaTextEffect {
+        key = "exponent",
+        func = function (dynatext, index, letter)
+            letter.offset.y = 20
+            letter.offset.x = 20
+        end
+    }
 end

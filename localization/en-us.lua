@@ -2352,6 +2352,39 @@ return {
                     "{C:attention}undebuffs{} this card if it was debuffed",
                 },
             },
+            akyrs_neon_seal={
+                name="Neon Seal",
+                text={
+                    "Create an {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} Card",
+                    "per number of cards with {C:attention}Neon Seal{}",
+                    "held or played, {C:attention}whichever is lower{}",
+                    "{C:inactive}(Must have room)",
+                },
+            },
+            akyrs_twin_seal={
+                name="Twin Seal",
+                text={
+                    "Copies a {C:attention}random{} Joker's",
+                    "{C:attention}main{} ability when scored",
+                    "{C:inactive}(Will not copy per-card ability){}",
+                },
+            },
+            akyrs_fault_seal={
+                name="Fault Seal",
+                text={
+                    "{C:green}Base 1 in x{C:green,E:akyrs_exponent,s:0.7}2{C:green}chance{} to retrigger {C:attention}x{} times",
+                    "where {C:attention}x{} is the number of cards played",
+                    "if all cards in played hand has {C:attention}Fault Seal{}",
+                    "{C:inactive}(Currently {C:green}#1# in #2#{C:inactive} -> {C:attention}#3# {C:inactive}times)",
+                },
+            },
+            akyrs_deformed_seal={
+                name="Deformed Seal",
+                text={
+                    "Create a {C:attention}Self-Destructive{} copy of this card",
+                    "and add it to {C:attention}played hand{} when played",
+                },
+            },
             akyrs_chip_mult_xchip_xmult={
                 name="Gives",
                 text={
@@ -3534,7 +3567,11 @@ return {
             akyrs_latticed="Latticed",
             akyrs_sus="Sus",
             akyrs_sale="90% Sale",
-            akyrs_carmine_seal="Carmine",
+            akyrs_carmine_seal="Carmine Seal",
+            akyrs_neon_seal="Neon Seal",
+            akyrs_twin_seal="Twin Seal",
+            akyrs_fault_seal="Fault Seal",
+            akyrs_deformed_seal="Deformed Seal",
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",
             akyrs_sliced = "Sliced",

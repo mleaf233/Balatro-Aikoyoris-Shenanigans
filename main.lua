@@ -53,6 +53,7 @@ end
 assert(SMODS.load_file("./modules/content/planets.lua"))()
 assert(SMODS.load_file("./modules/content/constellation.lua"))()
 assert(SMODS.load_file("./modules/content/boosters.lua"))()
+assert(SMODS.load_file("./modules/content/seals.lua"))()
 assert(SMODS.load_file("./modules/content/stickers.lua"))()
 assert(SMODS.load_file("./modules/content/blinds.lua"))()
 assert(SMODS.load_file("./modules/content/stakes.lua"))()

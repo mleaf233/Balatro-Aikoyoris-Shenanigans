@@ -4009,7 +4009,7 @@ SMODS.Joker {
                 chips = card.ability.extras.chips
             }
         end
-        if context.buying_card and context.card and context.card.ability and context.card.ability.set == "Joker" then
+        if context.buying_card and context.card and context.card.ability and context.card.ability.set == "Joker" and not context.blueprint then
             return {
                 func = function ()
                     SMODS.scale_card(card,{
@@ -4033,6 +4033,7 @@ SMODS.Joker {
             }
         end
     end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
@@ -4104,26 +4105,28 @@ SMODS.Joker {
                         scalar_value = "reduce",
                         scaling_message = { message = localize("k_akyrs_downgrade_ex") },
                     })
-                    if card.ability.extras.xc <= 1 then
-                        card.pinch.x = true
-                        SMODS.calculate_effect(
-                            { message = localize("k_akyrs_ate_up")},
-                            card
-                        )
-                        AKYRS.simple_event_add(function ()
+
+                    AKYRS.simple_event_add(function ()
+                        if card.ability.extras.xc <= 1 then
+                            card.pinch.x = true
+                            SMODS.calculate_effect(
+                                { message = localize("k_akyrs_ate_up")},
+                                card
+                            )
                             card:remove()
-                            return true
-                        end, 0.5)
-                    end
+                        end
+                        return true
+                    end, 0.5)
                 end
             }
         end
-        if context.joker_main then
+        if context.joker_main and not context.blueprint then
             return {
                 xchips = card.ability.extras.xc
             }
         end
     end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
@@ -4158,4 +4161,5 @@ SMODS.Joker {
             }
         end
     end,
+    blueprint_compat = true,
 }
