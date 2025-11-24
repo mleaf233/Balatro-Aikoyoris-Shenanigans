@@ -3811,7 +3811,7 @@ SMODS.Joker {
     cost = 6,
     config = {
         extras = {
-            scaleth = 4,
+            scaleth = 2,
         }
     },
     calculate = function (self, card, context)
