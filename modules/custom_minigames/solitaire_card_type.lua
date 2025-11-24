@@ -66,18 +66,6 @@ function SolitaireCard:stop_drag()
         AKYRS.draw_card(self.area, area, 1, 'up', nil, self ,0)
         area:align_cards()
         self.area:align_cards()
-        if area.akyrs_sol_emplace_func == AKYRS.SOL.foundation_check then
-            local win = true
-            for _,ca in ipairs(AKYRS.SOL.cardAreas.foundations) do
-                if not (#ca.cards == 13) then
-                    win = false 
-                    break
-                end
-            end
-            if win then
-                check_for_unlock({type = "akyrs_win_solitaire"})
-            end
-        end
     end
     if area then
         area:align_cards()
@@ -90,10 +78,27 @@ function SolitaireCard:stop_drag()
             if self.area then 
                 self.area.is_something_being_held = false
             end
+            
             self.states.drag.can = true
             self.states.click.can = true
+            
+            if area.config.akyrs_sol_emplace_func == AKYRS.SOL.foundation_check then
+                --print("checking for win because card is placed in foundation...")
+                local win = true
+                for _,ca in ipairs(AKYRS.SOL.cardAreas.foundations) do
+                    if not (#ca.cards == 13) then
+                        --print("found cardarea with "..#ca.cards.." less than 13 cards! no win!")
+                        win = false 
+                        break
+                    end
+                end
+                if win then
+                    --print("win!")
+                    check_for_unlock({type = "akyrs_win_solitaire"})
+                end
+            end
             return true
-        end,0
+        end,0, "akyrs_desc"
     )
     return c
 end

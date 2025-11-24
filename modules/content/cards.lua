@@ -215,6 +215,7 @@ SMODS.Enhancement{
                             if AKYRS.has_room(G.consumeables) then
                                 SMODS.add_card{set = "Consumeables", area = G.consumeables}
                             end
+                            card.ability.akyrs_triggered = true
                             return true
                         end, 0
                     )

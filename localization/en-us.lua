@@ -3280,6 +3280,7 @@ return {
             ach_akyrs_repeater_into_another_one = "Repeater Locking",
             ach_akyrs_happy_ghast_grown = "Uneasy Alliance",
             ach_akyrs_both_pickaxe = "Dual Wielding",
+            ach_akyrs_win_klondike = "Back to Basics",
             ach_akyrs_spell_very_long_word = "Supercalifragilisticexpialidociousing my antidisestablishmentarianism",
             ach_akyrs_spell_long_word = "Long Live The New Fresh",
             ach_akyrs_we_no_speak_americano = "We No Speak Americano",

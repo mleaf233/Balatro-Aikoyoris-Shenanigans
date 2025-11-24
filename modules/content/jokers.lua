@@ -1436,6 +1436,7 @@ SMODS.Joker{
         end
     end,
     demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 
@@ -1594,6 +1595,7 @@ SMODS.Joker{
     end,
     blueprint_compat = true,
     demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 SMODS.Joker{
@@ -1657,6 +1659,7 @@ SMODS.Joker{
     end,
     blueprint_compat = true,
     demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 -- happy ghast family
@@ -2123,7 +2126,8 @@ SMODS.Joker {
                 end
             end
         end
-    end
+    end,
+    hpot_unbreedable = true,
 }
 
 local toga_tags = {"tag_toga_togajokerbooster","tag_toga_togajokerziparchive","tag_toga_togarararchive","tag_toga_togacardcabarchive","tag_toga_togaxcopydnaarchive",}
@@ -2149,6 +2153,7 @@ SMODS.Joker {
             }
         }
     },
+    hpot_unbreedable = true,
     set_ability = function (self, card, initial, delay_sprites)
         ---@type Card
         card = card
@@ -3477,6 +3482,7 @@ SMODS.Joker{
     end,
     blueprint_compat = true,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 SMODS.Joker{
@@ -3561,6 +3567,7 @@ SMODS.Joker{
         end
     end,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 
@@ -3618,6 +3625,7 @@ SMODS.Joker{
         end
     end,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 SMODS.Joker {
@@ -3761,7 +3769,8 @@ SMODS.Joker {
                 func = function ()
                     AKYRS.simple_event_add(
                         function ()
-                            card.sell_cost = card.sell_cost + card.ability.extras.addth
+                            card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra
+                            card:set_cost()
                             return true
                         end
                     )
@@ -3771,6 +3780,7 @@ SMODS.Joker {
     end,
     blueprint_compat = true,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 
@@ -3821,6 +3831,7 @@ SMODS.Joker {
     end,
     blueprint_compat = true,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 
@@ -3852,6 +3863,7 @@ SMODS.Joker {
     calculate = function (self, card, context)
         
     end,
+    hpot_unbreedable = true,
 }
 
 
@@ -3882,7 +3894,8 @@ SMODS.Joker {
                 return {
                     message = localize("k_akyrs_value_up"),
                     func = function()
-                        card.sell_cost = card.sell_cost + card.ability.extra
+                        card.ability.extra_value = card.ability.extra_value + card.ability.extra
+                        card:set_cost()
                     end
                 } 
             end
@@ -3890,6 +3903,7 @@ SMODS.Joker {
     end,
     blueprint_compat = false,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 
@@ -3927,6 +3941,7 @@ SMODS.Joker {
     end,
     blueprint_compat = true,
 	demicoloncompat = true,
+    hpot_unbreedable = true,
 }
 
 SMODS.Joker {
