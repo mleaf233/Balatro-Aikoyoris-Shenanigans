@@ -3769,7 +3769,7 @@ SMODS.Joker {
                 func = function ()
                     AKYRS.simple_event_add(
                         function ()
-                            card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extra
+                            card.ability.extra_value = (card.ability.extra_value or 0) + card.ability.extras.addth
                             card:set_cost()
                             return true
                         end
