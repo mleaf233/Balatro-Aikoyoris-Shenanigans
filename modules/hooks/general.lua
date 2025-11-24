@@ -1177,10 +1177,38 @@ function Card:set_ability(c,i,d)
     return r
 end
 
+function AKYRS.change_base_set_card(self)
+    if G.GAME.akyrs_any_drag or G.GAME.akyrs_ultimate_freedom then
+        AKYRS.simple_event_add(
+            function ()
+                if self and not (self.config.center.set == "Enhanced" or self.config.center.set == "Default") then
+                    local card = pseudorandom_element(G.P_CARDS,pseudoseed("akyrsmodcard"))
+                    self:set_base(card)
+                    --print(self.base)
+                    --print("TS IS SO ASS" ,suit.key,rank.key)
+                    --print(self.base)
+                    --[[
+                        if self.ability.set == "Voucher" then
+                            self:set_base(AKYRS.construct_case_base("akyrs_voucher","akyrs_non_playing"), true)
+                        elseif self.ability.set == "Booster" then
+                            self:set_base(AKYRS.construct_case_base("akyrs_booster","akyrs_non_playing"), true)
+                        elseif self.ability.consumeable then
+                            self:set_base(AKYRS.construct_case_base("akyrs_consumable","akyrs_non_playing"), true)
+                        elseif self.ability.set == "Joker" then
+                            self:set_base(AKYRS.construct_case_base("akyrs_joker","akyrs_non_playing"), true)
+                        else
+                            self:set_base(AKYRS.construct_case_base("akyrs_thing","akyrs_non_playing"), true)
+                        end
+                    ]]
+                end
+                return true
+            end, 0, "akyrs_misc")
+    end
+end
 
 local cardBaseHooker = Card.set_base
-function Card:set_base(card, initial)
-    local ret = cardBaseHooker(self, card, initial)
+function Card:set_base(card, initial, manual_sprites)
+    local ret = cardBaseHooker(self, card, initial, manual_sprites)
     self.aiko_draw_delay = math.random() * 1.75 + 0.25
     self.akyrs_impostor_card = false
     if self.base.name and not self.ability.aikoyori_letters_stickers then
@@ -1195,6 +1223,7 @@ function Card:set_base(card, initial)
             self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
         end
     end
+    
     return ret
 end
 local cardInitHook = Card.init
@@ -1229,29 +1258,6 @@ AKYRS.do_not_misprint = {
 }
 
 function Card:akyrs_mod_card_value_init(center, initial, delay)
-    if G.GAME.akyrs_any_drag or G.GAME.akyrs_ultimate_freedom then
-        if self and self.ability.set ~= "Default" and self.ability.set ~= "Enhanced" then
-            local rank = pseudorandom_element(SMODS.Ranks,pseudoseed("akyrsmodcard"))
-            local suit = pseudorandom_element(SMODS.Suits,pseudoseed("akyrsmodcard2"))
-            self.is_null = true
-            pcall(SMODS.change_base,self,suit.key,rank.key)
-            --print("TS IS SO ASS" ,suit.key,rank.key)
-            --print(self.base)
-            --[[
-                if self.ability.set == "Voucher" then
-                    self:set_base(AKYRS.construct_case_base("akyrs_voucher","akyrs_non_playing"), true)
-                elseif self.ability.set == "Booster" then
-                    self:set_base(AKYRS.construct_case_base("akyrs_booster","akyrs_non_playing"), true)
-                elseif self.ability.consumeable then
-                    self:set_base(AKYRS.construct_case_base("akyrs_consumable","akyrs_non_playing"), true)
-                elseif self.ability.set == "Joker" then
-                    self:set_base(AKYRS.construct_case_base("akyrs_joker","akyrs_non_playing"), true)
-                else
-                    self:set_base(AKYRS.construct_case_base("akyrs_thing","akyrs_non_playing"), true)
-                end
-            ]]
-        end
-    end
     
     if G.GAME.modifiers.akyrs_misprint and not (self.ability or {}).misprinted and center and not AKYRS.do_not_misprint[center.key] then
         --local x = self.ability

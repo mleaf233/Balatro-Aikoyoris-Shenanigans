@@ -4073,7 +4073,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "nutrient",
     atlas = 'AikoyoriJokers',
-    pos = { x = 7, y = 6 },
+    pos = { x = 8, y = 6 },
     pools = { Food = true },
     config = {
         extras = {
@@ -4129,7 +4129,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "shine_bright_like_a_diamond",
     atlas = 'AikoyoriJokers',
-    pos = { x = 8, y = 6 },
+    pos = { x = 9, y = 6 },
     pools = {  },
     config = {
         extras = {

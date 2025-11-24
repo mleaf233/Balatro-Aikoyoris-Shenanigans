@@ -153,3 +153,16 @@ AKYRS.mod_playing_cards(self)
 overwrite = true
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = "    self:set_base(card, true)"
+position = "after"
+payload = """
+AKYRS.change_base_set_card(self)
+"""
+overwrite = true
+match_indent = true
+
