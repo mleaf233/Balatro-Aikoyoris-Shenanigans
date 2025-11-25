@@ -6,9 +6,7 @@ SMODS.Seal{
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
 
     calculate = function(self, card, context)
-        if context.cardarea == G.hand and context.before and G.GAME.current_round.hands_played == 0 then
-            card:set_debuff(false)
-        end
+
     end,
 }
 

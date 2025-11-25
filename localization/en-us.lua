@@ -1813,9 +1813,8 @@ return {
                 text = { 
                     "If played hand contains a {C:attention}Flush",
                     "and at least one of them is {C:attention}Wild Card",
-                    "This joker gains {X:chips,C:white} X#1# {} Chips",
-                    "when a {C:attention}Wild Cards{} is scored",
-                    "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} Chips)",
+                    "Increase the Rank of all played",
+                    "{C:attention}Wild Cards{} by 1",
                 }
             },
             j_akyrs_brushing_clothes_pattern_absurd = {
@@ -2348,8 +2347,8 @@ return {
             akyrs_carmine_seal={
                 name="Carmine Seal",
                 text={
-                    "When played on {C:attention}first hand{}",
-                    "{C:attention}undebuffs{} this card if it was debuffed",
+                    "Always undebuffed",
+                    "on {C:attention}first hand{} of the round",
                 },
             },
             akyrs_neon_seal={

@@ -708,9 +708,9 @@ AKYRS.aiko_click = function (self)
         function ()
             self.akyrs_clicked_cnt = (self.akyrs_clicked_cnt or -1) + 1
             self:juice_up(self.akyrs_clicked_cnt * 0.1, self.akyrs_clicked_cnt*0.1)
-            local pitch = AKYRS.shift_semitone(0.76, AKYRS.semitones_from_tone_table(AKYRS.NOTE_MAJOR,self.akyrs_clicked_cnt))
+            local pitch = AKYRS.shift_semitone(1, AKYRS.semitones_from_tone_table(AKYRS.NOTE_MAJOR,self.akyrs_clicked_cnt))
             play_sound('generic1', pitch)
-            play_sound('gong', pitch)
+            play_sound('akyrs_piano', pitch)
             if self.akyrs_clicked_cnt >= 7 then
                 G.SETTINGS.paused = true
                 self.akyrs_clicked_cnt = -1

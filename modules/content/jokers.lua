@@ -3109,12 +3109,11 @@ SMODS.Joker{
     pos = {
         x = 8, y = 4
     },
-    rarity = 3,
-    cost = 8,
+    rarity = 2,
+    cost = 6,
     config = {
         extras = {
-            xchips = 1,
-            xchips_gain = 0.2,
+            xchips = 2,
             xchips_absurd = 1,
             xchips_gain_absurd = 2,
         }
@@ -3131,7 +3130,6 @@ SMODS.Joker{
         end
         return {
             vars = {
-                card.ability.extras.xchips_gain,
                 card.ability.extras.xchips,
             }
         }
@@ -3144,16 +3142,30 @@ SMODS.Joker{
                     func = function ()
                         if AKYRS.bal("absurd") then
                             SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips", scalar_value = "xchips_gain"})
-                        else
-                            SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xchips_absurd", scalar_value = "xchips_gain_absurd"})
                         end
                     end
                 }
             end
         end
-        if context.joker_main then                
+        if AKYRS.bal("adequate") and context.press_play then
+            local cardsers = G.hand.highlighted
+            local text,disp_text,poker_hands,scoring_hand,non_loc_disp_text = G.FUNCS.get_poker_hand_info(cardsers)
+            if next(poker_hands["Flush"]) then
+                return {
+                    func = function()
+                        local filtered = AKYRS.filter_table(cardsers, function (cr)
+                            return cr.config and cr.config.center_key == "m_wild"
+                        end, true, true)
+                        AKYRS.do_things_to_card(filtered, function (card, index)
+                            SMODS.modify_rank(card, 1)
+                        end, {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true, dont_unhighlight = true})
+                    end
+                }
+            end
+        end
+        if context.joker_main then
             return {
-                xchips = AKYRS.bal_val(card.ability.extras.xchips,card.ability.extras.xchips)
+                xchips = AKYRS.bal_val(nil,card.ability.extras.xchips)
             }
         end
     end,

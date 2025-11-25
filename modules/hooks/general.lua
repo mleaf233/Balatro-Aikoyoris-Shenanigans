@@ -162,7 +162,15 @@ function Card:update(dt)
         self.children.center.pinch.y = false
         self.ability.perishable = false
     end
-    
+    if self.seal == "akyrs_carmine" and G.STATE ~= G.STATES.HAND_PLAYED then
+        if self.debuffed_by_blind then
+            if G.GAME.current_round.hands_played == 0 then
+                self.debuff = false
+            else
+                self.debuff = true
+            end
+        end
+    end
     if self.config.center_key == "j_akyrs_emerald" and self.sell_cost ~= self.cost * self.ability.extras.xcost then
         local emerald = SMODS.find_card("j_akyrs_emerald")
         self.ability.extras.amnt = #emerald
@@ -1320,6 +1328,7 @@ function Card:save()
     c.akyrs_old_ability = self.akyrs_old_ability
     c.akyrs_upgrade_sliced = self.akyrs_upgrade_sliced
     c.akyrs_impostor_card = self.akyrs_impostor_card
+    c.debuffed_by_blind = self.debuffed_by_blind
     return c
 end
 
@@ -1331,6 +1340,7 @@ function Card:load(cardTable, other_card)
     self.akyrs_old_ability = cardTable.akyrs_old_ability
     self.akyrs_upgrade_sliced = cardTable.akyrs_upgrade_sliced
     self.akyrs_impostor_card = cardTable.akyrs_impostor_card
+    self.debuffed_by_blind = cardTable.debuffed_by_blind
     
     _c = self.config.center
 
