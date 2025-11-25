@@ -126,7 +126,9 @@ SMODS.Seal{
     pos = {x = 8, y = 1},
     badge_colour = HEX('c76d71'),
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
-
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { set = "Other", key = "akyrs_self_destructs"}
+    end,
     calculate = function(self, card, context)
         if context.press_play and card.area == G.hand and AKYRS.find_index(G.hand.highlighted, card) then
             return {
