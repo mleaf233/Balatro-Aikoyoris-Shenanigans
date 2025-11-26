@@ -4,9 +4,9 @@ if Entropy then
         func = function (hand)
             if AKYRS.should_calculate_word() then
                 local normal_calculate = false
-                local s = AKYRS.word_hand_combine(hand, #hand)
+                local s = AKYRS.word_hand_combine(hand)
                 if #s == 0 then normal_calculate = true end
-                local hand_return, word_data = AKYRS.word_hand_search(s, hand, #hand)
+                local hand_return, word_data = AKYRS.word_hand_search(s, hand, #s)
                 if #hand_return == 0 then
                     normal_calculate = true
                 end

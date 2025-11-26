@@ -104,12 +104,12 @@ AKYRS.WORD_CHECKED = {
 }
 
 function AKYRS.word_hand_combine(hand_in, length)
-    if ((not G.GAME.akyrs_character_stickers_enabled) or (not G.GAME.akyrs_wording_enabled)) and not AKYRS.word_blind() then 
+    if not (((G.GAME.akyrs_character_stickers_enabled) or (G.GAME.akyrs_wording_enabled)) or AKYRS.word_blind()) then 
     return {} end
     local word_hand = {}
     local hand = AKYRS.shallow_indexed_table_copy(hand_in)
     table.sort(hand, AKYRS.hand_sort_function)
-    for _, v in pairs(hand) do
+    for _, v in ipairs(hand) do
         if not v.ability or not v.ability.aikoyori_letters_stickers then return {} end
         local alpha = v.ability.aikoyori_letters_stickers:lower()
         if alpha == "#" and v.ability.aikoyori_pretend_letter then
@@ -122,7 +122,7 @@ function AKYRS.word_hand_combine(hand_in, length)
             table.insert(word_hand, ltr)
         end 
     end
-    if #word_hand ~= length then
+    if #word_hand ~= (length or #word_hand) then
         return {}
     end
     return word_hand
@@ -142,7 +142,7 @@ function AKYRS.word_hand_search(word_hand, hand, length)
         if AKYRS.example_words[length-2] then
             G.GAME.aiko_current_word = string.lower(AKYRS.example_words[length-2])
         end
-        return { hand }
+        return { hand }, { valid = true, word = string.lower(AKYRS.example_words[length-2]) }
     end
     local wordData = {}
     --print("CHECK TIME! FOR '"..word_hand_str.."' IS THE WORD")
@@ -157,9 +157,9 @@ function AKYRS.word_hand_search(word_hand, hand, length)
     if wordData.valid then
         G.GAME.aiko_current_word = wordData.word
         local aiko_current_word_split = {}
-        return {hand}, word_data
+        return {hand}, wordData
     else 
-        return {}, word_data
+        return {}, wordData
     end
 end
 

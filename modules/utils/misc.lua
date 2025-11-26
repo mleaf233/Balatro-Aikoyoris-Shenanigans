@@ -733,7 +733,7 @@ end
 
 function AKYRS.filter_table(tbl, predicate, ordered_in, ordered_out) 
     if not tbl or not predicate then return {} end
-    if #tbl == 0 then return {} end
+    if #tbl == 0 and ordered_in then return {} end
     local table_out = {}
     if ordered_in then
         for k,v in ipairs(tbl) do
@@ -1432,4 +1432,10 @@ function AKYRS.semitones_from_tone_table(tone_table, tone)
         tone = math.fmod(tone,#tone_table)
     end
     return tone_table[tone + 1] + octaves * 12
+end
+
+function AKYRS.start_blind_arbitrarily(key)
+    G.GAME.blind_on_deck = "akyrs_Solo"
+    G.GAME.round_resets.blind_choices.akyrs_Solo = key
+    G.FUNCS.select_blind({config = { ref_table = G.P_BLINDS[key] }, UIBox = {get_UIE_by_ID = function(...) end}})
 end

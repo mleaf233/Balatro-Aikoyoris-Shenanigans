@@ -50,3 +50,16 @@ pattern = """            if G.GAME.round_resets.ante == G.GAME.win_ante and G.GA
 position = "at"
 payload = """            if G.GAME.round_resets.ante == G.GAME.win_ante and G.GAME.blind_on_deck == 'Boss' then"""
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """            else
+                G.GAME.round_resets.blind_states.Boss = 'Current'
+                blhash = 'L'"""
+position = "before"
+payload = """elseif G.GAME.blind_on_deck == "akyrs_Solo" then
+    G.GAME.round_resets.blind_states.akyrs_Solo = 'Current'
+    --G.GAME.current_boss_streak = 0
+    blhash = 'akyrs_Solo'"""
+match_indent = true

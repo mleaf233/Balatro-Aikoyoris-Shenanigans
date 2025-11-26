@@ -169,6 +169,27 @@ SMODS.Sticker{
         card.ability[self.key] = val
     end,
     calculate = function (self, card, context)
+        if context.debuff_hand then
+            local contains_attention = false
+            for _,_c in ipairs(context.full_hand) do
+                if _c.ability.akyrs_attention then
+                    contains_attention = true
+                end
+            end
+            if not contains_attention then
+                return {
+                    debuff = true,
+                    debuff_text = localize("k_akyrs_must_pay_attention"),
+                    func = function ()
+                        AKYRS.simple_event_add(
+                            function()
+                                card:juice_up(0.2,0.2)
+                            return true
+                        end, 0)
+                    end
+                }
+            end
+        end
         if context.destroy_card and context.cardarea == G.play then
             if card == context.destroy_card then
                 return {
@@ -230,8 +251,13 @@ SMODS.Sticker{
             return {
                 debuff = true,
                 debuff_text = localize("k_akyrs_crystalised_warning"),
-                juice_card = G.GAME.blind,
-                no_juice = true,
+                function ()
+                    AKYRS.simple_event_add(
+                        function()
+                            card:juice_up(0.2,0.2)
+                        return true
+                    end, 0)
+                end
             }
         end
         if context.after and (context.cardarea == G.play or context.cardarea == 'unscored') then
@@ -240,6 +266,7 @@ SMODS.Sticker{
                     AKYRS.simple_event_add(
                         function ()
                             self:apply(card, false)
+                            AKYRS.juice_like_tarot(card)
                             return true
                         end
                     )

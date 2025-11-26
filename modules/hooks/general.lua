@@ -52,6 +52,8 @@ function Game:init_game_object()
     ret.akyrs_umbral_atmosphere_score_inc = 100
     ret.akyrs_umbral_atmosphere_uses = 0
     ret.akyrs_umbral_intrusive_usage_set = -4
+    ret.round_resets.blind_choices.akyrs_Solo = ""
+    ret.round_resets.blind_states.akyrs_Solo = "Upcoming"
 
     -- this one prevents crashes
     ret.modifiers.scaling = ret.modifiers.scaling or 1
@@ -524,6 +526,12 @@ function end_round()
     else
         local ret = endRoundHook()
         G.AKYRS_ACTIVATED_END_ROUND = true
+        if G.GAME.akyrs_sfc_used then
+            ease_ante(G.GAME.akyrs_sfc_used)
+            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante + G.GAME.akyrs_sfc_used
+        end
+        G.GAME.akyrs_sfc_used = nil
         for _, cardarea in ipairs(G.I.CARDAREA) do
             if cardarea and cardarea.cards then
                 for i, card in ipairs(cardarea.cards) do

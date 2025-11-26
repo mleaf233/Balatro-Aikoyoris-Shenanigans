@@ -641,6 +641,19 @@ G.E_MANAGER:add_event(Event({
     }))
 end
 
+AKYRS.draw_cards_back_to_hand = function(cards, to)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+            local cx = #cards
+            for i=1, cx do --draw cards from deck
+                draw_card(cards[cx], to, i*100/cx,'up', nil ,nil, 0.005, i%2==0, nil, math.max((21-i)/20,0.7))
+            end
+            return true
+        end
+        }))
+end
+
 AKYRS.create_hover_tooltip = function(args)
     args = args or {}
     return {

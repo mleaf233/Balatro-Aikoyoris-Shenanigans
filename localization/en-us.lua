@@ -2307,7 +2307,8 @@ return {
                 name="Attention",
                 text={
                     "{C:red}Cannot be discarded{}",
-                    "{C:blue}Must be played{}",
+                    "{C:attention}Must be played{}",
+                    "{C:red}Self-destructs{} after played",
                 },
             },
             akyrs_concealed={
@@ -2842,6 +2843,7 @@ return {
                 name = "Steam Stake",
                 text = {
                     "Many cards in the shop have {C:red}Sale{} Sticker",
+                    "(Lose {C:money}$0.5{} at end of round)",
                     "{s:0.8}Applies Aluminium Stake",
                 }
             },
@@ -3269,6 +3271,7 @@ return {
                     "Up to {C:attention}#1#{} cards are allowed be selected",
                     "to make #2# duplicates which {C:attention}differentiates",
                     "itself from the original by {C:attention}rank and suit{}",
+                    "{C:purple}Crystalised{} sticker is then applied to created copies",
                 }
             },
             c_akyrs_replicant_steganography = {
@@ -3290,18 +3293,19 @@ return {
             c_akyrs_replicant_short_form_content = {
                 name = "Short Form Content",
                 text = {
-                    "{C:attention}Rids{} the {C:attention}next{}",
-                    "Small and Big Blinds",
-                    "{C:attention}#1#{} Ante when Boss Blind is {C:attention}defeated",
+                    "Initiate a fight with random {C:attention}Finisher Blind {}immediately{}",
+                    "{C:attention}#1#{} Ante when it is {C:attention}defeated",
+                    "{C:inactive}(Must be used while selecting blind)",
                 }
             },
             c_akyrs_replicant_smart_home = {
                 name = "Smart Home",
                 text = {
-                    "Select a Poker Hand",
-                    "to {C:attention}upgrade {}#1# times",
-                    "then {C:purple}Crystalised{} stickers",
+                    "Poker Hand shall be selected",
+                    "to be {C:attention}upgraded {}#1# times",
+                    "then {C:attention}Attention{} stickers",
                     "are applied to selected cards",
+                    "{C:inactive}(Selecting {C:attention}#1#{C:inactive})",
                 }
             },
         }
@@ -3376,7 +3380,7 @@ return {
             ph_word_puzzle = "Word Puzzle",
             ph_aiko_defuse = "Get rid of",
             ph_aiko_bomb = "Word Bomb!",
-            k_akyrs_must_defuse = "Must have Attention Card in hand!",
+            k_akyrs_must_pay_attention = "Must have Attention Card in hand!",
             k_akyrs_must_contain_word = "Hand must contain word!",
             ph_puzzle_clear = "Puzzle Clear!",
             ph_akyrs_unknown = "???",

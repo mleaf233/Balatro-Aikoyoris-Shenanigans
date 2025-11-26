@@ -285,44 +285,24 @@ SMODS.Blind{
     calculate = function (self, blind, context)
         if context.debuff_hand then 
             
-            table.sort(context.full_hand, AKYRS.hand_sort_function)
-            local contains_attention = false
-            for _,_c in ipairs(context.full_hand) do
-                if _c.ability.akyrs_attention then
-                    contains_attention = true
-                end
-            end
-            if not contains_attention then
-                return {
-                    debuff = true,
-                    debuff_text = localize("k_akyrs_must_defuse"),
-                    func = function ()
-                        AKYRS.simple_event_add(
-                            function()
-                                if G.STATE == G.STATES.HAND_PLAYED then
-                                    G.FUNCS.akyrs_force_draw_from_discard_to_hand()
-                                else
-                            end
-                            return true
-                        end, 0)
-                    end
-
-                }
-            end
-            if not G.GAME.aiko_current_word then
+            local hand = context.full_hand
+            table.sort(hand, AKYRS.hand_sort_function)
+            local s = AKYRS.word_hand_combine(hand)
+            local hand_return, word_data = AKYRS.word_hand_search(s, hand, #s)
+            if not ((word_data or {}).valid) then
             return {
-                    debuff = true,
-                    debuff_text = localize("k_akyrs_must_contain_word"),
-                    func = function ()
-                        AKYRS.simple_event_add(
-                            function()
-                                if G.STATE == G.STATES.HAND_PLAYED then
-                                    G.FUNCS.akyrs_force_draw_from_discard_to_hand()
-                                else
-                            end
-                            return true
-                        end, 0)
-                    end
+                debuff = true,
+                debuff_text = localize("k_akyrs_must_contain_word"),
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function()
+                            if G.STATE == G.STATES.HAND_PLAYED then
+                                G.FUNCS.akyrs_force_draw_from_discard_to_hand()
+                            else
+                        end
+                        return true
+                    end, 0)
+                end
                 }
             end
             
