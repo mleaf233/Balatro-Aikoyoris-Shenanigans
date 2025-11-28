@@ -527,9 +527,14 @@ function end_round()
         local ret = endRoundHook()
         G.AKYRS_ACTIVATED_END_ROUND = true
         if G.GAME.akyrs_sfc_used then
-            ease_ante(G.GAME.akyrs_sfc_used)
-            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
-            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante + G.GAME.akyrs_sfc_used
+            if MP.GAME.lives then
+                ease_lives(G.GAME.akyrs_sfc_used)
+            else
+                ease_ante(G.GAME.akyrs_sfc_used)
+                G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+                G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante + G.GAME.akyrs_sfc_used
+            end
+
         end
         G.GAME.akyrs_sfc_used = nil
         for _, cardarea in ipairs(G.I.CARDAREA) do
