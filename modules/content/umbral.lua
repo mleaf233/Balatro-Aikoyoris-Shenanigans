@@ -1147,6 +1147,7 @@ SMODS.Consumable{
     hidden = true,
     soul_rate = 0.05,
     can_repeat_soul = true,
+    soul_set = 'Replicant'
     config = {
         extras = {
             mod = 1
