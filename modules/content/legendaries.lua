@@ -213,6 +213,15 @@ SMODS.Joker {
         if AKYRS.is_mod_loaded("GSPhanta") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_phanta_ability"}
         end
+        if AKYRS.is_mod_loaded("kino") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_kino_ability"}
+        end
+        if AKYRS.is_mod_loaded("Maximus") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_maximus_ability"}
+        end
+        if AKYRS.is_mod_loaded("Sagatro") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_sagatro_ability"}
+        end
         return {
         }
     end,
@@ -301,6 +310,11 @@ SMODS.Joker {
                     SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Myth", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end
             end
+            if AKYRS.is_mod_loaded("kino") then
+                if math.fmod(G.GAME.current_round.hands_played, 2) == 1 then
+                    SMODS.calculate_effect({ func = function() SMODS.add_card({set = "confection", area = G.consumeables, edition = "e_negative"}) end}, card)
+                end
+            end
         end 
         if AKYRS.is_mod_loaded("Astronomica") then
             if context.after then
@@ -330,6 +344,12 @@ SMODS.Joker {
         end
         if garb_enabled and context.selling_card and context.card.ability.set == "Joker" then
             SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Stamp", area = G.consumeables, edition = "e_negative"}) end}, card)
+        end
+        if AKYRS.is_mod_loaded("Maximus") and context.selling_card and context.card.ability.set == "Planet" then
+            SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Horoscope", edition = "e_negative"}) end}, card)
+        end
+        if AKYRS.is_mod_loaded("Sagatro") and context.selling_card and context.card.ability.set == "Tarot" then
+            SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Divinatio", edition = "e_negative"}) end}, card)
         end
         if context.individual and context.cardarea == G.play then
             if not context.other_card:is_face() then

@@ -675,6 +675,28 @@ return {
                     "{C:dark_edition}Negative{} {C:attention}Hanafuda{} card",
                 },
             },
+            dd_akyrs_kino_ability={
+                name="Balatro Goes Kino Ability",
+                text={
+                    "Create a {C:dark_edition}Negative{} {C:Confection}Confection{}",
+                    "when playing on {C:attention}odd{} number of {C:blue}hands",
+                    "{C:inactive}(Number before clicking play)",
+                },
+            },
+            dd_akyrs_maximus_ability={
+                name="Maximus Ability",
+                text={
+                    "When selling a {C:planet}Planet{} Card",
+                    "Create a {C:dark_edition}Negative{} {C:horoscope}Horoscope{}",
+                },
+            },
+            dd_akyrs_sagatro_ability={
+                name="Sagatro Ability",
+                text={
+                    "When selling a {C:tarot}Tarot{} Card",
+                    "Create a {C:dark_edition}Negative{} {C:sgt_divinatio}Divinatio{}",
+                },
+            },
             dd_akyrs_mukuroju_en = {
                 name = "Mukuroju no Hakamori",
                 text = { 
@@ -3196,7 +3218,7 @@ return {
                 name="Weeping Angel",
                 text=
                 {
-                    "{C:attention}Flips all cards{} in hand",
+                    "{C:attention}Flips all cards{} in current hand",
                     "{C:money}+$#1#{} per {C:attention}face down{} cards after flipping{}",
                 },
             },
