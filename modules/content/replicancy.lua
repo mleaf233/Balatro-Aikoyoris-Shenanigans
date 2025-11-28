@@ -167,9 +167,9 @@ SMODS.Consumable{
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
-                (MP and MP.GAME and card.ability.extras_mp or card.ability.extras),
+                (AKYRS.is_mp() and card.ability.extras_mp or card.ability.extras),
             },
-            key = self.key ..(MP and MP.GAME and "_mp" or "")
+            key = self.key ..(AKYRS.is_mp() and "_mp" or "")
         }
     end,
     can_use = function (self, card)
@@ -177,7 +177,7 @@ SMODS.Consumable{
     end,
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
-        G.GAME.akyrs_sfc_used = (MP and MP.GAME and card.ability.extras_mp or card.ability.extras)
+        G.GAME.akyrs_sfc_used = (AKYRS.is_mp() and card.ability.extras_mp or card.ability.extras)
         local blinds_candidate = AKYRS.filter_table(G.P_BLINDS, function (item)
             return item.boss and item.boss.showdown and (not item.in_pool or item:in_pool())
         end, false, true)

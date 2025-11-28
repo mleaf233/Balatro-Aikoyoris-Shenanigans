@@ -1873,18 +1873,36 @@ return {
             j_akyrs_you_tried = {
                 name = "You Tried",
                 text = { 
-                    "{C:attention}Prevents death",
+                    "{C:attention}Prevents death{} and",
                     "{C:red}Destroy all your Jokers",
                     "Halves your current Ante {C:inactive}(rounding up)",
                     "Sets money to {C:money}$#2#",
                     "then {E:akyrs_snaking,C:red}self-destructs",
                 }
             },
+            j_akyrs_you_tried_mp = {
+                name = "You Tried",
+                text = { 
+                    "When losing to {C:attention}non-PvP{} blinds",
+                    --"{C:red}Destroy all your Jokers",
+                    --"{C:attention}+#1#{} Life",
+                    "Gain {C:money}$#2#",
+                    "then {E:akyrs_snaking,C:red}self-destructs",
+                }
+            },
             j_akyrs_you_tried_absurd = {
                 name = "You Tried",
                 text = { 
-                    "{C:attention}Prevents death",
+                    "{C:attention}Prevents death{} and",
                     "Set Ante to {C:attention}#1#{}",
+                    "then {E:akyrs_snaking,C:red}self-destructs",
+                }
+            },
+            j_akyrs_you_tried_absurd_mp = {
+                name = "You Tried",
+                text = { 
+                    "{C:attention}Prevents death{} and",
+                    "Set Life to {C:attention}#1#{}",
                     "then {E:akyrs_snaking,C:red}self-destructs",
                 }
             },
@@ -3392,7 +3410,7 @@ return {
                 name = "Short Form Content",
                 text = {
                     "Initiate a fight with random {C:attention}Finisher Blind {}immediately{}",
-                    "{C:attention}#1#{} Life when it is {C:attention}defeated",
+                    "{C:attention}+#1#{} Life when it is {C:attention}defeated",
                     "{C:inactive}(Must be used while selecting blind)",
                 }
             },

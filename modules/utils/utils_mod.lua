@@ -775,3 +775,169 @@ end
 AKYRS.is_playing_card = function(cr)
     return cr.ability and (cr.ability.set == "Default" or cr.ability.set == "Enhanced")
 end
+
+
+AKYRS.is_mp = function()
+    if MP and MP.LOBBY.code or MP.LOBBY.ruleset_preview then return true end
+end
+
+AKYRS.mp_check = function(sp,mp)
+    if MP and MP.LOBBY.code or MP.LOBBY.ruleset_preview then return mp end
+    return sp
+end
+
+AKYRS.ease_lives_mp = function(lives)
+    if MP and MP and MP.LOBBY.code or MP.LOBBY.ruleset_preview then ease_lives(lives) MP.GAME.lives = MP.GAME.lives + lives end
+end
+
+function AKYRS.end_round_hook()
+    local x = G.playing_cards
+    if G.GAME.blind.debuff.akyrs_destroy_unplayed then
+        for i, card in ipairs(x) do
+            G.E_MANAGER:add_event(Event({
+                trigger = "after",
+                func = function()
+                    if not card.ability.akyrs_played_this_round and G.GAME.blind.debuff.akyrs_destroy_unplayed then
+                        card.area:remove_card(card)
+                        
+                        card:start_dissolve({ G.C.RED }, nil, 1.6)
+                        AKYRS.remove_value_from_table(G.playing_cards, card)
+                    end
+                    card.ability.akyrs_played_this_round = false
+                    return true
+                end,
+                delay = 0,
+            }), 'base')
+        end
+    else
+        for i, card in ipairs(x) do
+            card.ability.akyrs_played_this_round = false
+        end
+    end    
+    if #SMODS.find_card("j_akyrs_you_tried") > 0 and AKYRS.is_mp() and not MP.is_pvp_boss() then        
+        local card = SMODS.find_card("j_akyrs_you_tried")[1]
+        AKYRS.simple_event_add(function()
+            if card.ability.extras.last_life ~= MP.GAME.lives then
+                card:start_dissolve({G.C.YELLOW},1.6)
+                card.ability.extras.unset = false
+                if AKYRS.bal("adequate") then
+                    --AKYRS.ease_lives_mp(card.ability.extras.lives_mp)
+                    ease_dollars(card.ability.extras.lives_mp_set_money)
+                else
+                    AKYRS.ease_lives_mp(-G.GAME.round_resets.ante + card.ability.extras.lives_mp_set)
+                end
+            end
+            return true
+        end, 0)   
+    end
+    if G.GAME.akyrs_sfc_used then
+        if MP.GAME.lives then
+            ease_lives(G.GAME.akyrs_sfc_used)
+            MP.GAME.lives = MP.GAME.lives + 1
+        else
+            ease_ante(G.GAME.akyrs_sfc_used)
+            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante or G.GAME.round_resets.ante
+            G.GAME.round_resets.blind_ante = G.GAME.round_resets.blind_ante + G.GAME.akyrs_sfc_used
+        end
+
+    end
+    G.GAME.akyrs_sfc_used = nil
+    for _, cardarea in ipairs(G.I.CARDAREA) do
+        if cardarea and cardarea.cards then
+            for i, card in ipairs(cardarea.cards) do
+
+                if card.ability.akyrs_self_destructs then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card:start_dissolve({ G.C.BLACK }, nil, 1.6)
+                            AKYRS.remove_value_from_table(G.playing_cards,card)
+                            return true
+                        end,
+                        delay = 0.5,
+                    }), 'base')
+                end
+                if card.ability.akyrs_attention then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card:start_dissolve({ G.C.RED }, nil, 1.6)
+                            AKYRS.remove_value_from_table(G.playing_cards,card)
+                            return true
+                        end,
+                        delay = 0.5,
+                    }), 'base')
+                end
+                if card.ability.akyrs_sus then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            local ros = pseudorandom_element({"r","s"},"akyrs_sus_random")
+                            if ros == "r" then
+                                rank = pseudorandom_element(SMODS.Ranks,"akyrs_sus_r")
+                                SMODS.change_base(card, nil, rank.key)
+                            elseif ros == "s" then
+                                suit = pseudorandom_element(SMODS.Suits,"akyrs_sus_s")
+                                SMODS.change_base(card, suit.key, nil)
+                            end
+                            return true
+                        end,
+                        delay = 0.5,
+                    }), 'base')
+                end
+                if SMODS.get_enhancements(card)["m_akyrs_ash_card"] or card.config.center_key == "j_akyrs_ash_joker" then
+                    local odder = AKYRS.bal("absurd") or SMODS.pseudorandom_probability(card,"akyrs_ash_card",1,card.ability.extras.odds)
+                    if odder then
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                card:start_dissolve({ G.C.BLACK }, nil, 1.6)
+                                return true
+                            end,
+                            delay = 0.5,
+                        }), 'base')
+                    end
+
+                end
+                if SMODS.get_enhancements(card)["m_akyrs_item_box"] and card.ability.akyrs_triggered then
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            card:start_dissolve({ G.C.DARK_EDITION }, nil, 1.6)
+                            return true
+                        end,
+                        delay = 0.5,
+                    }), 'base')
+                end
+                if card.edition and card.edition.key == "e_akyrs_burnt" then
+                    local odder = SMODS.pseudorandom_probability(card,"akyrs_ash_card",1,card.edition.extras.odds)
+                    if odder then
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                local area = card.area
+                                if area == G.jokers or area == G.consumeables then
+                                    SMODS.add_card({ key = "j_akyrs_ash_joker"})
+                                    
+                                end
+                                if area == G.deck or area == G.hand or area == G.discard then
+                                    local c = SMODS.add_card({ key = "m_akyrs_ash_card" , area = G.deck})
+                                    G.deck.config.card_limit = G.deck.config.card_limit + 1
+                                    table.insert(G.playing_cards, c)
+                                end
+                                card:start_dissolve({ G.C.BLACK }, nil, 1.6)
+                                
+                                return true
+                            end,
+                            delay = 0.5,
+                        }), 'base')
+                    end
+                end
+                if card.ability.akyrs_triggered then
+                    card.ability.akyrs_triggered = nil
+                end
+            end
+        end
+    end
+end
+
+function AKYRS.end_round_event()
+    AKYRS.simple_event_add(function ()
+        AKYRS.end_round_hook()
+        return true
+    end, 0)
+end

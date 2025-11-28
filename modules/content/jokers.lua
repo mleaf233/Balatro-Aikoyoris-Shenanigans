@@ -2822,24 +2822,31 @@ SMODS.Joker{
         extras = {
             ante_set = 3,
             money_set = 4,
+            lives_mp = 1,
+            lives_mp_set = 4,
+            lives_mp_set_money = 31,
         }
     },
     loc_vars = function (self, info_queue, card)
         return {
-            key = self.key .. AKYRS.bal_val("","_absurd"),
+            key = self.key .. AKYRS.bal_val("","_absurd") .. AKYRS.mp_check("","_mp"),
             vars = {
-                card.ability.extras.ante_set,
-                card.ability.extras.money_set,
+                AKYRS.mp_check(card.ability.extras.ante_set, AKYRS.bal_val(card.ability.extras.lives_mp,card.ability.extras.lives_mp_set)),
+                AKYRS.mp_check(card.ability.extras.money_set,card.ability.extras.lives_mp_set_money),
             }
         }
     end,
     calculate = function (self, card, context)
-        if context.end_of_round and context.game_over and not context.blueprint then
+        if context.final_scoring_step and AKYRS.is_mp() then
+            card.ability.extras.last_life = MP.GAME.lives
+            card.ability.extras.unset = true
+        end
+        if context.end_of_round and context.game_over and not context.blueprint and not AKYRS.is_mp() then
             card:start_dissolve({G.C.YELLOW},1.6)
             return {
                 saved = localize("k_akyrs_you_tried"),
                 func = function ()
-                    if AKYRS.bal("adequate") then
+                    if AKYRS.bal("adequate") and not AKYRS.is_mp() then
                         for i,k in ipairs(G.jokers.cards) do
                             if not SMODS.is_eternal(k) then
                                 k:start_dissolve({G.C.YELLOW},1.6)
@@ -2849,7 +2856,6 @@ SMODS.Joker{
                     local old_ante = G.GAME.round_resets.ante
                     if AKYRS.bal("adequate") then
                         ease_ante((-math.floor(G.GAME.round_resets.ante/2)))
-                        ease_dollars(-G.GAME.dollars + card.ability.extras.money_set)
                     else
                         ease_ante(-G.GAME.round_resets.ante + card.ability.extras.ante_set)
                     end
