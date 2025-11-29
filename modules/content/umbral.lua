@@ -1060,16 +1060,19 @@ SMODS.Consumable{
         extras = {
             n = 1,
             d = 2,
+            mp_percent_of_req = 0.375,
         }
     },
     loc_vars = function (self, info_queue, card)
         local n, d = SMODS.get_probability_vars(card ,card.ability.extras.n, card.ability.extras.d, "akyrs_umbral_exit_plan" )
         return {
             vars = {
-                n, d
-            }
+                n, d, card.ability.extras.mp_percent_of_req * 100, get_blind_amount(G.GAME.round_resets.ante) * card.ability.extras.mp_percent_of_req
+            },
+            key = self.key .. AKYRS.mp_check("","_mp")
         }
     end,
+    select_card = 'consumeables',
     can_use = function (self, card)
         if G.GAME.blind and G.GAME.blind.in_blind then
             return true
@@ -1088,7 +1091,11 @@ SMODS.Consumable{
         if G.GAME.blind and G.GAME.blind.in_blind then
             local should = SMODS.pseudorandom_probability(card, "akyrs_umbral_exit_plan" ,card.ability.extras.n, card.ability.extras.d )
             if should then 
-                G.GAME.blind:disable()
+                if AKYRS.is_mp() then
+                    AKYRS.mod_score({ add = get_blind_amount(G.GAME.round_resets.ante) * card.ability.extras.mp_percent_of_req})
+                else
+                    G.GAME.blind:disable()
+                end
             else
                 -- nope
                 AKYRS.simple_event_add(function()

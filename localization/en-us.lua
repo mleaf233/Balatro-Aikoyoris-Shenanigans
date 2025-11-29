@@ -3347,13 +3347,22 @@ return {
                     "{C:attention}Droplet Cards{}",
                 },
             },
-            c_akyrs_umbral_exit_plan= {
+            c_akyrs_umbral_exit_plan = {
                 name="Exit Plan",
                 text=
                 {
                     "{C:green}#1# in #2#{} chance to",
                     "{C:attention}disable{} the blind's effect",
-                    "{C:inactive}(Use outside of blind to keep)",
+                },
+            },
+            c_akyrs_umbral_exit_plan_mp = {
+                name="Exit Plan",
+                text=
+                {
+                    "{C:green}#1# in #2#{} chance to",
+                    "Gain {C:purple}#3#%{} of current",
+                    "{C:attention}base blind size{} as {C:purple}score{}",
+                    "{C:inactive}(Currently {C:purple}+#4#{C:inactive} Score)",
                 },
             },
             c_akyrs_umbral_free_will = {
