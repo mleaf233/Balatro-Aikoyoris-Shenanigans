@@ -1060,7 +1060,7 @@ SMODS.Consumable{
         extras = {
             n = 1,
             d = 2,
-            mp_percent_of_req = 0.375,
+            mp_percent_of_req = 0.30,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -1093,6 +1093,16 @@ SMODS.Consumable{
             if should then 
                 if AKYRS.is_mp() then
                     AKYRS.mod_score({ add = get_blind_amount(G.GAME.round_resets.ante) * card.ability.extras.mp_percent_of_req})
+                    if true then
+                        AKYRS.simple_event_add(function ()
+                            if not AKYRS.is_mp() or not MP.is_pvp_boss() then
+                                AKYRS.force_check_win()
+                            else
+                                MP.ACTIONS.play_hand(G.GAME.chips, G.GAME.current_round.hands_left)
+                            end
+                            return true
+                        end,0)
+                    end
                 else
                     G.GAME.blind:disable()
                 end

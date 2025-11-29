@@ -540,7 +540,7 @@ AKYRS.force_check_win = function (config)
                     new_round = true
                 end
             end
-            if G.GAME.current_round.advanced_blind and G.GAME.aiko_puzzle_win or G.GAME.current_round.hands_left < 1 then
+            if G.GAME.current_round.advanced_blind and G.GAME.aiko_puzzle_win or AKYRS.compare(G.GAME.current_round.hands_left,"<",1) then
                 if G.GAME.aiko_puzzle_win or G.GAME.current_round.hands_left < 1 then
                     new_round = true
                 end
@@ -552,9 +552,20 @@ AKYRS.force_check_win = function (config)
             if new_round then
                 G.GAME.akyrs_win_checked = true
             end
-            if new_round and not config.no_winnage then
+            if new_round and config.traditional_win then
+                end_round()
+            elseif new_round and not config.no_winnage then
                 G.STATE = G.STATES.NEW_ROUND
                 G.STATE_COMPLETE = false
+                AKYRS.simple_event_add(function ()
+                    AKYRS.simple_event_add(function ()
+                            G.FUNCS.draw_from_hand_to_deck()
+                            G.FUNCS.draw_from_discard_to_deck()
+                            G.STATE = G.STATES.ROUND_EVAL
+                            return true
+                        end, 0)
+                    return true
+                end, 0)
             elseif not new_round then
                 G.STATE = config.state_to_go or G.STATES.SELECTING_HAND
                 if config.force_draw then
