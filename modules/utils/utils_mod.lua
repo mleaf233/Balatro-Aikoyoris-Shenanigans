@@ -842,7 +842,7 @@ function AKYRS.end_round_hook()
         end, 0)   
     end
     if G.GAME.akyrs_sfc_used then
-        if MP.GAME.lives then
+        if AKYRS.is_mp() then
             ease_lives(G.GAME.akyrs_sfc_used)
             MP.GAME.lives = MP.GAME.lives + 1
         else

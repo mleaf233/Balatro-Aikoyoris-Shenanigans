@@ -3410,7 +3410,7 @@ return {
             c_akyrs_replicant_short_form_content = {
                 name = "Short Form Content",
                 text = {
-                    "Initiate a fight with random {C:attention}Finisher Blind {}immediately{}",
+                    "Initiate a fight with random {C:attention}Showdown Blind {}immediately{}",
                     "{C:attention}#1#{} Ante when it is {C:attention}defeated",
                     "{C:inactive}(Must be used while selecting blind)",
                 }
@@ -3418,7 +3418,7 @@ return {
             c_akyrs_replicant_short_form_content_mp = {
                 name = "Short Form Content",
                 text = {
-                    "Initiate a fight with random {C:attention}Finisher Blind {}immediately{}",
+                    "Initiate a fight with random {C:attention}Showdown Blind {}immediately{}",
                     "{C:attention}+#1#{} Life when it is {C:attention}defeated",
                     "{C:inactive}(Must be used while selecting blind)",
                 }
