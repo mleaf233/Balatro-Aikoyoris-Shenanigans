@@ -133,3 +133,10 @@ SMODS.Achievement{
     unlock_condition = function (self, args)
     end
 }
+
+SMODS.Achievement{
+    key = "literally_cryptid",
+    bypass_all_unlocked = true,
+    unlock_condition = function (self, args)
+    end
+}

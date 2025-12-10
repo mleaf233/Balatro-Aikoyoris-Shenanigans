@@ -3631,6 +3631,8 @@ return {
             b_akyrs_normal_jokers = "Normal Jokers",
             b_akyrs_letter_jokers = "Letter Jokers",
             k_akyrs_ate_up = "Eaten Up!",
+            b_akyrs_words = "Words",
+            k_akyrs_check_word_check = "Check",
 
 
             k_akyrs_ryo_borrowed_money = "Borrowed Money...",
@@ -3671,6 +3673,10 @@ return {
 
             k_akyrs_type_in_letter = "Type in a letter",
             k_akyrs_letter_btn_currently = "Currently",
+            k_akyrs_word_check_init = "Type in word and Click Check!",
+            k_akyrs_word_tab_reduced_tip_1 = "Expecting a word but is not valid?",
+            k_akyrs_word_tab_reduced_tip_2 = "Try enabling Full Dictionary in the config!",
+            k_akyrs_word_tab_reduced_tip_3 = "(At a cost of some performance)",
             k_akyrs_letter_btn_unset = "Unset",
             k_akyrs_letter_btn_auto = "Auto",
             k_akyrs_letter_btn_set = "Set",
@@ -3811,6 +3817,8 @@ return {
             k_akyrs_score_add="+#1# Score",
             k_akyrs_score_x="X#1# Score",
             k_akyrs_score_minus="-#1# Score",
+            k_akyrs_word_check_valid="#1# is a VALID word!",
+            k_akyrs_word_check_invalid="#1# is NOT a VALID word.",
         },
         v_text={
             ch_c_sliced_space={

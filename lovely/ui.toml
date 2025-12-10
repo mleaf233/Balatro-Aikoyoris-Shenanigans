@@ -742,7 +742,6 @@ payload = """end"""
 overwrite = true
 match_indent = true
 
-
 [[patches]]
 [patches.pattern]
 target = '=[SMODS _ "src/overrides.lua"]'
@@ -773,3 +772,16 @@ payload = """{string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..(G.dec
 overwrite = true
 match_indent = true
 
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """
+        G.GAME.stake > 1 and {
+          label = localize('b_stake'),
+          tab_definition_function = G.UIDEF.current_stake,
+        } or nil,"""
+position = "before"
+payload = """AKYRS.run_info_tab(),"""
+overwrite = true
+match_indent = true

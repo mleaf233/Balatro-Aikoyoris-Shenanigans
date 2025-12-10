@@ -258,6 +258,7 @@ function AKYRS.create_better_text_input(args)
   args.hooked_colour = copy_table(args.hooked_colour) or darken(copy_table(G.C.BLUE), 0.3)
   args.w = args.w or 2.5
   args.h = args.h or 0.7
+  args.hide_keyboard = args.hide_keyboard or false
   args.text_scale = args.text_scale or 0.4
   args.max_length = args.max_length or 16
   args.all_caps = args.all_caps or false
@@ -282,7 +283,7 @@ function AKYRS.create_better_text_input(args)
       {n=G.UIT.C, config={align = "cm", colour = G.C.CLEAR}, nodes = {
           {n=G.UIT.C, config={id = args.id, align = "cm", padding = 0.05, r = 0.1, hover = true, colour = args.colour,minw = args.w, min_h = args.h, button = 'select_text_input', shadow = true}, nodes={
             {n=G.UIT.R, config={ref_table = args, padding = 0.05, align = "cm", r = 0.1, colour = G.C.CLEAR}, nodes={
-              {n=G.UIT.R, config={ref_table = args, align = "cm", r = 0.1, colour = G.C.CLEAR, func = 'akyrs_text_input'}, nodes=
+              {n=G.UIT.R, config={ref_table = args, align = "cm", r = 0.1, colour = G.C.CLEAR, func = 'akyrs_text_input', hide_keyboard = args.hide_keyboard}, nodes=
                 ui_letters
               }
             }}
@@ -306,7 +307,7 @@ G.FUNCS.akyrs_text_input = function(e)
   end
 
   local OSkeyboard_e = e.parent.parent.parent
-  if G.CONTROLLER.text_input_hook == e then
+  if G.CONTROLLER.text_input_hook == e and (not e.config or not e.config.hide_keyboard) then
     if not OSkeyboard_e.children.controller_keyboard then 
       OSkeyboard_e.children.controller_keyboard = UIBox{
         definition = AKYRS.create_better_keyboard_input{backspace_key = true, return_key = true, space_key = true, shift_key = true, osk = e},
@@ -702,4 +703,127 @@ function AKYRS.UIBox_HUD_villager_trading()
       }
     }
   }
+end
+
+function G.FUNCS.akyrs_check_word_btn(e)
+  local etet = AKYRS.split(AKYRS.word_check_data.word_check)
+  AKYRS.word_check_data.validated_info = AKYRS.check_word(etet)
+  if AKYRS.word_check_data.validated_info then
+    if AKYRS.word_check_data.validated_info.valid then
+      AKYRS.word_check_data.current_col = G.C.GREEN
+      AKYRS.word_check_data.text_disp = (localize{ type = "variable", key = "k_akyrs_word_check_valid", vars = {AKYRS.word_check_data.validated_info.word}})
+    else
+      AKYRS.word_check_data.current_col = G.C.RED
+      AKYRS.word_check_data.text_disp = (localize{ type = "variable", key = "k_akyrs_word_check_invalid", vars = {AKYRS.word_check_data.word_check}})
+    end
+  end
+end
+
+function G.FUNCS.akyrs_update_word_checker_text(e)
+end
+
+function AKYRS.UIDEF.words_run_info_tab()
+  AKYRS.word_check_data = {word_check = "", text_disp = localize("k_akyrs_word_check_init"), current_col = G.C.UI.TEXT_LIGHT}
+  return {
+				n = G.UIT.ROOT,
+				config = { align = "cm", colour = G.C.CLEAR },
+				nodes = {
+          -- part where it shows you words you played in the future ???
+          -- for now i am making a word checker
+          {
+            n = G.UIT.C,
+            config = { align = "cm", padding = 0.2 },
+            nodes = {
+              { n = G.UIT.R, config = {align = "cm",}, nodes = {
+                {
+                  n = G.UIT.O,
+                  config = {
+                    id = "dynatext_stuff",
+                    object = DynaText({string = {
+                      { ref_table = AKYRS.word_check_data, ref_value = "text_disp" }
+                    }, colours = {AKYRS.word_check_data.current_col}, shadow = true, pop_in = 0, float = true, scale = .6, silent = true})
+                  }
+                }
+              } },
+              {
+                n = G.UIT.R,
+                config = { padding = 0.05, w = 6.5, align = 'cm' },
+                nodes = {
+                  AKYRS.create_better_text_input({
+                    w = 6.5,
+                    h = 1,
+                    max_length = 45, 
+                    extended_corpus = true, 
+                    prompt_text = "",
+                    hide_keyboard = true,
+                    ref_table = AKYRS.word_check_data,
+                    ref_value = "word_check",
+                    id = "check_wild",
+                    keyboard_offset = 4.5,
+                  })
+                }
+              },
+              { n = G.UIT.R, config = {align = "cm",}, nodes = {
+                UIBox_button({
+                  button = "akyrs_check_word_btn",
+                  label = { localize("k_akyrs_check_word_check") }
+                })
+              } },
+              not AKYRS.config.full_dictionary and { n = G.UIT.R, config = { align = "cm", padding = 0.05}, nodes = {
+                { n = G.UIT.C, config = { align = "cm", padding = 0.05}, nodes = 
+                  {
+                    {
+                      n = G.UIT.R, config = { align = "cm" }, nodes = {
+                        {
+                          n = G.UIT.T,
+                          config = {
+                            text = localize("k_akyrs_word_tab_reduced_tip_1"),
+                            scale = 0.3,
+                            colour = G.C.UI.TEXT_INACTIVE
+                          }
+                        }
+                      }
+                    },
+                    {
+                      n = G.UIT.R, config = { align = "cm" }, nodes = {
+                        {
+                          n = G.UIT.T,
+                          config = {
+                            text = localize("k_akyrs_word_tab_reduced_tip_2"),
+                            scale = 0.3,
+                            colour = G.C.UI.TEXT_INACTIVE
+                          }
+                        }
+                      }
+                    },
+                    {
+                      n = G.UIT.R, config = { align = "cm" }, nodes = {
+                        {
+                          n = G.UIT.T,
+                          config = {
+                            text = localize("k_akyrs_word_tab_reduced_tip_3"),
+                            scale = 0.3,
+                            colour = G.C.UI.TEXT_INACTIVE
+                          }
+                        }
+                      }
+                    },
+                  }
+                },
+              }} or nil,
+            },
+          }
+        },
+			}
+end
+
+function AKYRS.run_info_tab()
+  local ret = {}
+  if AKYRS.should_calculate_word() then
+    table.insert(ret, {
+          label = localize('b_akyrs_words'),
+          tab_definition_function = AKYRS.UIDEF.words_run_info_tab,
+      })
+  end
+  return unpack(ret)
 end
