@@ -130,7 +130,7 @@ function AKYRS.bulk_level_up(center, card, area, copier, number, silent)
 			mult = G.GAME.hands[v].mult,
 			level = G.GAME.hands[v].level,
 		})
-		level_up_hand(used_consumable, v, silent, number)
+		SMODS.smart_level_up_hand(used_consumable, v, silent, number)
 	end
 	update_hand_text(
 		{ sound = "button", volume = 0.7, pitch = 1.1, delay = 0 },
@@ -164,7 +164,7 @@ function AKYRS.silent_bulk_level_up(center, card, area, copier, number)
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
     delay(1.3)
     for k, v in pairs(card.config.center.config.akyrs_hand_types) do
-		level_up_hand(used_consumable, v, true, number)
+		SMODS.smart_level_up_hand(used_consumable, v, true, number)
     end
     update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 end
@@ -195,7 +195,7 @@ function AKYRS.blk_lvl_up(hands, card, number)
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
     delay(1.3)
     for k, v in pairs(hands) do
-		level_up_hand(used_consumable, k, true, number)
+		SMODS.smart_level_up_hand(used_consumable, k, true, number)
     end
     update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 end

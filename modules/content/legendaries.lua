@@ -263,7 +263,7 @@ SMODS.Joker {
                 func = function ()
                     AKYRS.simple_event_add(
                         function()
-                            level_up_hand(card, context.zodiac_proto.config.extra.hand_type)
+                            SMODS.smart_level_up_hand(card, context.zodiac_proto.config.extra.hand_type)
                             return true
                         end
                     )

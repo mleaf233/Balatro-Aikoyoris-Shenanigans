@@ -2453,7 +2453,7 @@ SMODS.Joker{
             if context.using_consumeable and context.consumeable.config.center_key == "c_justice" then
                 return {
                     func = function ()
-                        level_up_hand(nil,"High Card",nil,G.GAME.hands["High Card"].level)
+                        SMODS.smart_level_up_hand(nil,"High Card",nil,G.GAME.hands["High Card"].level)
                     end
                 }
             end
@@ -2534,9 +2534,9 @@ SMODS.Joker{
                     cx = G.GAME.hands[context.scoring_name].level > 1
                 end
                 if not context.poker_hands["Straight"] or (context.poker_hands["Straight"] and not next(context.poker_hands["Straight"])) and cx then
-                    level_up_hand(card,context.scoring_name,nil,-card.ability.extras.level_down)
-                    level_up_hand(card,"Straight",nil,card.ability.extras.level_down * card.ability.extras.level_up_mult)
-                    level_up_hand(card,"Straight Flush",nil,card.ability.extras.level_down * card.ability.extras.level_up_mult)
+                    SMODS.smart_level_up_hand(card,context.scoring_name,nil,-card.ability.extras.level_down)
+                    SMODS.smart_level_up_hand(card,"Straight",nil,card.ability.extras.level_down * card.ability.extras.level_up_mult)
+                    SMODS.smart_level_up_hand(card,"Straight Flush",nil,card.ability.extras.level_down * card.ability.extras.level_up_mult)
                 end
             end
         end
