@@ -1,3 +1,17 @@
+-- copied from https://gist.github.com/CaptainPRICE/342303bba104354257db0471bf996bd3 to fix math deck
+AKYRS.NAN  =  0.0 / 0.0
+AKYRS.NINF = -math.huge
+AKYRS.PINF =  math.huge
+
+function AKYRS.is_finite(value)
+  if type(value) == "string" then
+    value = tonumber(value)
+    if value == nil then return nil end
+  elseif type(value) ~= "number" then
+    return nil
+  end
+  return value > AKYRS.NINF and value < AKYRS.PINF
+end
 
 AKYRS.DescriptionDummies = {}
 

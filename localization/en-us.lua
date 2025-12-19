@@ -360,8 +360,7 @@ return {
                 name = "Faraway Island",
                 text = {
                     "Hand must contain at least",
-                    "one card with no suit or rank",
-                    "(For example, Stone cards)"
+                    "one card without suit or rank",
                 }
             },
             bl_akyrs_master_plywood_forest = {
@@ -380,7 +379,7 @@ return {
             bl_akyrs_master_milk_crown_on_sonnetica = {
                 name = "Milk Crown on Sonnetica",
                 text = {
-                    "Set Mult to 0 if a King is scored",
+                    "Set Mult to 1 if a Face Card is scored",
                 }
             },
             bl_akyrs_master_bug = {
@@ -394,6 +393,46 @@ return {
                 name = "The Bomb",
                 text = {
                     "Defuse the bomb!",
+                }
+            },
+            bl_akyrs_the_stomata= {
+                name = "The Stomata",
+                text = {
+                    "-$1 per Face Card Scored",
+                }
+            },
+            bl_akyrs_the_rhizome= {
+                name = "The Rhizome",
+                text = {
+                    "#1#X blind size when",
+                    "repeating already played hands",
+                }
+            },
+            bl_akyrs_the_shrink= {
+                name = "The Shrink",
+                text = {
+                    "#1#X blind size every",
+                    "unique hand played",
+                }
+            },
+            bl_akyrs_the_harmonic= {
+                name = "The Harmonic",
+                text = {
+                    "Randomly select one card to",
+                    "discard after any hand is drawn",
+                }
+            },
+            bl_akyrs_the_sinusoidal= {
+                name = "The Sinusoidal",
+                text = {
+                    "Last 2 cards are drawn face down",
+                    "when any hand is drawn",
+                }
+            },
+            bl_akyrs_the_saw= {
+                name = "The Saw",
+                text = {
+                    "First scored card is destroyed",
                 }
             },
         },
@@ -880,6 +919,15 @@ return {
                 text={
                     "This card is {C:attention}completely{} unknown",
                     "{C:inactive}(and you will never know what it is)",
+                },
+            },
+            dd_akyrs_neon_seal_ex  = {
+                name="Example",
+                text={
+                    "If you play {C:attention}3{} cards with this seal",
+                    "and hold {C:green}1{} card with this seal in hand",
+                    "it will create {C:green}1{} {C:akyrs_umbral_p,X:akyrs_umbral_y}Umbral{} Card",
+                    "{C:inactive}(The lesser number)",
                 },
             },
         },
@@ -1662,9 +1710,9 @@ return {
                 name = "Tetoris",
                 text = { 
                     "Increase {C:attention}lines cleared{} by {C:attention}1{} per card played",
-                    "If counter is at least {C:attention}4{} at the end of the round",
+                    "If at least {C:attention}4{} lines are cleared at the end of the round",
                     "Create a {C:dark_edition}Negative{} {C:spectral}Spectral Card{} and {C:attention}reduce{} lines cleared by {C:attention}4{}",
-                    "If counter is at least {C:attention}160{} at the end of the round",
+                    "If at least {C:attention}160{} lines are cleared at the end of the round",
                     "Create a {C:dark_edition}Negative{} {C:spectral}The Soul{} and {C:attention}reduce{} lines cleared by {C:attention}160{}",
                     "{C:inactive}(Lines Cleared : {X:attention,C:white} #1# {C:inactive})",
                     "{s:0.9,C:inactive,f:5}興味がないこと本気じゃないもの全部後回しで{}",
@@ -2445,7 +2493,8 @@ return {
                 text={
                     "Create an {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} Card",
                     "per number of cards with {C:attention}Neon Seal{}",
-                    "held or played, {C:attention}whichever is lower{}",
+                    "held or played, {C:attention}whichever is less{}",
+                    "when hand is played",
                     "{C:inactive}(Must have room)",
                 },
             },

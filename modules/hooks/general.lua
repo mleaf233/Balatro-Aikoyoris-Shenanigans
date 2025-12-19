@@ -54,6 +54,7 @@ function Game:init_game_object()
     ret.akyrs_umbral_intrusive_usage_set = -4
     ret.round_resets.blind_choices.akyrs_Solo = ""
     ret.round_resets.blind_states.akyrs_Solo = "Upcoming"
+    ret.current_round.akyrs_hands_played = {}
 
     -- this one prevents crashes
     ret.modifiers.scaling = ret.modifiers.scaling or 1
@@ -93,6 +94,7 @@ function SMODS.current_mod.reset_game_globals(run_start)
     G.GAME.current_round.aiko_played_suits = {}
     G.GAME.current_round.aiko_played_ranks = {}
     G.GAME.current_round.aiko_played_ench = {}
+    G.GAME.current_round.akyrs_hands_played = {}
 end
 
 
@@ -758,7 +760,8 @@ G.FUNCS.evaluate_play = function(e)
             G.GAME.akyrs_suits_played[c.base.suit] = (G.GAME.akyrs_suits_played[c.base.suit] or 0) + 1
         end
     end
-    if G.GAME.aikoyori_evaluation_value ~= G.GAME.aikoyori_evaluation_value then
+    --print(G.GAME.aikoyori_evaluation_value)
+    if G.GAME.akyrs_mathematics_enabled and not AKYRS.is_finite(G.GAME.aikoyori_evaluation_value) then
         AKYRS.blocking_unlock_achievement("ach_akyrs_div_0_math")
         AKYRS.simple_event_add(function ()
         error([[Galaxy Collapse!
@@ -766,8 +769,24 @@ G.FUNCS.evaluate_play = function(e)
 
 
 
-Obviously this is not a real crash LMAO don't bother reporting.
+Obviously this is not a real crash please do not report else I will have to remove your kneecaps.
 
+Press [R] to restart your game.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Also technically this crash saves you from bricked runs so thank me later :D
 
 
 

@@ -369,6 +369,11 @@ AKYRS.DescriptionDummy{
         end
     end,
 }
+
+AKYRS.DescriptionDummy{
+    key = "neon_seal_ex",
+}
+
 if SMODS.DynaTextEffect then
     SMODS.DynaTextEffect {
         key = "obfuscate",

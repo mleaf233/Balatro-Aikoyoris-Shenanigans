@@ -352,3 +352,15 @@ payload = """if not v_nr and v.base and v.base.value then
 """
 overwrite = true
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/state_events.lua'
+pattern = """    -- TARGET: effects after hand evaluation"""
+position = "after"
+payload = """G.GAME.current_round.akyrs_hands_played = G.GAME.current_round.akyrs_hands_played or {}
+G.GAME.current_round.akyrs_hands_played[text] = true
+"""
+overwrite = true
+match_indent = true

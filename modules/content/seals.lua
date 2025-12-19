@@ -16,6 +16,9 @@ SMODS.Seal{
     pos = {x = 5, y = 1},
     badge_colour = HEX('5bbee0'),
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
+    loc_vars =function (self, info_queue, card)
+        info_queue[#info_queue+1] = AKYRS.DescriptionDummies['dd_akyrs_neon_seal_ex']
+    end,
 
     calculate = function(self, card, context)
         if context.main_scoring then

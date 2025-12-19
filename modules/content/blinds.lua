@@ -530,7 +530,7 @@ SMODS.Blind{
         disable_chip_x = 2
     },
     loc_vars = function(self)
-        local orig_chips = to_big(get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling)
+        local orig_chips = to_big(AKYRS.get_true_original_blind_amount(self.mult))
         return { vars = {orig_chips  * to_big(G.GAME.round_resets.ante * self.debuff.disable_chip_x) }, key = self.key }
     end,
     collection_loc_vars = function(self)
@@ -545,8 +545,7 @@ SMODS.Blind{
         return true
     end,
     disable = function(self)
-        G.GAME.blind.chips = to_big(get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling) * to_big(G.GAME.round_resets.ante) * to_big(self.debuff.disable_chip_x)
-        G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+        AKYRS.modify_blind_size({ set = to_big(AKYRS.get_true_original_blind_amount(self.mult)) * to_big(G.GAME.round_resets.ante) * to_big(self.debuff.disable_chip_x)})
             
     end,
     defeat = function(self)
@@ -557,17 +556,7 @@ SMODS.Blind{
 
 }
 AKYRS.picker_primed_action = function ()
-    
-    G.E_MANAGER:add_event(Event({
-        trigger = "after",
-        func = function ()
-            G.GAME.blind.chips = G.GAME.blind.chips * G.GAME.blind.debuff.score_change
-            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-            G.HUD_blind:get_UIE_by_ID("HUD_blind_count"):juice_up()
-            play_sound('timpani')
-            return true
-        end
-    }))
+    AKYRS.modify_blind_size({ mult = G.GAME.blind.debuff.score_change })
 end
 AKYRS.picker_initial_action = function() 
     G.E_MANAGER:add_event(Event({
@@ -921,6 +910,191 @@ SMODS.Blind{
     debuff = {
         akyrs_no_retriggers = true
     },
+}
+
+SMODS.Blind{
+    key = "the_stomata",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("72b06d"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 3, max = 10},
+    pos = { x = 0, y = 20 },
+    debuff = {
+        akyrs_deduct_play = 1
+    },
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.individual then
+                if context.other_card:is_face(true) then
+                    return {
+                        dollars = -blind.debuff.akyrs_deduct_play
+                    }
+                end
+            end
+        end
+    end,
+}
+
+
+SMODS.Blind{
+    key = "the_rhizome",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("c89bcf"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 3, max = 10},
+    pos = { x = 0, y = 21 },
+    debuff = {
+        akyrs_mult_blind_size = 1.5
+    },
+    loc_vars = function (self)
+        return {
+            vars = {
+                self.debuff.akyrs_mult_blind_size
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        return {
+            vars = {
+                self.debuff.akyrs_mult_blind_size
+            }
+        }
+    end,
+    disable = function (self)
+        AKYRS.modify_blind_size({set = AKYRS.get_true_original_blind_amount(self.mult)})
+    end,
+    calculate = function (self, blind, context)
+        if context.before and G.GAME.current_round.akyrs_hands_played[context.scoring_name] and not blind.disabled then
+            return {
+                func = function ()
+                    AKYRS.modify_blind_size({ mult = blind.debuff.akyrs_mult_blind_size })
+                end
+            }
+        end
+    end
+}
+
+
+SMODS.Blind{
+    key = "the_shrink",
+    dollars = 5,
+    mult = 12,
+    boss_colour = HEX("8087ff"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 3, max = 10},
+    pos = { x = 0, y = 22 },
+    debuff = {
+        akyrs_mult_blind_size = 0.5
+    },
+    loc_vars = function (self)
+        return {
+            vars = {
+                self.debuff.akyrs_mult_blind_size
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        return {
+            vars = {
+                self.debuff.akyrs_mult_blind_size
+            }
+        }
+    end,
+    disable = function (self)
+        AKYRS.modify_blind_size({set = AKYRS.get_true_original_blind_amount(self.mult)})
+    end,
+    calculate = function (self, blind, context)
+        if context.before and not G.GAME.current_round.akyrs_hands_played[context.scoring_name] and not blind.disabled then
+            return {
+                func = function ()
+                    AKYRS.modify_blind_size({ mult = blind.debuff.akyrs_mult_blind_size })
+                end
+            }
+        end
+    end
+}
+
+SMODS.Blind{
+    key = "the_harmonic",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("f0ad82"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 1, max = 10},
+    pos = { x = 0, y = 23 },
+    debuff = {
+    },
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.hand_drawn then
+                return {
+                    func = function ()
+                        AKYRS.simple_event_add(
+                            function ()
+                                local cards_candidate = AKYRS.filter_table(G.hand.cards, function(cds, inx) 
+                                    return not cds.highlighted
+                                end, true, true)
+                                local picks = AKYRS.pseudorandom_elements(cards_candidate, 1, "akyrs_blind_harmonics")
+                                for _, cd in ipairs(picks) do
+                                    G.hand:add_to_highlighted(cd)
+                                end
+                                G.FUNCS.discard_cards_from_highlighted(nil, true)
+                                return true
+                            end
+                        )
+                    end
+                }
+            end
+        end
+    end
+}
+
+SMODS.Blind{
+    key = "the_sinusoidal",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ffb4ea"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 2, max = 10},
+    pos = { x = 0, y = 24 },
+    debuff = {
+    },
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.stay_flipped then
+                if context.other_card and context.from_area == G.deck and context.to_area == G.hand then
+                    if G.hand.config.card_limit - #G.hand.cards <= 2 then
+                        return {
+                            stay_flipped = true
+                        }
+                    end
+                end
+            end
+        end
+    end
+}
+
+SMODS.Blind{
+    key = "the_saw",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("8becc4"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 4, max = 10},
+    pos = { x = 0, y = 25 },
+    debuff = {
+    },
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.destroy_card and context.cardarea == G.play and context.destroy_card == context.scoring_hand[1] then
+                return {
+                    remove = true
+                }
+            end
+        end
+    end
 }
 
 
@@ -1332,7 +1506,6 @@ SMODS.Blind {
     mult = 3,
     boss_colour = HEX('ce36ff'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1374,7 +1547,6 @@ SMODS.Blind {
     debuff = {
         mult_min = 0.01,
         mult_max = 1.1,
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1398,7 +1570,7 @@ SMODS.Blind {
         return G.GAME.round_resets.ante > G.GAME.win_ante
     end,
     calculate = function (self, blind, context)
-        if context.before then
+        if context.before and not blind.disabled then
             local xm = pseudorandom(pseudoseed("akyrs_fluctuation"))*(blind.debuff.mult_max - blind.debuff.mult_min) + blind.debuff.mult_min
             G.GAME.chips = G.GAME.chips * xm
             G.GAME.chips_text = number_format(G.GAME.chips)
@@ -1414,7 +1586,6 @@ SMODS.Blind {
     mult = 3,
     boss_colour = HEX('4d77ff'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1458,7 +1629,6 @@ SMODS.Blind {
     mult = 3,
     boss_colour = HEX('1fb643'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1497,7 +1667,6 @@ SMODS.Blind {
     mult = 3,
     boss_colour = HEX('ffa530'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1537,7 +1706,6 @@ SMODS.Blind {
     mult = 1,
     boss_colour = HEX('7371ff'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "expert",
         akyrs_is_postwin_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1560,7 +1728,6 @@ SMODS.Blind {
     boss_colour = HEX('4bbdff'),
     debuff = {
         akyrs_cannot_be_disabled = true,
-        akyrs_cannot_be_rerolled = true,
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1589,7 +1756,6 @@ SMODS.Blind {
     boss_colour = HEX('f74d4d'),
     debuff = {
         akyrs_cannot_be_disabled = true,
-        akyrs_cannot_be_rerolled = true,
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_destroy_unplayed = true,
@@ -1611,7 +1777,6 @@ SMODS.Blind {
     boss_colour = HEX('d0521a'),
     debuff = {
         akyrs_cannot_be_disabled = true,
-        akyrs_cannot_be_rerolled = true,
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1656,7 +1821,6 @@ SMODS.Blind {
     boss_colour = HEX('5f848c'),
     debuff = {
         akyrs_cannot_be_disabled = true,
-        akyrs_cannot_be_rerolled = true,
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1670,10 +1834,12 @@ SMODS.Blind {
     boss = {min = 12, max = 10},
     pos = { x = 0, y = 6 },
     calculate = function (self, blind, context)
-        if context.individual and context.cardarea == G.play then
-            if context.other_card:get_id() == 13 then
+        if context.individual and context.cardarea == G.play and not blind.disabled then
+            if context.other_card:is_face() then
                 return {
-                    xmult = 0
+                    func = function ()
+                        mult = mod_mult(1)
+                    end
                 }
             end
         end
@@ -1686,7 +1852,6 @@ SMODS.Blind {
     boss_colour = HEX('4de740'),
     debuff = {
         akyrs_cannot_be_disabled = true,
-        akyrs_cannot_be_rerolled = true,
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
@@ -1700,7 +1865,7 @@ SMODS.Blind {
     boss = {min = 12, max = 10},
     pos = { x = 0, y = 7 },
     calculate = function (self, blind, context)
-        if context.after and not context.repetition then
+        if context.after and not context.repetition and not blind.disabled then
             return {
                 func = function ()
                     local jkrs = AKYRS.get_non_eternals(G.jokers, blind)
