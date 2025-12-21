@@ -211,29 +211,30 @@ return {
             bl_akyrs_final_periwinkle_pinecone= {
                 name = "Periwinkle Pinecone",
                 text = {
-                    "Sealed cards",
-                    "are debuffed",
+                    "Shuffle remaining cards",
+                    "and draw to hand after hand played",
                 }
             },
             bl_akyrs_final_razzle_raindrop = {
                 name = "Razzle Raindrop",
                 text = {
-                    "Suits already played",
-                    "this round are debuffed",
+                    "Discard held in hand cards",
+                    "per unique suits played",
                 }
             },
             bl_akyrs_final_velvet_vapour = {
                 name = "Velvet Vapour",
                 text = {
-                    "Ranks already played",
-                    "this round are debuffed",
+                    "#1# in #2# chance for each card",
+                    "with the same rank as first",
+                    "played card to be discarded",
                 }
             },
             bl_akyrs_final_chamomile_cloud = {
                 name = "Chamomile Cloud",
                 text = {
-                    "Cards with enhancements already played",
-                    "this round are debuffed",
+                    "Discard all cards with",
+                    "a random suit every hand drawn",
                 }
             },
             bl_akyrs_final_salient_stream = {
@@ -246,14 +247,14 @@ return {
             bl_akyrs_final_luminous_lemonade = {
                 name = "Luminous Lemonade",
                 text = {
-                    "-#1# Discards per hand played",
-                    "-#1# Hands per discards",
+                    "Non-final Hands",
+                    "will not score",
                 }
             },
             bl_akyrs_final_glorious_glaive = {
                 name = "Glorious Glaive",
                 text = {
-                    "X#1# Mult per card played",
+                    "X#1# Score per card played",
                 }
             },
             bl_akyrs_final_lilac_lasso = {
@@ -291,7 +292,7 @@ return {
             bl_akyrs_expert_confrontation = {
                 name = "Confrontation",
                 text = {
-                    "Face cards must not be held in hand",
+                    "Hand must include face cards",
                 }
             },
             bl_akyrs_expert_fluctuation = {
@@ -305,7 +306,7 @@ return {
                 name = "Straightforwardness",
                 text = {
                     "All Hands starts with",
-                    "base #1# Chip and #2# Mult",
+                    "#1#% base Chip and #2#% base Mult",
                 }
             },
             bl_akyrs_expert_entanglement = {
@@ -363,8 +364,8 @@ return {
             bl_akyrs_master_plywood_forest = {
                 name = "Plywood Forest",
                 text = {
-                    "All unplayed cards are destroyed",
-                    "at the end of the round"
+                    "All cards held in hand",
+                    "are destroyed after hand scores"
                 }
             },
             bl_akyrs_master_golden_jade = {
@@ -376,14 +377,14 @@ return {
             bl_akyrs_master_milk_crown_on_sonnetica = {
                 name = "Milk Crown on Sonnetica",
                 text = {
-                    "Set Mult to 1 if a Face Card is scored",
+                    "X#1# Score when a face card scores",
                 }
             },
             bl_akyrs_master_bug = {
                 name = "BUG",
                 text = {
-                    "One Random Joker destroyed",
-                    "per card played"
+                    "One random Joker destroyed",
+                    "after hand scores"
                 }
             },
             bl_akyrs_the_bomb= {

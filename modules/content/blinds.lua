@@ -656,7 +656,7 @@ SMODS.Blind{
 SMODS.Blind{
     key = "the_rhizome",
     dollars = 5,
-    mult = 2,
+    mult = 1.5,
     boss_colour = HEX("c89bcf"),
     atlas = 'aikoyoriBlindsChips2', 
     boss = {min = 3, max = 10},
@@ -834,24 +834,47 @@ SMODS.Blind {
             return true
         end
         return false
-    end
-    --[[
-    disable = function (self)
-        if G.I.CARDAREA then 
-            for _,area in ipairs(G.I.CARDAREA) do
-                if (area and area.cards) then
-                    for j,c in ipairs(area.cards) do
-                        if c.seal then
-                            c.ability.akyrs_perma_debuff = false
-                        end
+    end,
+    calculate = function (self, blind, context)
+        if context.akyrs_pre_play and not blind.disabled then
+            return {
+                func = function ()
+                    local hcard = #G.hand.cards
+                    for i = hcard, 1, -1 do
+                        AKYRS.simple_event_add(function ()
+                            local drawn_c = G.hand:remove_card()
+                            if not drawn_c or drawn_c.highlighted then return true end
+                            G.deck:emplace(drawn_c)
+                            play_sound('card1')
+                            return true
+                        end, 0.1)
+                    end
+                    local dcard = #G.discard.cards
+                    for i = dcard, 1, -1 do
+                        AKYRS.simple_event_add(function ()
+                            local drawn_c = G.discard:remove_card()
+                            if not drawn_c then return true end
+                            G.deck:emplace(drawn_c)
+                            play_sound('card1')
+                            return true
+                        end, 0.1)
+                    end
+                    AKYRS.simple_event_add(function ()
+                        G.deck:shuffle("akyrs_razzle_shuffle")
+                        return true
+                    end, 1)
+                    for i = 1, G.hand.config.card_limit do
+                        AKYRS.simple_event_add(function ()
+                            local drawn_c = G.deck:remove_card()
+                            G.hand:emplace(drawn_c)
+                            play_sound('card1')
+                            return true
+                        end, 0.1)
                     end
                 end
-    
-            end
-                
+            }
         end
     end
-    ]]
 }
 SMODS.Blind {
     key = "final_razzle_raindrop",
@@ -859,12 +882,39 @@ SMODS.Blind {
     mult = 2,
     boss_colour = HEX('ff40ac'),
     debuff = {
-        akyrs_suit_debuff_hand = true
     },
-    
     atlas = 'aikoyoriBlindsChips', 
     boss = {min = 1, max = 10, showdown = true},
     pos = { x = 0, y = 11 },
+    calculate = function (self, blind, context)
+        if context.press_play and not blind.disabled then
+            return {
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function ()
+                            local suits_played = 0
+                            local suit_checked = {}
+                            for ke, va in pairs(SMODS.Suits) do
+                                for _, card_2_check in ipairs(G.play.cards) do
+                                    if card_2_check:is_suit(ke) and not suit_checked[ke] then
+                                        suit_checked[ke] = true
+                                        suits_played = suits_played + 1
+                                        break
+                                    end
+                                end
+                            end
+                            local picks = AKYRS.pseudorandom_elements(G.hand.cards, suits_played, "akyrs_blind_harmonics")
+                            for _, cd in ipairs(picks) do
+                                G.hand:add_to_highlighted(cd)
+                            end
+                            G.FUNCS.discard_cards_from_highlighted(nil, true)
+                            return true
+                        end
+                    )
+                end
+            }
+        end
+    end
 }
 
 SMODS.Blind {
@@ -876,8 +926,50 @@ SMODS.Blind {
     boss = {min = 1, max = 10, showdown = true},
     pos = { x = 0, y = 10 },
     debuff = {
-        akyrs_rank_debuff_hand = true
     },
+    config = {
+        numer = 2, denom = 3,
+    },
+    loc_vars = function (self)
+        local n, d = SMODS.get_probability_vars(self, self.config.numer, self.config.denom, "akyrs_velvet_chance")
+        return {
+            vars = {
+                n, d,
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        local n, d = SMODS.get_probability_vars(self, self.config.numer, self.config.denom, "akyrs_velvet_chance")
+        return {
+            vars = {
+                n, d,
+            }
+        }
+    end,
+    calculate = function (self, blind, context)
+        if context.press_play and not blind.disabled then
+            return {
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function ()
+                            local card_to_check = G.play.cards[1]
+                            if not card_to_check or SMODS.has_no_rank(card_to_check) then return true end
+                            local cards_candidate = AKYRS.filter_table(G.hand.cards, function(cds, inx) 
+                                return cds:get_id() == card_to_check:get_id() and not cds.highlighted
+                            end, true, true)
+                            for _, cd in ipairs(cards_candidate) do
+                                if SMODS.pseudorandom_probability(blind, "akyrs_velvet_chance", blind.effect.numer, blind.effect.denom) then
+                                    G.hand:add_to_highlighted(cd)
+                                end
+                            end
+                            G.FUNCS.discard_cards_from_highlighted(nil, true)
+                            return true
+                        end
+                    )
+                end
+            }
+        end
+    end,
     
 }
 
@@ -890,8 +982,39 @@ SMODS.Blind {
     boss = {min = 1, max = 10, showdown = true},
     pos = { x = 0, y = 9 },
     debuff = {
-        akyrs_enhancement_debuff_hand = true
     },
+    calculate = function (self, blind, context)
+        if context.press_play and not blind.disabled then
+            return {
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function ()
+                            local suit_checked = {}
+                            local suit_list = {}
+                            for ke, va in pairs(SMODS.Suits) do
+                                for _, card_2_check in ipairs(G.hand.cards) do
+                                    if card_2_check:is_suit(ke) and not suit_checked[ke] then
+                                        suit_checked[ke] = true
+                                        table.insert(suit_list, ke)
+                                        break
+                                    end
+                                end
+                            end
+                            local suit = pseudorandom_element(suit_list,"akyrs_chamomile_pick_suit")
+                            local cards_candidate = AKYRS.filter_table(G.hand.cards, function(cds, inx) 
+                                return cds:is_suit(suit) and not cds.highlighted
+                            end, true, true)
+                            for _, cd in ipairs(cards_candidate) do
+                                G.hand:add_to_highlighted(cd)
+                            end
+                            G.FUNCS.discard_cards_from_highlighted(nil, true)
+                            return true
+                        end
+                    )
+                end
+            }
+        end
+    end,
     
 }
 
@@ -918,7 +1041,7 @@ SMODS.Blind {
             vars = { 4 }
         }
     end,
-    set_blind =function (self)
+    set_blind = function (self)
         self.prepped = true
     end,
     drawn_to_hand = function (self)
@@ -1002,27 +1125,23 @@ SMODS.Blind {
 SMODS.Blind {
     key = "final_luminous_lemonade",
     dollars = 8,
-    mult = 3.5,
+    mult = 2,
     boss_colour = SMODS.Gradients['akyrs_luminous'],    
     atlas = 'aikoyoriBlindsChips2', 
     boss = {min = 1, max = 10, showdown = true},
     pos = { x = 0, y = 12 },
     debuff = {
-        akyrs_reduce_other = 1
     },
-    loc_vars = function (self)
-        return {
-            vars = {
-                self.debuff.akyrs_reduce_other
-            }
-        }
-    end,
-    collection_loc_vars = function (self)
-        return {
-            vars = {
-                1
-            }
-        }
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.debuff_hand then
+                if G.GAME.current_round.hands_left ~= (G.STATE == G.STATES.SELECTING_HAND and 1 or 0) then
+                    return {
+                        debuff = true
+                    }
+                end
+            end
+        end
     end
     
 }
@@ -1036,7 +1155,7 @@ SMODS.Blind {
     boss = {min = 1, max = 10, showdown = true},
     pos = { x = 0, y = 13 },
     debuff = {
-        akyrs_mult_per_played = 0.8
+        akyrs_mult_per_played = 0.85
     },
     loc_vars = function (self)
         return {
@@ -1048,14 +1167,14 @@ SMODS.Blind {
     collection_loc_vars = function (self)
         return {
             vars = {
-                0.8
+                self.debuff.akyrs_mult_per_played
             }
         }
     end,
     calculate = function (self, blind, context)
         if context.individual and not context.repetition and context.cardarea == G.play and not G.GAME.blind.disabled then
             return {
-                xmult = blind.debuff.akyrs_mult_per_played,
+                akyrs_xscore = blind.debuff.akyrs_mult_per_played,
             }
         end
     end
@@ -1219,25 +1338,23 @@ SMODS.Blind {
 SMODS.Blind {
     key = "expert_confrontation",
     dollars = 10,
-    mult = 3,
+    mult = 1,
     boss_colour = HEX('ce36ff'),
     debuff = {
         akyrs_blind_difficulty = "expert",
-        akyrs_is_postwin_blind = true,
-        akyrs_cannot_be_overridden = true,
     },
     atlas = 'aikoyoriBlindsChips', 
-    boss = {min = 9, max = 10},
+    boss = {min = 7, max = 10},
     pos = { x = 0, y = 18 },
     debuff_hand = function (self, cards, hand, handname, check)
         local has_face = false
-        for i,j in ipairs(G.hand.cards) do
-            if j:is_face() and not j.highlighted then
+        for i,j in ipairs(cards) do
+            if j:is_face() then
                 has_face = true
                 break
             end
         end
-        return has_face
+        return not has_face
     end,
     loc_vars = function (self)
         return {
@@ -1248,24 +1365,19 @@ SMODS.Blind {
         }
     end,
     in_pool = function (self)
-        return G.GAME.round_resets.ante > G.GAME.win_ante
-    end,
-    get_loc_debuff_text = function (self)
-        return localize("k_akyrs_confrontation_has_face_in_hand_warning")
+        return G.GAME.round_resets.ante >= G.GAME.win_ante
     end,
 
 }
 SMODS.Blind {
     key = "expert_fluctuation",
     dollars = 10,
-    mult = 3,
+    mult = 2.25,
     boss_colour = HEX('ff6c9a'),
     debuff = {
         mult_min = 0.01,
         mult_max = 1.1,
         akyrs_blind_difficulty = "expert",
-        akyrs_is_postwin_blind = true,
-        akyrs_cannot_be_overridden = true,
     },
     
     atlas = 'aikoyoriBlindsChips', 
@@ -1288,10 +1400,9 @@ SMODS.Blind {
     calculate = function (self, blind, context)
         if context.before and not blind.disabled then
             local xm = pseudorandom(pseudoseed("akyrs_fluctuation"))*(blind.debuff.mult_max - blind.debuff.mult_min) + blind.debuff.mult_min
-            G.GAME.chips = G.GAME.chips * xm
-            G.GAME.chips_text = number_format(G.GAME.chips)
-            G.HUD:get_UIE_by_ID("chip_UI_count"):juice_up()
-            play_sound('timpani')
+            return {
+                akyrs_xscore = xm
+            }
         end
     end,
 
@@ -1299,32 +1410,30 @@ SMODS.Blind {
 SMODS.Blind {
     key = "expert_straightforwardness",
     dollars = 10,
-    mult = 3,
+    mult = 1.75,
     boss_colour = HEX('4d77ff'),
     debuff = {
         akyrs_blind_difficulty = "expert",
-        akyrs_is_postwin_blind = true,
-        akyrs_cannot_be_overridden = true,
-        ch = 1,
-        mul = 1
+        ch = 0.25,
+        mul = 0.25
     },
     
     atlas = 'aikoyoriBlindsChips', 
-    boss = {min = 9, max = 10},
+    boss = {min = 7, max = 10},
     pos = { x = 0, y = 20 },
-    
     loc_vars = function (self)
         return {
             vars = {
-                self.debuff.ch,
-                self.debuff.mul,
+                self.debuff.ch * 100,
+                self.debuff.mul * 100,
             }
         }
     end,
     collection_loc_vars = function (self)
         return {
             vars = {
-                1, 1
+                self.debuff.ch * 100,
+                self.debuff.mul * 100,
             }
         }
     end,
@@ -1333,21 +1442,19 @@ SMODS.Blind {
     end,
     modify_hand = function (self, cards, poker_hands, text, mult, hand_chips)
         if Talisman then
-            return to_big(self.debuff.mul), to_big(self.debuff.ch), true
+            return to_big(self.debuff.mul) * mult, to_big(self.debuff.ch) * hand_chips, true
         end
-        return self.debuff.mul, self.debuff.ch, true
+        return self.debuff.mul  * mult , self.debuff.ch * hand_chips, true
         -- return mult, hand_chips, false
     end,
 }
 SMODS.Blind {
     key = "expert_entanglement",
     dollars = 10,
-    mult = 3,
+    mult = 2,
     boss_colour = HEX('1fb643'),
     debuff = {
         akyrs_blind_difficulty = "expert",
-        akyrs_is_postwin_blind = true,
-        akyrs_cannot_be_overridden = true,
     },
     stay_flipped = function (self, area, card)
         if area == G.hand and G.hand.cards then
@@ -1365,7 +1472,7 @@ SMODS.Blind {
     end,
     
     atlas = 'aikoyoriBlindsChips', 
-    boss = {min = 9, max = 10},
+    boss = {min = 7, max = 10},
     pos = { x = 0, y = 21 },
     
     loc_vars = function (self)
@@ -1380,21 +1487,15 @@ SMODS.Blind {
 SMODS.Blind {
     key = "expert_manuscript",
     dollars = 10,
-    mult = 3,
+    mult = 2,
     boss_colour = HEX('ffa530'),
     debuff = {
         akyrs_blind_difficulty = "expert",
-        akyrs_is_postwin_blind = true,
-        akyrs_cannot_be_overridden = true,
     },
     
     atlas = 'aikoyoriBlindsChips', 
-    boss = {min = 9, max = 10},
+    boss = {min = 7, max = 10},
     pos = { x = 0, y = 22 },
-    
-    in_pool = function (self)
-        return G.GAME.round_resets.ante > G.GAME.win_ante
-    end,
     modify_hand = function (self, cards, poker_hands, text, mult, hand_chips)
         AKYRS.simple_event_add(
             function ()
@@ -1419,43 +1520,44 @@ SMODS.Blind {
 SMODS.Blind {
     key = "expert_inflation",
     dollars = 10,
-    mult = 1,
+    mult = 2,
     boss_colour = HEX('7371ff'),
     debuff = {
         akyrs_blind_difficulty = "expert",
+        akyrs_anteth_power_of_x_blind_req = 1.5,
+        akyrs_anteth_power_of_x_blind_req_multiplier = 1,
+        akyrs_anteth_power_of_x_blind_req_power = 0.5,
         akyrs_is_postwin_blind = true,
-        akyrs_cannot_be_overridden = true,
-        akyrs_anteth_power_of_x_blind_req = 1.2,
-        akyrs_anteth_power_of_x_blind_req_multiplier = 1.2,
-        akyrs_anteth_power_of_x_blind_req_power = 1.2,
     },
-    
-    in_pool = function (self)
-        return G.GAME.round_resets.ante > G.GAME.win_ante
-    end,
     atlas = 'aikoyoriBlindsChips', 
-    boss = {min = 10, max = 10},
+    boss = {min = 8, max = 10},
     pos = { x = 0, y = 23 },
 }
+
 SMODS.Blind {
     key = "master_faraway_island",
     dollars = 14,
-    mult = 8,
+    mult = 2,
     boss_colour = HEX('4bbdff'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "master",
-        akyrs_is_endless_blind = true,
-        akyrs_cannot_be_overridden = true,
-        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)
-        return G.GAME.round_resets.ante >= self.boss.min and G.GAME.won
+        return G.GAME.round_resets.ante >= G.GAME.win_ante, {ignore_showdown_check = true}
     end,
     atlas = 'aikoyoriBlindsChips2', 
-    boss = {min = 12, max = 10},
+    boss = {min = 8, max = 10},
     pos = { x = 0, y = 3 },
+    set_blind = function (self)
+        SMODS.change_play_limit(1)
+    end,
+    disable = function (self)
+        SMODS.change_play_limit(-1)
+    end,
+    defeat = function (self)
+        SMODS.change_play_limit(-1)
+    end,
     debuff_hand = function (self, cards, hand, handname, check)
         for i, c in ipairs(cards) do
             if SMODS.has_no_rank(c) or SMODS.has_no_suit(c) then
@@ -1468,36 +1570,36 @@ SMODS.Blind {
 SMODS.Blind {
     key = "master_plywood_forest",
     dollars = 14,
-    mult = 8,
+    mult = 2,
     boss_colour = HEX('f74d4d'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "master",
-        akyrs_is_endless_blind = true,
-        akyrs_destroy_unplayed = true,
-        akyrs_cannot_be_overridden = true,
-        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)
-        return G.GAME.round_resets.ante >= self.boss.min and G.GAME.won
+        return G.GAME.round_resets.ante >= G.GAME.win_ante, {ignore_showdown_check = true}
     end,
     atlas = 'aikoyoriBlindsChips2', 
-    boss = {min = 12, max = 10},
+    boss = {min = 8, max = 10},
     pos = { x = 0, y = 4 },
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.destroy_card and context.cardarea == G.hand then
+                return {
+                    remove = true,
+                }
+            end
+        end
+    end
 }
 SMODS.Blind {
     key = "master_golden_jade",
     dollars = 14,
-    mult = 8,
+    mult = 2,
     boss_colour = HEX('d0521a'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "master",
-        akyrs_is_endless_blind = true,
-        akyrs_cannot_be_overridden = true,
-        akyrs_deduct_mult = 0.1,
-        akyrs_cannot_be_skipped = true,
+        akyrs_deduct_mult = 0.75,
     },
     loc_vars = function (self)
         return {
@@ -1511,7 +1613,7 @@ SMODS.Blind {
         }
     end,    
     in_pool = function (self)
-        return G.GAME.round_resets.ante >= self.boss.min and G.GAME.won
+        return G.GAME.round_resets.ante >= G.GAME.win_ante, {ignore_showdown_check = true}
     end,
     atlas = 'aikoyoriBlindsChips2', 
     boss = {min = 12, max = 10},
@@ -1533,18 +1635,31 @@ SMODS.Blind {
 SMODS.Blind {
     key = "master_milk_crown_on_sonnetica",
     dollars = 14,
-    mult = 8,
+    mult = 2,
     boss_colour = HEX('5f848c'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "master",
-        akyrs_is_endless_blind = true,
-        akyrs_cannot_be_overridden = true,
-        akyrs_cannot_be_skipped = true,
+    },
+    config = {
+        xscore = 0.75,
     },
     
     in_pool = function (self)
-        return G.GAME.round_resets.ante >= self.boss.min and G.GAME.won
+        return G.GAME.round_resets.ante >= G.GAME.win_ante, {ignore_showdown_check = true}
+    end,
+    loc_vars = function (self)
+        return {
+            vars = {
+                self.config.xscore
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        return {
+            vars = {
+                self.config.xscore
+            }
+        }
     end,
     atlas = 'aikoyoriBlindsChips2', 
     boss = {min = 12, max = 10},
@@ -1553,9 +1668,7 @@ SMODS.Blind {
         if context.individual and context.cardarea == G.play and not blind.disabled then
             if context.other_card:is_face() then
                 return {
-                    func = function ()
-                        mult = mod_mult(1)
-                    end
+                    akyrs_xscore = blind.effect.xscore
                 }
             end
         end
@@ -1564,18 +1677,14 @@ SMODS.Blind {
 SMODS.Blind {
     key = "master_bug",
     dollars = 14,
-    mult = 8,
+    mult = 2,
     boss_colour = HEX('4de740'),
     debuff = {
-        akyrs_cannot_be_disabled = true,
         akyrs_blind_difficulty = "master",
-        akyrs_is_endless_blind = true,
-        akyrs_cannot_be_overridden = true,
-        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)
-        return G.GAME.round_resets.ante >= self.boss.min and G.GAME.won
+        return G.GAME.round_resets.ante >= G.GAME.win_ante, {ignore_showdown_check = true}
     end,
     atlas = 'aikoyoriBlindsChips2', 
     boss = {min = 12, max = 10},
@@ -1586,23 +1695,15 @@ SMODS.Blind {
                 func = function ()
                     local jkrs = AKYRS.get_non_eternals(G.jokers, blind)
                     if #jkrs > 0 then
-                        for i = 1, #G.play.cards do
-                            local attempts = 0
-                            local card_to_destroy
-                            repeat
-                                card_to_destroy = pseudorandom_element(jkrs, pseudoseed("bl_bug_akyrs"))
-                                attempts = attempts + 1
-                                --print("atttempt "..attempts.." "..card_to_destroy.config.center_key)
-                            until (card_to_destroy and (not card_to_destroy.akyrs_removed and not card_to_destroy.ability.eternal and card_to_destroy.ability.cry_absolute)) or attempts >= #G.jokers.cards
-                            if card_to_destroy then
-                                card_to_destroy.akyrs_removed = true
-                                AKYRS.simple_event_add(
-                                    function ()
-                                        card_to_destroy:start_dissolve({ G.C.RED }, nil, 1.6)
-                                        return true
-                                    end, 0
-                                )
-                            end
+                        local card_to_destroy = pseudorandom_element(jkrs, "akyrs_bug_destroy")
+                        if card_to_destroy then
+                            card_to_destroy.akyrs_removed = true
+                            AKYRS.simple_event_add(
+                                function ()
+                                    card_to_destroy:start_dissolve({ G.C.RED }, nil, 1.6)
+                                    return true
+                                end, 0
+                            )
                         end
                     end
                 end
@@ -1615,7 +1716,7 @@ SMODS.Blind {
 SMODS.Blind {
     key = "ultima_lost_umbrella",
     dollars = 14,
-    mult = 12,
+    mult = 3,
     boss_colour = HEX('595959'),
     debuff = {
         akyrs_cannot_be_disabled = true,
@@ -1661,7 +1762,7 @@ SMODS.Blind {
         end 
     end,
     atlas = 'aikoyoriBlindsChips2', 
-    boss = {min = 16, max = 10},
+    boss = {min = 9, max = 10},
     pos = { x = 0, y = 8 },
     calculate = function (self, blind, context)
         if context.remove_playing_cards then

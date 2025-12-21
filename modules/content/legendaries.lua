@@ -1,5 +1,43 @@
 local to_number = to_number or function(x) return x end
 
+-- her
+SMODS.Joker {
+    key = "furina",
+    atlas = 'furina',
+    pools = { ["Genshin Impact"] = true,},
+    pos = {
+        x = 0, y = 0
+    },
+    soul_pos = {
+        x = 1, y = 0, draw = function (card, scale_mod, rotate_mod)
+            card.children.floating_sprite:draw_shader('dissolve',0, nil, nil, card.children.center,scale_mod, rotate_mod,0,0 - 0.3,nil, 0.6)
+            card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod,0,0-0.5)
+        end
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = { card.ability.extra },
+        }
+    end,
+    rarity = 4,
+    cost = 30,
+    config = {
+        extra = 1
+    },
+    calculate = function (self, card, context)
+        if context.press_play then
+            return {
+                func = function ()
+                    ease_discard(card.ability.extra)
+                end
+            }
+        end
+    end,
+    blueprint_compat = true,
+	demicoloncompat = true,
+    hpot_unbreedable = true,
+}
+
 -- tsunagite
 SMODS.Joker {
     atlas = 'AikoyoriJokers',

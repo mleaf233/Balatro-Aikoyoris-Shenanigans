@@ -65,6 +65,22 @@ match_indent = true
 
 [[patches]]
 [patches.pattern]
+target = "functions/state_events.lua"
+pattern = """    for k, v in ipairs(G.playing_cards) do
+        v.ability.forced_selection = nil
+    end
+    
+    table.sort(G.hand.highlighted, function(a,b) return a.T.x < b.T.x end)"""
+position = "after"
+payload = """SMODS.calculate_context({akyrs_extremely_pre_play = true, akyrs_pre_play_cards = G.hand.highlighted})
+"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
 target = "functions/button_callbacks.lua"
 pattern = """              G.STATE = G.STATES.SHOP"""
 position = "before"
