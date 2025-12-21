@@ -1886,7 +1886,7 @@ end
 
 local blindDisable = Blind.disable
 function Blind:disable()
-    if self.debuff.akyrs_cannot_be_disabled then
+    if self.debuff.akyrs_cannot_be_disabled and not G.AKYRS_FORCE_BLIND_DISABLE then
         AKYRS.nope_buzzer()
         return
     end

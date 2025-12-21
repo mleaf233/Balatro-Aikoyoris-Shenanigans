@@ -1612,6 +1612,71 @@ SMODS.Blind {
     end
 }
 
+SMODS.Blind {
+    key = "ultima_lost_umbrella",
+    dollars = 14,
+    mult = 12,
+    boss_colour = HEX('595959'),
+    debuff = {
+        akyrs_cannot_be_disabled = true,
+        akyrs_blind_difficulty = "ultima",
+        akyrs_is_endless_blind = true,
+        akyrs_cannot_be_overridden = true,
+        akyrs_cannot_be_skipped = true,
+    },
+    config = {
+        cards_left = 2  
+    },
+    loc_vars = function (self)
+        return {
+            vars = {
+                self.config.cards_left,
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        return {
+            vars = {
+                self.config.cards_left,
+            }
+        }
+    end,
+    in_pool = function (self)
+        return G.GAME.round_resets.ante >= self.boss.min and G.GAME.won, {ignore_showdown_check = true}
+    end,
+    drawn_to_hand = function (self)
+        for i = 1, #G.jokers.cards do
+            G.jokers.cards[i]:set_debuff(true)
+        end
+    end,
+    press_play =function (self)
+        if G.jokers.cards[1] then
+            self.triggered = true
+            self.prepped = true
+        end
+    end,
+    disable = function (self)
+        for i = 1, #G.jokers.cards do
+            G.jokers.cards[i]:set_debuff(false)
+        end 
+    end,
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 16, max = 10},
+    pos = { x = 0, y = 8 },
+    calculate = function (self, blind, context)
+        if context.remove_playing_cards then
+            return {
+                func = function ()
+                    blind.effect.cards_left = blind.effect.cards_left - #context.removed
+                    if blind.effect.cards_left <= 0 then
+                        AKYRS.force_disable_blind()
+                    end
+                end
+            }
+        end
+    end
+}
+
 
 SMODS.Blind{
     key = "the_thought",
@@ -1973,7 +2038,6 @@ SMODS.Blind{
             }
         end
     end
-
 }
 
 
@@ -1993,7 +2057,7 @@ SMODS.Blind{
     boss = {min = 2, max = 10},
     pos = { x = 0, y = 0 },
     in_pool = function(self)
-        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled) and G.GAME.round_resets.hands > 1
+        return G.GAME.round_resets.hands > 1 and G.GAME.round_resets.ante >= self.boss.min
     end,
     loc_vars = function (self)
         return {

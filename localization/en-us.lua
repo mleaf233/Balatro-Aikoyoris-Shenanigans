@@ -26,7 +26,7 @@ return {
                 text = 
                 { 
                     'Letters-Only Deck',
-                    "Letters give C:mult}Mult{}", 
+                    "Letters give {C:mult}Mult{}", 
                     "{C:red}X#1#{} base Blind Size",
                     "{C:red}+#2#{} Discards",
                     "{C:attention}+#3#{} Hand Size",
@@ -456,6 +456,13 @@ return {
                 text = {
                     "Play a #1#",
                     "#2# times",
+                }
+            },
+            bl_akyrs_ultima_lost_umbrella = {
+                name = "Lost Umbrella",
+                text = {
+                    "All Joker debuffed until",
+                    "#1# playing cards destroyed",
                 }
             },
         },

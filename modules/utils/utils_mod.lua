@@ -1068,3 +1068,11 @@ function AKYRS.blocking_unlock_achievement(achievement_name)
         end
         }), 'achievement')
 end
+
+-- used internally for some bosses, should not be used by any cards if possible
+function AKYRS.force_disable_blind()
+    G.AKYRS_FORCE_BLIND_DISABLE = true
+    G.GAME.blind:disable()
+    G.AKYRS_FORCE_BLIND_DISABLE = nil
+
+end
