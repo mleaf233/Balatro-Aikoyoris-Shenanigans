@@ -25,8 +25,8 @@ SMODS.Edition{
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
-                self.config.extra.x_chip,
-                self.config.extra.x_mult,
+                card.edition.extra.x_chip,
+                card.edition.extra.x_mult,
             }
         }
     end,
