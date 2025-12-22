@@ -3803,3 +3803,90 @@ SMODS.Joker {
     end,
     blueprint_compat = true,
 }
+
+SMODS.Joker {
+    key = "so_close",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 0, y = 7 },
+    pools = {  },
+    config = {
+        extras = {
+            score_xbase = 0.03
+        }
+    },
+    rarity = 2,
+    cost = 7,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.score_xbase * 100
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.individual and context.poker_hands and context.poker_hands["Two Pair"] and context.cardarea == G.hand then
+            return {
+                akyrs_score = card.ability.extras.score_xbase * (G.GAME.blind.chips or 0)
+            }
+        end
+    end,
+    blueprint_compat = true,
+}
+
+SMODS.Joker {
+    key = "so_close",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 0, y = 7 },
+    pools = {  },
+    config = {
+        extras = {
+            score_xbase = 0.03
+        }
+    },
+    rarity = 2,
+    cost = 7,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.score_xbase * 100
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.individual and context.poker_hands and context.poker_hands["Two Pair"] and context.cardarea == G.hand then
+            return {
+                akyrs_score = card.ability.extras.score_xbase * (G.GAME.blind.chips or 0)
+            }
+        end
+    end,
+    blueprint_compat = true,
+}
+
+SMODS.Joker {
+    key = "snow_pea",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 1, y = 7 },
+    pools = {  },
+    config = {
+        extras = {
+            xscore = 1.75,
+        },
+    },
+    rarity = 3,
+    cost = 8,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xscore
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.joker_main then
+            return {
+                akyrs_xscore = card.ability.extras.xscore
+            }
+        end
+    end,
+    blueprint_compat = true,
+}

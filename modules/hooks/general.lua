@@ -30,6 +30,7 @@ function Game:init_game_object()
     ret.akyrs_generated_but_not_redeemed_vouchers_check = {}
     ret.akyrs_list_of_generated_but_not_redeemed_vouchers = {}
     ret.aiko_letters_consumable_rate = 0
+    ret.current_round.akyrs_scoring_set = nil
     -- table of key { n_add = 0, d_add = 1, n_mult = 1, d_mult = 1 } // tho only one of these should exist
     ret.akyrs_prob_mod = {
 
@@ -278,10 +279,8 @@ function AKYRS.expensive_calculation()
     if G.STATE == G.STATES.SELECTING_HAND then
         
         if AKYRS.should_calculate_word() and G.GAME.blind.debuff.akyrs_is_puzzle_blind then
-            if not G.GAME.blind.disabled and not G.GAME.blind.defeated and not G.GAME.blind.debuff.akyrs_scoring_set then
+            if not G.GAME.blind.disabled and not G.GAME.blind.defeated and not G.GAME.current_round.akyrs_scoring_set then
                 AKYRS.set_scoring_parameter_backup('akyrs_puzzle_display')
-                G.GAME.blind.debuff = G.GAME.blind.debuff or {}
-                G.GAME.blind.debuff.akyrs_scoring_set = true
             end
         end
         if not G.GAME.blind.debuff.initial_action_act_set and not G.GAME.blind.disabled then

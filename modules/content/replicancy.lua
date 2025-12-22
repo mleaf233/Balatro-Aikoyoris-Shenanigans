@@ -148,7 +148,7 @@ SMODS.Consumable{
         AKYRS.simple_event_add(function ()
             ease_discard(card.ability.extras.disca)
             G.deck:shuffle("akyrs_shuffled_db_replicant")
-            SMODS.draw_cards() 
+            AKYRS.fill_hand()
             return true
         end)
     end,
@@ -468,7 +468,7 @@ SMODS.Consumable{
         SMODS.change_discard_limit(card.ability.extras.give_away)
         G.hand:change_size(card.ability.extras.gain)
         if #G.hand.cards > 0 then
-            SMODS.draw_cards(0)
+            AKYRS.fill_hand()
         end
     end
 }

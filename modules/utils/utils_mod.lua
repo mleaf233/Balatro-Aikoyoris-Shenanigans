@@ -569,7 +569,7 @@ AKYRS.force_check_win = function (config)
             elseif not new_round then
                 G.STATE = config.state_to_go or G.STATES.SELECTING_HAND
                 if config.force_draw then
-                    SMODS.draw_cards() 
+                    AKYRS.fill_hand()
                     AKYRS.force_save()
                 end
             end

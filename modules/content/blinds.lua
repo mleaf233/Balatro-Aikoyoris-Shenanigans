@@ -1609,7 +1609,7 @@ SMODS.Blind {
 
     collection_loc_vars = function (self)
         return {
-            vars = { 0.1 }
+            vars = { self.debuff.akyrs_deduct_mult }
         }
     end,    
     in_pool = function (self)
@@ -1619,7 +1619,7 @@ SMODS.Blind {
     boss = {min = 12, max = 10},
     pos = { x = 0, y = 5 },
     calculate = function (self, blind, context)
-        if context.individual and context.cardarea == G.play then
+        if context.individual and context.cardarea == G.play and not blind.disabled then
             
             blind.debuff.current_money = blind.debuff.current_money or G.GAME.dollars
             local old_money = blind.debuff.current_money or G.GAME.dollars
@@ -1836,7 +1836,7 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
-                SMODS.draw_cards() 
+                AKYRS.fill_hand()
                 for i = 1, 5 do
                     AKYRS.simple_event_add(
                         function ()
@@ -1968,7 +1968,7 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
-                SMODS.draw_cards() 
+                AKYRS.fill_hand()
                 for i = 2, 5 do
                     AKYRS.simple_event_add(
                         function ()
@@ -2162,7 +2162,7 @@ SMODS.Blind{
     loc_vars = function (self)
         return {
             vars = {
-                G.GAME.current_round.akyrs_picked_poker_hands,
+                localize(G.GAME.current_round.akyrs_picked_poker_hands, "poker_hands") or "????",
                 self.config.times_left,
             }
         }

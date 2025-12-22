@@ -1166,8 +1166,9 @@ function AKYRS.get_consumable_set()
 end
 
 function AKYRS.set_scoring_parameter_backup(parameter)
-    G.GAME.akyrs_previous_scoring_key = G.GAME.current_scoring_calculation
+    G.GAME.akyrs_previous_scoring_key = G.GAME.current_scoring_calculation.key
     SMODS.set_scoring_calculation(parameter)
+    G.GAME.current_round.akyrs_scoring_set = true
 end
 
 -- structure
@@ -1566,4 +1567,9 @@ AKYRS.scramble_list = function(tblx, seed)
         AKYRS.remove_value_from_table(values, v2i)
     end
     return output
+end
+
+function AKYRS.fill_hand()
+    local to_draw = G.hand.config.card_limit - #G.hand.cards
+    SMODS.draw_cards(to_draw)
 end

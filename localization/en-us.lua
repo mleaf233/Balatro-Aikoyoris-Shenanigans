@@ -2359,6 +2359,24 @@ return {
                     "to every {C:attention}played{} hand",
                 }
             },
+            j_akyrs_so_close = {
+                name = {
+                    "So Close!",
+                },
+                text = {
+                    "If hand contains a {C:attention}Two Pair",
+                    "Add {C:purple}#1#%{} of Blind Size to Score",
+                    "per cards held in hand",
+                }
+            },
+            j_akyrs_snow_pea = {
+                name = {
+                    "Snow Pea",
+                },
+                text = {
+                    "{C:white,X:purple}X#1#{} Score",
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
