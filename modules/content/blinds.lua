@@ -423,7 +423,7 @@ SMODS.Blind {
         }
     end,
     calculate = function (self, blind, context)
-        if context.individual and (context.cardarea == G.hand or context.cardarea == G.play or context.cardarea == "unscored") then
+        if context.individual and not context.end_of_round and (context.cardarea == G.hand or context.cardarea == G.play or context.cardarea == "unscored") then
             if context.other_card:is_face(true) then
                 return { Xmult = blind.debuff.dec_mult }
             end

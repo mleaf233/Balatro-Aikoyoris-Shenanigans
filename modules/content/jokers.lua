@@ -1429,8 +1429,8 @@ SMODS.Joker{
     config = {
         name = "Neuro Sama",
         extras = {
-            mult = 0,
-            mult_inc = 0.06,
+            xmult = 0,
+            xmult_inc = 0.06,
             xmult_absurd = 1,
             xmult_inc_absurd = 1.2,
         }
