@@ -65,5 +65,21 @@ if CardSleeves then
         end
     }
 
+    CardSleeves.Sleeve {
+        key = "inversion",
+        atlas = "aikoyoriSleeves",
+        pos = { x = 3, y = 0 },
+        config = { akyrs_inversion_deck = true },
+        
+        loc_vars = function (self, info_queue, card)
+        end,
+        apply = function(self, sleeve)
+            if (sleeve.config.akyrs_inversion_deck) then
+                G.GAME.starting_params.akyrs_inversion_deck = sleeve.config.akyrs_inversion_deck
+            end
+            CardSleeves.Sleeve.apply(sleeve)
+        end
+    }
+
 
 end

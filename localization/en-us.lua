@@ -3234,6 +3234,12 @@ return {
                     "The challenge is to not crash the game."
 				},
             },
+            sleeve_akyrs_inversion={
+                name="Inversion Sleeve",
+				text = {
+					"Card selection is {C:attention}inverted",
+				},
+            },
         },
         Umbral = {
             c_akyrs_umbral_graduate = {
