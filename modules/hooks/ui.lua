@@ -1147,6 +1147,7 @@ function buildAdditionsTab(mod)
         local modNodes = {}
         table.insert(modNodes, t)
             ]]
+        additionsTabHook(mod) -- call original to keep functionality, other mods maybe hooking into this
 		return {
         label = localize("b_additions"),
         chosen = SMODS.LAST_SELECTED_MOD_TAB == "additions" or false,
