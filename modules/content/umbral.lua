@@ -564,6 +564,7 @@ SMODS.Consumable{
             if AKYRS.bal("absurd") then
                 if G.STAGE == G.STAGES.RUN then 
                     G.GAME.akyrs_defeated_by_center = self.key
+                    G.TAROT_INTERRUPT = nil
                     G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false 
                 end
             else
